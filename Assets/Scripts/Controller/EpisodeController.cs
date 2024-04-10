@@ -2,8 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomepageController : MonoBehaviour
+public enum DialogPlayerStatus
 {
+    Stop,
+    Playing,
+}
+
+public class EpisodeController : MonoBehaviour
+{
+    private int playingEpisode = -1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +22,10 @@ public class HomepageController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void PlayEpisode(int episodeID)
+    {
+
     }
 }
