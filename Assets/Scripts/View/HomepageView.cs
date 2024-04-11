@@ -9,6 +9,8 @@ public class HomepageView : MonoBehaviour
 
     void Start()
     {
+        ControllerManager.Get().init();
+        ControllerManager.Get().UIController.Init(transform.parent.gameObject);
         gameStartBtn = transform.Find("gameStartBtn")?.GetComponent<Button>();
         gameStartBtn.onClick.AddListener(onGameStartBtnClick);
     }
@@ -20,7 +22,7 @@ public class HomepageView : MonoBehaviour
 
     private void onGameStartBtnClick()
     {
-        GameController gameController = ControllerManager.GetManager().gameController;
+        GameController gameController = ControllerManager.Get().gameController;
         gameController?.GameStart();
     }
 }

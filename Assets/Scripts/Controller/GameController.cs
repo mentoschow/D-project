@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController
 {
-    private void Start()
-    {
-        
-    }
+    private ControllerManager api = ControllerManager.Get();
 
-    public void GenerateGameConfig()
-    {
-
-    }
 
     public void GameStart()
     {
-        UIController UIController = ControllerManager.GetManager().UIController;
-        UIController?.ChangeStage();
+        Debug.Log("游戏开始了");
+        api.UIController.homepageView?.gameObject.SetActive(false);
+        api.sceneController.ChangeScene(Scene.Scene1);
     }
+
+    
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControllerManager
 {
-    public static ControllerManager GetManager()
+    public static ControllerManager Get()
     {
         if (_manager == null)
         {
@@ -12,10 +12,24 @@ public class ControllerManager
         }
         return _manager;
     }
-    public static ControllerManager _manager = null;  // 데절
+    public static ControllerManager _manager;  // 데절
 
-    public StoryController storyController = new StoryController();
-    public UIController UIController = new UIController();
-    public GameController gameController = new GameController();
-    
+    public GameController gameController;
+    public UIController UIController;
+    public ConfigController configController;
+    public SceneController sceneController;
+
+    public GameDataProxy gameData;
+
+    public void init()
+    {
+        Debug.Log("init manager");
+        gameController = new GameController();
+        UIController = new UIController();
+        configController = new ConfigController();
+        sceneController = new SceneController();
+        gameData = new GameDataProxy();
+
+        //configController?.InitConfig();
+    }
 }
