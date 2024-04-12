@@ -20,7 +20,6 @@ public class HomepageView : MonoBehaviour
 
     private void onGameStartBtnClick()
     {
-        GameController gameController = ControllerManager.Get().gameController;
-        gameController?.GameStart();
+        GameController.Instance.GameStart();
     }
 }

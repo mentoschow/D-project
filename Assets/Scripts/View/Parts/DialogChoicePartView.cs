@@ -28,11 +28,9 @@ public class DialogChoicePartView : MonoBehaviour
     {
         if (choiceConfig?.episodeType == EpisodeType.Normal)
         {
-            ControllerManager.Get().UIController?.episodePlayerView?.PlayEpisode(triggerEpisodeID);
         }
         else if (choiceConfig?.episodeType == EpisodeType.Phone)
         {
-            ControllerManager.Get().UIController?.phoneEpisodePlayerView?.PlayEpisode(triggerEpisodeID);
         }
     }
 }

@@ -64,7 +64,7 @@ public class EpisodePlayerView : MonoBehaviour
             case EpisodePlayerStatus.Stop:
                 break;
             case EpisodePlayerStatus.Typing:
-                typeSpeed = ControllerManager.Get().configController.maxTypingSpeed;
+                typeSpeed = ConfigController.Instance.maxTypingSpeed;
                 break;
             case EpisodePlayerStatus.Pause:
                 GoNext();
@@ -87,7 +87,7 @@ public class EpisodePlayerView : MonoBehaviour
         verticalChoiceLayout.gameObject.SetActive(false);
         nextBtn.interactable = true;
         var tempQueue = dialogQueue;
-        var config = ControllerManager.Get().configController;
+        var config = ConfigController.Instance;
         dialogQueue = new Queue<DialogConfig>();
         EpisodeConfig episode = config.GetEpisode(episodeID);
         foreach (var id in episode.dialogList)
@@ -115,16 +115,16 @@ public class EpisodePlayerView : MonoBehaviour
             this.gameObject.SetActive(false);
             return;
         }
+        var configController = ConfigController.Instance;
         var dialog = dialogQueue.Dequeue();
         if (dialog != null)
         {
             if (dialog.choices.Count > 0)
             {
                 // 出现选项
-                var config = ControllerManager.Get().configController;
                 foreach (var choiceID in dialog.choices)
                 {
-                    ChoiceConfig choice = config.GetChoice(choiceID);
+                    ChoiceConfig choice = configController.GetChoice(choiceID);
                     if (choice != null)
                     {
                         choice.episodeType = dialog.episodeType;
@@ -138,7 +138,7 @@ public class EpisodePlayerView : MonoBehaviour
             if (useTypeEffect)
             {
                 targetText = dialog.content;
-                typeSpeed = ControllerManager.Get().configController.normalTypingSpeed;
+                typeSpeed = configController.normalTypingSpeed;
                 typeTimer = 0;
                 ChangeStatus(EpisodePlayerStatus.Typing);
             }
@@ -148,7 +148,7 @@ public class EpisodePlayerView : MonoBehaviour
                 ChangeStatus(EpisodePlayerStatus.Pause);
             }
             UpdateView(dialog);
-            ControllerManager.Get().gameData.historyDialog.Add(dialog);
+            GameDataProxy.Instance.historyDialog.Add(dialog);
         }
     }
 

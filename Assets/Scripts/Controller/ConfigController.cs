@@ -7,7 +7,7 @@ using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ConfigController
+public class ConfigController : Singleton<ConfigController>
 {
     private const string configPath = "Assets/Resources/Configs/";
     private const string fileTailPath = ".csv";
@@ -30,7 +30,7 @@ public class ConfigController
     private List<EquipmentConfig> equipmentConfigList = new List<EquipmentConfig>();  // 场景设备（物品）属性
     private List<ItemConfig> itemConfigList = new List<ItemConfig>();  // 道具（线索）属性
 
-    public void InitConfig()
+    public ConfigController()
     {
         generateChapterConfig();
         generateEpisodeConfig();
@@ -366,6 +366,7 @@ public enum Chapter
 
 public enum Scene
 {
+    None,
     Scene1
 }
 

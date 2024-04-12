@@ -17,7 +17,7 @@ public class RoleController : MonoBehaviour
 
     void Update()
     {
-        if (ControllerManager.Get().gameData.canMainRoleMove)
+        if (GameDataProxy.Instance.canMainRoleMove)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {

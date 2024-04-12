@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class UIController
+public class UIController : MonoSingleton<UIController>
 {
     public HomepageView homepageView;
     public LoadingView loadingView;
     public EpisodePlayerView episodePlayerView;
     public PhoneEpisodePlayerView phoneEpisodePlayerView;
 
-    public void Init(GameObject canvas)
+    void Start()
     {
-        homepageView = canvas.GetComponentInChildren<HomepageView>();
-        loadingView = canvas.GetComponentInChildren<LoadingView>();
-        episodePlayerView = canvas.GetComponentInChildren<EpisodePlayerView>();
-        phoneEpisodePlayerView = canvas.GetComponentInChildren<PhoneEpisodePlayerView>();
+        MessageManager.Instance.Register(MessageDefine.GameStart, GameStart);
+        Init();
+    }
+
+    void OnDestroy()
+    {
+        MessageManager.Instance.Remove(MessageDefine.GameStart, GameStart);
+    }
+
+    public void Init()
+    {
+        homepageView = GetComponentInChildren<HomepageView>();
+        loadingView = GetComponentInChildren<LoadingView>();
+        episodePlayerView = GetComponentInChildren<EpisodePlayerView>();
+        phoneEpisodePlayerView = GetComponentInChildren<PhoneEpisodePlayerView>();
 
         loadingView.gameObject.SetActive(false);
 
@@ -25,7 +36,12 @@ public class UIController
     public void OpenHomepage()
     {
         Debug.Log("打开首页");
-        ControllerManager.Get().UIController.homepageView?.gameObject.SetActive(true);
+        homepageView.gameObject.SetActive(true);
+    }
 
+    void GameStart()
+    {
+        Debug.Log("收到消息【游戏开始】");
+        homepageView.gameObject.SetActive(false);
     }
 }

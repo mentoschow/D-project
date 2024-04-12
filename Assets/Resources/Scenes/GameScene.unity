@@ -629,9 +629,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1768503950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29bc887992622c647a8ccac3f3d5931b, type: 3}
+  m_Script: {fileID: 11500000, guid: 584aaa038387d4c46a1537809676119e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  homepageView: {fileID: 0}
+  loadingView: {fileID: 0}
+  episodePlayerView: {fileID: 0}
+  phoneEpisodePlayerView: {fileID: 0}
 --- !u!224 &1867956573 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6010286809094170742, guid: 9f606fa92e7072b41a5f60bf4a87f9ec, type: 3}
