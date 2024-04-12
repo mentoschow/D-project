@@ -12,6 +12,7 @@ public class GameController
         Debug.Log("游戏开始了");
         api.UIController.homepageView?.gameObject.SetActive(false);
         api.sceneController.ChangeScene(Scene.Scene1);
+        api.gameData.canMainRoleMove = true;
     }
 
     

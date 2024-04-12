@@ -7,4 +7,5 @@ public class GameDataProxy
     public List<DialogConfig> historyDialog = new List<DialogConfig>();
     public List<ItemConfig> bagItem = new List<ItemConfig>();
     public Scene curScene;
+    public bool canMainRoleMove = false;
 }

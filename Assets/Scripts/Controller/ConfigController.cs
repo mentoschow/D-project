@@ -101,7 +101,6 @@ public class ConfigController
                 ChapterConfig config = new ChapterConfig();
                 config.ID = (Chapter)int.Parse(arr[0]);
                 config.name = arr[1];
-                config.triggerEpisodeID = int.Parse(arr[2]);
                 chapterConfigList.Add(config);
             }
         }
@@ -310,7 +309,6 @@ public class ChapterConfig
 {
     public Chapter ID;
     public string name;
-    public int triggerEpisodeID;
 }
 
 public class EpisodeConfig

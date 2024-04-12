@@ -12,7 +12,7 @@ public class ControllerManager
         }
         return _manager;
     }
-    public static ControllerManager _manager;  // 데절
+    private static ControllerManager _manager;  // 데절
 
     public GameController gameController;
     public UIController UIController;
