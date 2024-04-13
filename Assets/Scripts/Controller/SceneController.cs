@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneController : Singleton<SceneController>
+public class SceneController : MonoSingleton<SceneController>
 {
     public Dictionary<Scene, GameObject> sceneMap = new Dictionary<Scene, GameObject>();
 

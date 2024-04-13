@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleController : MonoSingleton<RoleController>
+public class RoleView : MonoSingleton<RoleView>
 {
     [SerializeField]
     private SpriteRenderer roleSp;
@@ -23,6 +23,9 @@ public class RoleController : MonoSingleton<RoleController>
     private Vector2 colliderSize;
     private Vector2 slopeNormalPerp;
     private bool isOnSlope;
+    private float slopeDownAngle;
+    private float slopeSideAngle;
+    private float lastSlopeAngle;
 
     private void Start()
     {
@@ -95,6 +98,7 @@ public class RoleController : MonoSingleton<RoleController>
     private void CheckSlope()
     {
         Vector2 checkPos = transform.position - new Vector3(0f, colliderSize.y / 2);
+        SlopeCheckHorizontal(checkPos);
         CheckSlopeVertical(checkPos);
     }
 
@@ -104,13 +108,46 @@ public class RoleController : MonoSingleton<RoleController>
 
         if (hit)
         {
+
             slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+
+            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+            if (slopeDownAngle != lastSlopeAngle)
+            {
+                isOnSlope = true;
+            }
+
+            lastSlopeAngle = slopeDownAngle;
+
+            Debug.Log("slopeDownAngle:" + slopeDownAngle);
+        }
+    }
+
+    private void SlopeCheckHorizontal(Vector2 checkPos)
+    {
+        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDis, ground);
+        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDis, ground);
+
+        if (slopeHitFront)
+        {
             isOnSlope = true;
+
+            slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+
+        }
+        else if (slopeHitBack)
+        {
+            isOnSlope = true;
+
+            slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
         }
         else
         {
+            slopeSideAngle = 0.0f;
             isOnSlope = false;
         }
+        Debug.Log("slopeSideAngle:" + slopeSideAngle);
     }
 }
 
