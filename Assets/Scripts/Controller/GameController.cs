@@ -10,5 +10,6 @@ public class GameController : Singleton<GameController>
     {
         Debug.Log("游戏开始了");
         MessageManager.Instance.Send(MessageDefine.GameStart);
+        GameDataProxy.Instance.canMainRoleMove = true;
     }
 }
