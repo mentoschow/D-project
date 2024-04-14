@@ -13,12 +13,15 @@ public class RoleView : MonoSingleton<RoleView>
     [SerializeField]
     private LayerMask ground;
     [SerializeField]
+    private LayerMask wall;
+    [SerializeField]
     private PhysicsMaterial2D noFriction;
     [SerializeField]
     private PhysicsMaterial2D fullFriction;
 
     private Rigidbody2D rigidBody;
     private CapsuleCollider2D capsuleCollider;
+    private BoxCollider2D trigger;
     private MoveVector moveVec = MoveVector.None;
     private Vector2 colliderSize;
     private Vector2 slopeNormalPerp;
@@ -26,11 +29,13 @@ public class RoleView : MonoSingleton<RoleView>
     private float slopeDownAngle;
     private float slopeSideAngle;
     private float lastSlopeAngle;
+    private GameObject triggerObj;
 
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        trigger = GetComponent<BoxCollider2D>();
 
         colliderSize = capsuleCollider.size;
     }
@@ -95,6 +100,20 @@ public class RoleView : MonoSingleton<RoleView>
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        triggerObj = collision.gameObject;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == triggerObj.tag)
+        {
+            
+        }
+    }
+
     private void CheckSlope()
     {
         Vector2 checkPos = transform.position - new Vector3(0f, colliderSize.y / 2);
@@ -119,35 +138,12 @@ public class RoleView : MonoSingleton<RoleView>
             }
 
             lastSlopeAngle = slopeDownAngle;
-
-            Debug.Log("slopeDownAngle:" + slopeDownAngle);
         }
     }
 
     private void SlopeCheckHorizontal(Vector2 checkPos)
     {
-        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDis, ground);
-        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDis, ground);
-
-        if (slopeHitFront)
-        {
-            isOnSlope = true;
-
-            slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-
-        }
-        else if (slopeHitBack)
-        {
-            isOnSlope = true;
-
-            slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
-        }
-        else
-        {
-            slopeSideAngle = 0.0f;
-            isOnSlope = false;
-        }
-        Debug.Log("slopeSideAngle:" + slopeSideAngle);
+        
     }
 }
 

@@ -4,40 +4,77 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
+using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class ConfigController : Singleton<ConfigController>
 {
     private const string configPath = "Assets/Resources/Configs/";
     private const string fileTailPath = ".csv";
-    private const string chapterConfigFilePath = configPath + "配置文档_-_章节" + fileTailPath;
     private const string episodeConfigFilePath = configPath + "配置文档_-_情节" + fileTailPath;
     private const string dialogConfigFilePath = configPath + "配置文档_-_对话" + fileTailPath;
     private const string choiceConfigFilePath = configPath + "配置文档_-_对话选项" + fileTailPath;
     private const string equipmentConfigFilePath = configPath + "配置文档_-_物品" + fileTailPath;
     private const string itemConfigFilePath = configPath + "配置文档_-_道具" + fileTailPath;
+    private const string clickPointConfigFilePath = configPath + "配置文档_-_点击交互按钮" + fileTailPath;
+    private Dictionary<string, string> dataFilePathDic = new Dictionary<string, string>() {
+        {"ChapterConfig", configPath + "配置文档_-_章节" + fileTailPath},
+        //{"EpisodeConfig", ""},
+    };
 
-    public List<Scene> scenes = new List<Scene>();
-    public List<GameObject> sceneGameObjs = new List<GameObject>();
-    public List<Chapter> chapterLine;  // 游戏章节流程
     public int normalTypingSpeed = 5;
     public int maxTypingSpeed = 10;
-    private List<ChapterConfig> chapterConfigList = new List<ChapterConfig>();  // 章节属性
+    private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
+    private Dictionary<int, ChapterConfig> chapterConfigList = new Dictionary<int, ChapterConfig>();  // 章节属性
     private List<EpisodeConfig> episodeConfigList = new List<EpisodeConfig>();  // 情节属性
     private List<DialogConfig> dialogConfigList = new List<DialogConfig>();  // 对话属性
     private List<ChoiceConfig> choiceConfigList = new List<ChoiceConfig>();  // 选项属性
     private List<EquipmentConfig> equipmentConfigList = new List<EquipmentConfig>();  // 场景设备（物品）属性
     private List<ItemConfig> itemConfigList = new List<ItemConfig>();  // 道具（线索）属性
+    private List<ClickPointConfig> clickPointConfigs = new List<ClickPointConfig>(); // 点击交互按钮
 
     public ConfigController()
     {
-        generateChapterConfig();
-        generateEpisodeConfig();
-        generateDialogConfig();
-        generateChoiceConfig();
-        generateEquipmentConfig();
-        generateItemConfig();
+        GenerateConfig();
+        //generateChapterConfig();
+        //generateEpisodeConfig();
+        //generateDialogConfig();
+        //generateChoiceConfig();
+        //generateEquipmentConfig();
+        //generateItemConfig();
+        //generateClickPointConfig();
+    }
+
+    public ChapterConfig GetChapterConfig (int chapterID)
+    {
+        if (!chapterConfigList.ContainsKey(chapterID))
+        {
+            ChapterConfig config = new ChapterConfig();
+            var dt = datatableDic["ChapterConfig"];
+            if (dt.Rows.Count == 0)
+            {
+                Debug.LogError("章节配置不存在，id：" + chapterID);
+                return null;
+            }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var row = dt.Rows[i];
+                if (row["ID"].ToString() == chapterID.ToString())
+                {
+                    config.ID = chapterID;
+                    config.name = row["name"].ToString();
+                    chapterConfigList[chapterID] = config;
+                    break;
+                } 
+            }
+            return config;
+        } 
+        else
+        {
+            return chapterConfigList[chapterID];
+        }
     }
 
     public EpisodeConfig GetEpisode(int episodeID)
@@ -76,37 +113,70 @@ public class ConfigController : Singleton<ConfigController>
         return null;
     }
 
-    private void generateChapterConfig()
+    public EquipmentConfig GetEquipment(int equipmentID)
     {
-        //文件流读取
-        System.IO.FileStream fs = new System.IO.FileStream(chapterConfigFilePath, System.IO.FileMode.Open);
-        System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.GetEncoding("gb2312"));
-        string tempText = "";
-        bool isFirst = true;
-        while ((tempText = sr.ReadLine()) != null)
+        foreach (var equipment in equipmentConfigList)
         {
-            string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            //一般第一行为标题
-            if (isFirst)
+            if (equipment.ID == equipmentID)
             {
-                foreach (string str in arr)
-                {
-                    
-                }
-                isFirst = false;
-            }
-            else
-            {
-                ChapterConfig config = new ChapterConfig();
-                config.ID = (Chapter)int.Parse(arr[0]);
-                config.name = arr[1];
-                chapterConfigList.Add(config);
+                return equipment;
             }
         }
-        //关闭流
-        sr.Close();
-        fs.Close();
+        return null;
+    }
+
+    public ItemConfig GetItem(int itemID)
+    {
+        foreach (var item in itemConfigList)
+        {
+            if (item.ID == itemID)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private void GenerateConfig()
+    {
+        foreach (var item in dataFilePathDic)
+        {
+            string filePath = item.Value;
+            DataTable dt = new DataTable();
+            //文件流读取
+            System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open);
+            System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.GetEncoding("gb2312"));
+            string tempText = "";
+            bool isFirst = true;
+            while ((tempText = sr.ReadLine()) != null)
+            {
+                string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                //一般第一行为标题
+                if (isFirst)
+                {
+                    foreach (string str in arr)
+                    {
+                        dt.Columns.Add(str);
+                    }
+                    isFirst = false;
+                }
+                else
+                {
+                    DataRow dr = dt.NewRow();
+                    for (int i = 0; i < dt.Columns.Count; i++)
+                    {
+                        string valueName = dt.Columns[i].ToString();
+                        dr[valueName] = i < arr.Length ? arr[i] : "";
+                    }
+                    dt.Rows.Add(dr);
+                }
+            }
+            datatableDic[item.Key] = dt;
+            //关闭流
+            sr.Close();
+            fs.Close();
+        }
     }
 
     private void generateEpisodeConfig()
@@ -139,6 +209,17 @@ public class ConfigController : Singleton<ConfigController>
                     config.dialogList.Add(int.Parse(list[i]));
                 }
                 config.episodeType = (EpisodeType)int.Parse(arr[2]);
+                string[] list2 = arr[3].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < list2.Length; i++)
+                {
+                    config.enableEquipmentID.Add(int.Parse(list[i]));
+                }
+                string[] list3 = arr[4].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < list3.Length; i++)
+                {
+                    config.disableEquipmentID.Add(int.Parse(list[i]));
+                }
+
                 episodeConfigList.Add(config);
             }
         }
@@ -185,6 +266,7 @@ public class ConfigController : Singleton<ConfigController>
                 {
                     config.choices.Add(int.Parse(list[i]));
                 }
+
                 dialogConfigList.Add(config);
             }
         }
@@ -219,6 +301,7 @@ public class ConfigController : Singleton<ConfigController>
                 config.ID = int.Parse(arr[0]);
                 config.content = arr[1];
                 config.triggerEpisodeID = int.Parse(arr[2]);
+
                 choiceConfigList.Add(config);
             }
         }
@@ -261,6 +344,13 @@ public class ConfigController : Singleton<ConfigController>
                     config.getItemID.Add(int.Parse(list[i]));
                 }
                 config.triggerEpisodeID = int.Parse(arr[6]);
+                config.triggerPuzzleID = int.Parse(arr[7]);
+                string[] list2 = arr[8].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < list2.Length; i++)
+                {
+                    config.mustDoneEpisodeID.Add(int.Parse(list[i]));
+                }
+
                 equipmentConfigList.Add(config);
             }
         }
@@ -296,7 +386,60 @@ public class ConfigController : Singleton<ConfigController>
                 config.name = arr[1];
                 config.description = arr[2];
                 config.imageUrl = arr[3];
+
                 itemConfigList.Add(config);
+            }
+        }
+        //关闭流
+        sr.Close();
+        fs.Close();
+    }
+
+    private void generateClickPointConfig()
+    {
+        //文件流读取
+        System.IO.FileStream fs = new System.IO.FileStream(clickPointConfigFilePath, System.IO.FileMode.Open);
+        System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.GetEncoding("gb2312"));
+        string tempText = "";
+        bool isFirst = true;
+        while ((tempText = sr.ReadLine()) != null)
+        {
+            string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            //一般第一行为标题
+            if (isFirst)
+            {
+                foreach (string str in arr)
+                {
+
+                }
+                isFirst = false;
+            }
+            else
+            {
+                ClickPointConfig config = new ClickPointConfig();
+                config.ID = int.Parse(arr[0]);
+                string[] list = arr[1].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < list.Length; i++)
+                {
+                    config.mustHaveItemID.Add(int.Parse(list[i]));
+                }
+                string[] list2 = arr[2].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < list2.Length; i++)
+                {
+                    config.mustDoneEpisodeID.Add(int.Parse(list[i]));
+                }
+                config.satisfyTriggerEpisodeID = int.Parse(arr[3]);
+                config.unSatisfyTriggerEpisodeID = int.Parse(arr[4]);
+                config.satisfyClickAgainTriggerEpisodeID = int.Parse(arr[5]);
+                config.isCorrect = bool.Parse(arr[6]);
+                string[] list3 = arr[7].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < list3.Length; i++)
+                {
+                    config.getItemID.Add(int.Parse(list[i]));
+                }
+
+                clickPointConfigs.Add(config);
             }
         }
         //关闭流
@@ -307,7 +450,7 @@ public class ConfigController : Singleton<ConfigController>
 
 public class ChapterConfig
 {
-    public Chapter ID;
+    public int ID;
     public string name;
 }
 
@@ -316,6 +459,8 @@ public class EpisodeConfig
     public int ID;
     public List<int> dialogList;
     public EpisodeType episodeType;
+    public List<int> enableEquipmentID;
+    public List<int> disableEquipmentID;
 }
 
 public class DialogConfig
@@ -347,6 +492,8 @@ public class EquipmentConfig
     public bool isCollider;
     public List<int> getItemID;
     public int triggerEpisodeID;
+    public int triggerPuzzleID;
+    public List<int> mustDoneEpisodeID;
 }
 
 public class ItemConfig
@@ -357,17 +504,22 @@ public class ItemConfig
     public string imageUrl;
 }
 
-public enum Chapter
+public class ClickPointConfig
 {
-    Chapter1,
-    Chapter2,
-    Chapter3
+    public int ID;
+    public List<int> mustHaveItemID;
+    public List<int> mustDoneEpisodeID;
+    public int satisfyTriggerEpisodeID;
+    public int unSatisfyTriggerEpisodeID;
+    public int satisfyClickAgainTriggerEpisodeID;
+    public bool isCorrect;
+    public List<int> getItemID;
 }
 
 public enum Scene
 {
     None,
-    Scene1
+    Scene1,
 }
 
 public enum Character

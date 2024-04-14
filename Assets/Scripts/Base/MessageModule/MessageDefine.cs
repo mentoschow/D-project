@@ -5,4 +5,5 @@ using UnityEngine;
 public static class MessageDefine
 {
     public static readonly string GameStart = "GameStart";
+    public static readonly string ChangeSceneDone = "ChangeSceneDone";
 }
