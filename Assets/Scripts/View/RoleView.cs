@@ -30,12 +30,15 @@ public class RoleView : MonoSingleton<RoleView>
     private float slopeSideAngle;
     private float lastSlopeAngle;
     private GameObject triggerObj;
+    private GameObject tips;
 
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         trigger = GetComponent<BoxCollider2D>();
+        tips = transform.Find("tips")?.gameObject;
+        tips.SetActive(false);
 
         colliderSize = capsuleCollider.size;
     }
@@ -102,16 +105,23 @@ public class RoleView : MonoSingleton<RoleView>
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
-        triggerObj = collision.gameObject;
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == triggerObj.tag)
+        if (collision.tag == "Equipment")
         {
-            
+            tips.SetActive(true);
+            triggerObj = collision.gameObject;
+            int equipmentID = triggerObj.GetComponent<EquipmentView>().equipmentID;
+            Debug.Log("当前发生碰撞的设备id：" + equipmentID);
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        tips.SetActive(false);
     }
 
     private void CheckSlope()

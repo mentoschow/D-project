@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
@@ -452,6 +453,12 @@ public class ChapterConfig
 {
     public int ID;
     public string name;
+
+    public ChapterConfig()
+    {
+        ID = 0;
+        name = "";
+    }
 }
 
 public class EpisodeConfig
