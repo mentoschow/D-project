@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EpisodePlayerView : MonoBehaviour
+public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
 {
     public enum EpisodePlayerStatus
     {

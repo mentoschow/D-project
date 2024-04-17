@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStageView : MonoBehaviour
+public class GameStageView : MonoSingleton<GameStageView>
 {
     // Start is called before the first frame update
     void Start()

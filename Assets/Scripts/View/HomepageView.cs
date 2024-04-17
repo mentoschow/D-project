@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HomepageView : MonoBehaviour
+public class HomepageView : MonoSingleton<HomepageView>
 {
     public Button gameStartBtn;
 

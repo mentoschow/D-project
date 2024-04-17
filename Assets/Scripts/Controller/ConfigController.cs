@@ -28,6 +28,7 @@ public class ConfigController : Singleton<ConfigController>
     public int normalTypingSpeed = 5;
     public int maxTypingSpeed = 10;
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
+    public List<GameLineConfig> gameLineConfigs = new List<GameLineConfig>();  // 游戏流程配置
     private Dictionary<string, ChapterConfig> chapterConfigList = new Dictionary<string, ChapterConfig>();  // 章节属性
     private List<EpisodeConfig> episodeConfigList = new List<EpisodeConfig>();  // 普通对话情节属性
     private List<PhoneEpisodeConfig> phoneEpisodeConfigList = new List<PhoneEpisodeConfig>();  // 手机对话情节属性
@@ -40,13 +41,6 @@ public class ConfigController : Singleton<ConfigController>
     public ConfigController()
     {
         GenerateConfig();
-        //generateChapterConfig();
-        //generateEpisodeConfig();
-        //generateDialogConfig();
-        //generateChoiceConfig();
-        //generateEquipmentConfig();
-        //generateItemConfig();
-        //generateClickPointConfig();
     }
 
     public ChapterConfig GetChapterConfig(string chapterID)
@@ -196,6 +190,7 @@ public enum GameNodeType
     PhoneEpisode,  // 手机对话
     Tutorial,  // 教程
     FreeOperate,  // 自由操作
+    ChangeScene,  // 切换场景
     Puzzle,  // 谜题
     GameEnd,  // 游戏结束
 }
@@ -280,11 +275,6 @@ public class ClickPointConfig
     public string satisfyClickAgainTriggerEpisodeID;
     public bool isCorrect;
     public List<string> getItemID;
-}
-
-public enum Scene
-{
-    Scene1,
 }
 
 public enum RoleType

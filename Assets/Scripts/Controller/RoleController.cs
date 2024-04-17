@@ -42,4 +42,42 @@ public class RoleController : MonoSingleton<RoleController>
             }
         }
     }
+
+    private void Update()
+    {
+        CheckInput();
+    }
+
+    private void CheckInput()
+    {
+        if (curRoleView == null)
+        {
+            Debug.LogError("roleview is null");
+            return;
+        }
+        if (GameDataProxy.Instance.canMainRoleMove)
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                // 向左移动
+                curRoleView.moveVec = MoveVector.Left;
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                // 向右移动
+                curRoleView.moveVec = MoveVector.Right;
+            }
+            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+            {
+                curRoleView.moveVec = MoveVector.None;
+            }
+        }
+    }
+
+}
+public enum MoveVector
+{
+    None,  // 原地不动
+    Left,
+    Right,
 }

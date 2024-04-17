@@ -6,33 +6,37 @@ using UnityEngine;
 
 public class SceneController : MonoSingleton<SceneController>
 {
-    public Dictionary<Scene, GameObject> sceneMap = new Dictionary<Scene, GameObject>();
-    public GameObject scene;
+    public List<string> sceneID = new List<string>();
+    public Dictionary<string, GameObject> sceneMap = new Dictionary<string, GameObject>();
+    private string curSceneID;
 
     public float sceneBgWidth;
     public float sceneBgHeight;
 
     void Start()
     {
-        foreach (int scene in Enum.GetValues(typeof(Scene)))
+        foreach (string scene in sceneID)
         {
-            string sceneName = ((Scene)scene).ToString();
-            GameObject sceneObj = transform.Find(sceneName)?.gameObject;
+            GameObject sceneObj = transform.Find(scene)?.gameObject;
             if (sceneObj == null)
             {
-                sceneMap.Add((Scene)scene, sceneObj);
+                sceneMap.Add(scene, sceneObj);
             }
         }
+    }
 
-        var texture = scene.transform.Find("bg").transform.GetComponent<SpriteRenderer>().sprite.texture;
+    public void ChangeScene(string scene)
+    {
+        curSceneID = scene;
+        if (!sceneMap.ContainsKey(curSceneID))
+        {
+            Debug.LogError("切换场景失败：没有该场景ID" + curSceneID);
+            return;
+        }
+        Texture2D texture = sceneMap[curSceneID]?.transform.Find("bg").transform.GetComponent<SpriteRenderer>().sprite.texture;
         sceneBgWidth = texture.width;
         sceneBgHeight = texture.height;
         Debug.Log("sceneBgWidth:" + sceneBgWidth);
         Debug.Log("sceneBgHeight:" + sceneBgHeight);
-    }
-
-    public void ChangeScene(Scene scene)
-    {
-        
     }
 }

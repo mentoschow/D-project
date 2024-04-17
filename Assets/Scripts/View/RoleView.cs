@@ -23,7 +23,7 @@ public class RoleView : MonoBehaviour
     private Rigidbody2D rigidBody;
     private CapsuleCollider2D capsuleCollider;
     private BoxCollider2D trigger;
-    private MoveVector moveVec = MoveVector.None;
+    public MoveVector moveVec = MoveVector.None;
     private Vector2 colliderSize;
     private Vector2 slopeNormalPerp;
     private bool isOnSlope;
@@ -41,7 +41,7 @@ public class RoleView : MonoBehaviour
         trigger = GetComponent<BoxCollider2D>();
         tips = transform.Find("tips")?.gameObject;
         tips.SetActive(false);
-        originScaleX = transform.localScale.x;
+        originScaleX = roleSp.transform.localScale.x;
         colliderSize = capsuleCollider.size;
     }
 
@@ -49,11 +49,6 @@ public class RoleView : MonoBehaviour
     {
         CheckSlope();
         ApplyMovement();
-    }
-
-    private void Update()
-    {
-        CheckInput();
     }
 
     private void ApplyMovement()
@@ -68,12 +63,12 @@ public class RoleView : MonoBehaviour
             case MoveVector.Left:
                 realMoveSpeed *= -1;
                 rigidBody.sharedMaterial = noFriction;
-                transform.localScale = new Vector3(-originScaleX, transform.localScale.y, 1);
+                roleSp.transform.localScale = new Vector3(-originScaleX, roleSp.transform.localScale.y, 1);
                 break;
             case MoveVector.Right:
                 realMoveSpeed *= 1;
                 rigidBody.sharedMaterial = noFriction;
-                transform.localScale = new Vector3(originScaleX, transform.localScale.y, 1);
+                roleSp.transform.localScale = new Vector3(originScaleX, roleSp.transform.localScale.y, 1);
                 break;
         }
         if (isOnSlope)
@@ -83,27 +78,6 @@ public class RoleView : MonoBehaviour
         else
         {
             rigidBody.velocity = new Vector2(realMoveSpeed, 0);
-        }
-    }
-
-    private void CheckInput()
-    {
-        if (GameDataProxy.Instance.canMainRoleMove)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                // 向左移动
-                moveVec = MoveVector.Left;
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                // 向右移动
-                moveVec = MoveVector.Right;
-            }
-            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
-            {
-                moveVec = MoveVector.None;
-            }
         }
     }
 
@@ -159,11 +133,4 @@ public class RoleView : MonoBehaviour
     {
         
     }
-}
-
-public enum MoveVector
-{
-    None,  // 原地不动
-    Left,
-    Right,
 }

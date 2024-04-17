@@ -8,7 +8,6 @@ public class UIController : MonoSingleton<UIController>
     public HomepageView homepageView;
     public LoadingView loadingView;
     public EpisodePlayerView episodePlayerView;
-    public PhoneEpisodePlayerView phoneEpisodePlayerView;
 
     void Start()
     {
@@ -20,17 +19,15 @@ public class UIController : MonoSingleton<UIController>
 
     }
 
-    public void Init()
+    private void Init()
     {
         homepageView = GetComponentInChildren<HomepageView>();
         loadingView = GetComponentInChildren<LoadingView>();
         episodePlayerView = GetComponentInChildren<EpisodePlayerView>();
-        phoneEpisodePlayerView = GetComponentInChildren<PhoneEpisodePlayerView>();
-
         HideAllView();
-
         OpenHomepage();
     }
+
 
     private void HideAllView()
     {
@@ -38,7 +35,7 @@ public class UIController : MonoSingleton<UIController>
         loadingView?.gameObject.SetActive(false);
     }
 
-    public void OpenHomepage()
+    private void OpenHomepage()
     {
         homepageView?.gameObject.SetActive(true);
     }
@@ -46,6 +43,16 @@ public class UIController : MonoSingleton<UIController>
     public void GameStart()
     {
         homepageView?.gameObject.SetActive(false);
+    }
+
+    public void ShowScene()
+    {
+
+    }
+
+    public void ShowTransition(string ID)
+    {
+
     }
 
     public void OpenTransitionView(TransitionType type)
