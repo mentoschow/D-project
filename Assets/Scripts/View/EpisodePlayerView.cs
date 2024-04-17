@@ -77,9 +77,9 @@ public class EpisodePlayerView : MonoBehaviour
 
     }
 
-    public void PlayEpisode(int episodeID)
+    public void PlayEpisode(string episodeID)
     {
-        if (episodeID < 0)
+        if (episodeID == "" || episodeID == null)
         {
             return;
         }
@@ -89,13 +89,12 @@ public class EpisodePlayerView : MonoBehaviour
         var tempQueue = dialogQueue;
         var config = ConfigController.Instance;
         dialogQueue = new Queue<DialogConfig>();
-        EpisodeConfig episode = config.GetEpisode(episodeID);
+        EpisodeConfig episode = config.GetNormalEpisode(episodeID);
         foreach (var id in episode.dialogList)
         {
             DialogConfig dialog = config.GetDialog(id);
             if (dialog != null)
             {
-                dialog.episodeType = episode.episodeType;
                 dialogQueue.Enqueue(dialog);  // 中途插进来的先播
             }
         }
@@ -127,7 +126,6 @@ public class EpisodePlayerView : MonoBehaviour
                     ChoiceConfig choice = configController.GetChoice(choiceID);
                     if (choice != null)
                     {
-                        choice.episodeType = dialog.episodeType;
                         choices.Add(choice);
                     }
                 }

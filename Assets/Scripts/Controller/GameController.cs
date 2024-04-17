@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class GameController : Singleton<GameController>
 {
+    private GameNodeType curGameNode;
 
+
+    public void CheckNextGameNode()
+    {
+
+    }
 
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        MessageManager.Instance.Send(MessageDefine.GameStart);
-        GameDataProxy.Instance.canMainRoleMove = true;
+        curGameNode = GameNodeType.GameStart;
+        CheckNextGameNode();
+        UIController.Instance.GameStart();
     }
 }

@@ -12,13 +12,12 @@ public class UIController : MonoSingleton<UIController>
 
     void Start()
     {
-        MessageManager.Instance.Register(MessageDefine.GameStart, GameStart);
         Init();
     }
 
     void OnDestroy()
     {
-        MessageManager.Instance.Remove(MessageDefine.GameStart, GameStart);
+
     }
 
     public void Init()
@@ -28,20 +27,29 @@ public class UIController : MonoSingleton<UIController>
         episodePlayerView = GetComponentInChildren<EpisodePlayerView>();
         phoneEpisodePlayerView = GetComponentInChildren<PhoneEpisodePlayerView>();
 
-        loadingView.gameObject.SetActive(false);
+        HideAllView();
 
         OpenHomepage();
     }
 
-    public void OpenHomepage()
+    private void HideAllView()
     {
-        Debug.Log("打开首页");
-        homepageView.gameObject.SetActive(true);
+        homepageView?.gameObject.SetActive(false);
+        loadingView?.gameObject.SetActive(false);
     }
 
-    void GameStart()
+    public void OpenHomepage()
     {
-        Debug.Log("收到消息【游戏开始】");
-        homepageView.gameObject.SetActive(false);
+        homepageView?.gameObject.SetActive(true);
+    }
+
+    public void GameStart()
+    {
+        homepageView?.gameObject.SetActive(false);
+    }
+
+    public void OpenTransitionView(TransitionType type)
+    {
+        Debug.Log("进入转场" + type);
     }
 }

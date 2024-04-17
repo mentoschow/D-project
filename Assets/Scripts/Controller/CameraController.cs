@@ -16,7 +16,12 @@ public class CameraController : MonoSingleton<CameraController>
 
     private void FixedUpdate()
     {
-        float newX = RoleView.Instance.transform.position.x;
+        var role = RoleController.Instance.curRoleView;
+        if (!role)
+        {
+            return;
+        }
+        float newX = role.transform.position.x;
         float moveMax = (SceneController.Instance.sceneBgWidth - gameCam.pixelWidth) / 2 / 9.6f;
         if (newX > moveMax)
         {

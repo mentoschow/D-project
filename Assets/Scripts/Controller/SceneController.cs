@@ -14,11 +14,14 @@ public class SceneController : MonoSingleton<SceneController>
 
     void Start()
     {
-        
         foreach (int scene in Enum.GetValues(typeof(Scene)))
         {
             string sceneName = ((Scene)scene).ToString();
-            //Debug.Log(sceneName);
+            GameObject sceneObj = transform.Find(sceneName)?.gameObject;
+            if (sceneObj == null)
+            {
+                sceneMap.Add((Scene)scene, sceneObj);
+            }
         }
 
         var texture = scene.transform.Find("bg").transform.GetComponent<SpriteRenderer>().sprite.texture;
@@ -26,7 +29,6 @@ public class SceneController : MonoSingleton<SceneController>
         sceneBgHeight = texture.height;
         Debug.Log("sceneBgWidth:" + sceneBgWidth);
         Debug.Log("sceneBgHeight:" + sceneBgHeight);
-        ConfigController.Instance.GetChapterConfig(1);
     }
 
     public void ChangeScene(Scene scene)

@@ -13,7 +13,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
     {
         historyDialog = new List<DialogConfig>();
         bagItem = new List<ItemConfig>();
-        curScene = Scene.None;
+        curScene = Scene.Scene1;
         canMainRoleMove = false;
     }
 }

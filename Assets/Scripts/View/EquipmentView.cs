@@ -15,7 +15,6 @@ public class EquipmentView : MonoBehaviour
     {
         trigger = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        //equipmentConfig = ConfigController.Instance.GetEquipment(equipmentID);
         
     }
 

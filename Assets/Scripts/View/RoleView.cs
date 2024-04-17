@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleView : MonoSingleton<RoleView>
+public class RoleView : MonoBehaviour
 {
+    public RoleType characterType;
     [SerializeField]
     private SpriteRenderer roleSp;
     [SerializeField]
@@ -31,6 +32,7 @@ public class RoleView : MonoSingleton<RoleView>
     private float lastSlopeAngle;
     private GameObject triggerObj;
     private GameObject tips;
+    private float originScaleX;  // œÚ”“
 
     private void Start()
     {
@@ -39,7 +41,7 @@ public class RoleView : MonoSingleton<RoleView>
         trigger = GetComponent<BoxCollider2D>();
         tips = transform.Find("tips")?.gameObject;
         tips.SetActive(false);
-
+        originScaleX = transform.localScale.x;
         colliderSize = capsuleCollider.size;
     }
 
@@ -66,10 +68,12 @@ public class RoleView : MonoSingleton<RoleView>
             case MoveVector.Left:
                 realMoveSpeed *= -1;
                 rigidBody.sharedMaterial = noFriction;
+                transform.localScale = new Vector3(-originScaleX, transform.localScale.y, 1);
                 break;
             case MoveVector.Right:
                 realMoveSpeed *= 1;
                 rigidBody.sharedMaterial = noFriction;
+                transform.localScale = new Vector3(originScaleX, transform.localScale.y, 1);
                 break;
         }
         if (isOnSlope)

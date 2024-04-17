@@ -9,7 +9,7 @@ public class DialogChoicePartView : MonoBehaviour
     public Button clickBtn;
 
     private ChoiceConfig choiceConfig = null;
-    private int triggerEpisodeID = -1;
+    private string triggerEpisodeID = "";
 
     void Start()
     {
@@ -26,11 +26,6 @@ public class DialogChoicePartView : MonoBehaviour
 
     private void onClickBtnClick()
     {
-        if (choiceConfig?.episodeType == EpisodeType.Normal)
-        {
-        }
-        else if (choiceConfig?.episodeType == EpisodeType.Phone)
-        {
-        }
+        
     }
 }
