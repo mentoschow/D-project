@@ -1,4 +1,0 @@
-repository "D-project@mentoschow@cloud.cn"
-  path "/"
-    br "/main"
-    co "/main"
