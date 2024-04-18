@@ -23,6 +23,10 @@ public class SceneController : MonoSingleton<SceneController>
                 sceneMap.Add(scene, sceneObj);
             }
         }
+        // ≤‚ ‘”√
+        GameObject text = transform.Find("SceneView")?.gameObject;
+        sceneMap.Add("SceneView", text);
+        ChangeScene("SceneView");
     }
 
     public void ChangeScene(string scene)
