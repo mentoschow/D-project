@@ -51,8 +51,8 @@ public class GameController : Singleton<GameController>
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        CheckNextGameNode();
+        //CheckNextGameNode();
         UIController.Instance.GameStart();
-        //GameDataProxy.Instance.canMainRoleMove = true;
+        GameDataProxy.Instance.canMainRoleMove = true;
     }
 }
