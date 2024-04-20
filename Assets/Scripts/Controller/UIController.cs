@@ -10,8 +10,6 @@ public class UIController : MonoSingleton<UIController>
     public GameObject loadingObj;
     public GameObject puzzleViewObj;
 
-    private HomepageView homepageView;
-    private LoadingView loadingView;
     private EpisodePlayerView episodePlayerView;
     private PuzzleView puzzleView;
     public GameObject stageViewObj;
@@ -50,7 +48,7 @@ public class UIController : MonoSingleton<UIController>
         homepageView = CreateView<HomepageView>(homepageObj, layer1);
         loadingView = CreateView<LoadingView>(loadingObj, layer4);
         normalEpisodePlayerView = CreateView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
-        puzzleView = CreateView<PuzzleView>(puzzleViewObj, transform.Find("layer4"));
+        puzzleView = CreateView<PuzzleView>(puzzleViewObj, layer4);
         
         HideAllView();
         OpenHomepage();
