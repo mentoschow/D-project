@@ -8,15 +8,21 @@ public class UIController : MonoSingleton<UIController>
     // Ô¤ÖÆÌå
     public GameObject homepageObj;
     public GameObject loadingObj;
+    public GameObject normalEpisodePlayerObj;
 
     private HomepageView homepageView;
     private LoadingView loadingView;
-    private EpisodePlayerView episodePlayerView;
+    private EpisodePlayerView normalEpisodePlayerView;
+
+    private Transform layer1;
+    private Transform layer2;
+    private Transform layer3;
+    private Transform layer4;
 
     void Start()
     {
         MessageManager.Instance.Register(MessageDefine.GameStart, GameStart);
-        MessageManager.Instance.Register(MessageDefine.ChangeSceneDone, OpenStageView);
+        MessageManager.Instance.Register(MessageDefine.PlayTransitionDone, OpenStageView);
         Init();
     }
 
@@ -27,8 +33,13 @@ public class UIController : MonoSingleton<UIController>
 
     private void Init()
     {
-        homepageView = CreateView<HomepageView>(homepageObj, transform.Find("layer1"));
-        loadingView = CreateView<LoadingView>(loadingObj, transform.Find("layer4"));
+        layer1 = transform.Find("layer1");
+        layer2 = transform.Find("layer2");
+        layer3 = transform.Find("layer3");
+        layer4 = transform.Find("layer4");
+        homepageView = CreateView<HomepageView>(homepageObj, layer1);
+        loadingView = CreateView<LoadingView>(loadingObj, layer4);
+        normalEpisodePlayerView = CreateView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
 
         HideAllView();
         OpenHomepage();
@@ -81,7 +92,8 @@ public class UIController : MonoSingleton<UIController>
         var config = ConfigController.Instance.GetEpisodeConfig(ID);
         if (config.episodeType == EpisodeType.Normal)
         {
-
+            normalEpisodePlayerView?.gameObject.SetActive(true);
+            normalEpisodePlayerView?.PlayEpisode(ID);
         }
         else if (config.episodeType == EpisodeType.Phone)
         {
