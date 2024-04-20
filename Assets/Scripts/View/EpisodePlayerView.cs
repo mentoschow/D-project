@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
+public class EpisodePlayerView : MonoBehaviour
 {
     public enum EpisodePlayerStatus
     {
@@ -14,12 +14,17 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
         Pause,  // 打字机播放完，dialogQueue不为空
     }
 
-    public Image leftImg;
-    public Text content;
-    public HorizontalLayoutGroup horizontalChoiceLayout;
-    public VerticalLayoutGroup verticalChoiceLayout;
-    public Button nextBtn;
     public GameObject choicePartViewPrefab;
+    public Sprite boySp;
+    public Sprite girlSp;
+
+    protected Image roleImg;
+    protected Text content;
+    protected HorizontalLayoutGroup horizontalChoiceLayout;
+    protected VerticalLayoutGroup verticalChoiceLayout;
+    protected Button nextBtn;
+    protected GameObject nextArrow;
+    protected Text nameText;
 
     protected Queue<DialogConfig> dialogQueue = new Queue<DialogConfig>();
     protected EpisodePlayerStatus curStatus;
@@ -31,9 +36,14 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
     protected List<DialogChoicePartView> choiceView = new List<DialogChoicePartView>();
     protected string curEpisodeID = "";
 
-    void Start()
+    void Awake()
     {
-        this.gameObject?.SetActive(false);
+        roleImg = transform.Find("roleImg")?.GetComponent<Image>();
+        content = transform.Find("textArea")?.Find("contentText")?.GetComponent<Text>();
+        nextBtn = transform.Find("nextBtn")?.GetComponent<Button>();
+        nextArrow = transform.Find("textArea")?.Find("arrow")?.gameObject;
+        nameText = transform.Find("textArea")?.Find("nameText")?.GetComponent<Text>();
+
         nextBtn?.onClick.AddListener(onNextBtnClick);
         ChangeStatus(EpisodePlayerStatus.Stop);
         nextBtn.interactable = false;
@@ -48,10 +58,15 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
             if (content.text == targetText)
             {
                 ChangeStatus(EpisodePlayerStatus.Pause);
+                nextArrow?.SetActive(true);
                 if (choices?.Count > 0)
                 {
                     ShowChoices();
                 }
+            }
+            else
+            {
+                nextArrow?.SetActive(false);
             }
         }
     }
@@ -73,7 +88,62 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
 
     public virtual void UpdateView(DialogConfig dialog)
     {
+        var configController = ConfigController.Instance;
+        // 选项
+        if (dialog.choices.Count > 0)
+        {
+            foreach (var choiceID in dialog.choices)
+            {
+                ChoiceConfig choice = configController.GetChoiceConfig(choiceID);
+                if (choice != null)
+                {
+                    choices.Add(choice);
+                }
+            }
+        }
+        else
+        {
+            choices = null;
+        }
+        // 打字机
+        if (useTypeEffect)
+        {
+            targetText = dialog.content;
+            typeSpeed = configController.normalTypingSpeed;
+            typeTimer = 0;
+            ChangeStatus(EpisodePlayerStatus.Typing);
+        }
+        else
+        {
+            content.text = dialog.content;
+            ChangeStatus(EpisodePlayerStatus.Pause);
+        }
+        // 获得道具
+        if (dialog.getItemID.Count > 0)
+        {
+            UIController.Instance.GetItemTip(dialog.getItemID, transform);
+        }
+        // 中间的图片
+        if (!string.IsNullOrEmpty(dialog.showImgUrl))
+        {
 
+        }
+        // 立绘、名字
+        switch (dialog.character)
+        {
+            case RoleType.MainRoleGirl:
+                nameText.text = "女主角";
+                roleImg.sprite = girlSp;
+                break;
+            case RoleType.MainRoleBoy:
+                nameText.text = "男主角";
+                roleImg.sprite = boySp;
+                break;
+            default:
+                nameText.text = "";
+                roleImg.sprite = null;
+                break;
+        }
     }
 
     public void PlayEpisode(string episodeID)
@@ -122,37 +192,9 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
             curEpisodeID = "";
             return;
         }
-        var configController = ConfigController.Instance;
         var dialog = dialogQueue.Dequeue();
         if (dialog != null)
         {
-            if (dialog.choices.Count > 0)
-            {
-                // 出现选项
-                foreach (var choiceID in dialog.choices)
-                {
-                    ChoiceConfig choice = configController.GetChoiceConfig(choiceID);
-                    if (choice != null)
-                    {
-                        choices.Add(choice);
-                    }
-                }
-            } else
-            {
-                choices = null;
-            }
-            if (useTypeEffect)
-            {
-                targetText = dialog.content;
-                typeSpeed = configController.normalTypingSpeed;
-                typeTimer = 0;
-                ChangeStatus(EpisodePlayerStatus.Typing);
-            }
-            else
-            {
-                content.text = dialog.content;
-                ChangeStatus(EpisodePlayerStatus.Pause);
-            }
             UpdateView(dialog);
             GameDataProxy.Instance.historyDialog.Add(dialog);
         }

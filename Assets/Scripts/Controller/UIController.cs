@@ -8,7 +8,9 @@ public class UIController : MonoSingleton<UIController>
     // Ô¤ÖÆÌå
     public GameObject homepageObj;
     public GameObject loadingObj;
+    public GameObject stageViewObj;
     public GameObject normalEpisodePlayerObj;
+    public GameObject getItemTipObj;
 
     private HomepageView homepageView;
     private LoadingView loadingView;
@@ -19,10 +21,9 @@ public class UIController : MonoSingleton<UIController>
     private Transform layer3;
     private Transform layer4;
 
-    void Start()
+    void Awake()
     {
         MessageManager.Instance.Register(MessageDefine.GameStart, GameStart);
-        MessageManager.Instance.Register(MessageDefine.PlayTransitionDone, OpenStageView);
         Init();
     }
 
@@ -49,16 +50,12 @@ public class UIController : MonoSingleton<UIController>
     {
         homepageView?.gameObject.SetActive(false);
         loadingView?.gameObject.SetActive(false);
+        normalEpisodePlayerView?.gameObject.SetActive(false);
     }
 
     private void OpenHomepage()
     {
         homepageView?.gameObject.SetActive(true);
-    }
-
-    private void OpenStageView(MessageData data)
-    {
-
     }
 
     public void GameStart(MessageData data)
@@ -67,11 +64,6 @@ public class UIController : MonoSingleton<UIController>
     }
 
     public void GameEnd()
-    {
-
-    }
-
-    public void ShowScene()
     {
 
     }
@@ -90,10 +82,11 @@ public class UIController : MonoSingleton<UIController>
     public void PlayEpisode(string ID)
     {
         var config = ConfigController.Instance.GetEpisodeConfig(ID);
+        normalEpisodePlayerView.gameObject.SetActive(false);
         if (config.episodeType == EpisodeType.Normal)
         {
-            normalEpisodePlayerView?.gameObject.SetActive(true);
-            normalEpisodePlayerView?.PlayEpisode(ID);
+            normalEpisodePlayerView.gameObject.SetActive(true);
+            normalEpisodePlayerView.PlayEpisode(ID);
         }
         else if (config.episodeType == EpisodeType.Phone)
         {
@@ -114,5 +107,26 @@ public class UIController : MonoSingleton<UIController>
             return view;
         }
         return default(T);
+    }
+
+    public void GetItemTip(List<string> itemList, Transform parent)
+    {
+        if (parent == null)
+        {
+            parent = layer4;
+        }
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            var obj = Instantiate(getItemTipObj);
+            if (obj != null)
+            {
+                obj.transform.SetParent(parent);
+                var rect = obj.GetComponent<RectTransform>();
+                float y = -((rect.rect.height + 50) * i + 100);
+                rect.anchoredPosition = new Vector3(0, y);
+                var view = obj.GetComponent<GetItemTipPartView>();
+                //view?.UpdateView(itemList[i]);
+            }
+        }
     }
 }

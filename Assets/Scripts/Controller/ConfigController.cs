@@ -357,7 +357,6 @@ public enum GameNodeType
     NormalEpisode,  // 普通对话
     PhoneEpisode,  // 手机对话
     Tutorial,  // 教程
-    FreeOperate,  // 自由操作
     Puzzle,  // 谜题
     GameEnd,  // 游戏结束
 }
