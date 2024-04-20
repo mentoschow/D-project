@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
@@ -15,16 +16,16 @@ public class ConfigController : Singleton<ConfigController>
     private const string configPath = "Assets/Resources/Configs/";
     private const string fileTailPath = ".csv";
     private Dictionary<string, string> dataFilePathDic = new Dictionary<string, string>() {
-        {"ChapterConfig", configPath + "配置文档_-_章节" + fileTailPath},
-        //{"EpisodeConfig", configPath + "配置文档_-_情节" + fileTailPath},
-        //{"DialogConfig", configPath + "配置文档_-_对话" + fileTailPath},
+        {"ChapterConfig", configPath + "配置文档-章节" + fileTailPath},
+        {"EpisodeConfig", configPath + "配置文档-情节" + fileTailPath},
+        {"DialogConfig", configPath + "配置文档-对话" + fileTailPath},
         //{"ChoiceConfig", configPath + "配置文档_-_对话选项" + fileTailPath},
         //{"EquipmentConfig", configPath + "配置文档_-_物品" + fileTailPath},
         //{"ItemConfig", configPath + "配置文档_-_道具" + fileTailPath},
     };
 
-    public int normalTypingSpeed = 5;
-    public int maxTypingSpeed = 10;
+    public int normalTypingSpeed = 10;
+    public int maxTypingSpeed = 20;
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
     private Dictionary<string, ChapterConfig> chapterConfigList = new Dictionary<string, ChapterConfig>();  // 章节属性
     private Dictionary<string, EpisodeConfig> episodeConfigList = new Dictionary<string, EpisodeConfig>();  // 对话情节属性
@@ -85,7 +86,7 @@ public class ConfigController : Singleton<ConfigController>
                 if (row["ID"].ToString() == episodeID.ToString())
                 {
                     config.ID = episodeID;
-                    config.isNeedRecord = bool.Parse(row["isNeedRecord"].ToString());
+                    config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
                     config.episodeType = (EpisodeType)int.Parse(row["episodeType"].ToString());
                     string dialogList = row["dialogList"].ToString();
                     config.dialogList = new List<string>(dialogList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
@@ -134,6 +135,7 @@ public class ConfigController : Singleton<ConfigController>
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string choices = row["choices"].ToString();
                     config.choices = new List<string>(choices.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.showImgUrl = row["showImgUrl"].ToString();
 
                     dialogConfigList[dialogID] = config;
                     break;
@@ -266,11 +268,10 @@ public class ConfigController : Singleton<ConfigController>
                 bool isFirst = true;
                 while ((tempText = sr.ReadLine()) != null)
                 {
-                    string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
                     //一般第一行为标题
                     if (isFirst)
                     {
+                        string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         foreach (string str in arr)
                         {
                             dt.Columns.Add(str);
@@ -279,6 +280,7 @@ public class ConfigController : Singleton<ConfigController>
                     }
                     else
                     {
+                        string[] arr = FromCsvLine(tempText);
                         DataRow dr = dt.NewRow();
                         for (int i = 0; i < dt.Columns.Count; i++)
                         {
@@ -298,6 +300,47 @@ public class ConfigController : Singleton<ConfigController>
                 Debug.LogError(error);
             }
         }
+    }
+
+    /// <summary>
+    /// 解析一行CSV数据
+    /// </summary>
+    /// <param name="csv">csv数据行</param>
+    /// <returns></returns>
+    public static string[] FromCsvLine(string csv)
+    {
+        List<string> result = new List<string>();
+
+        if (!string.IsNullOrEmpty(csv))
+        {
+            int startIndex = 0;
+            for (int endIndex = 0; endIndex < csv.Length; endIndex++)
+            {
+                if (csv[endIndex] == '"')
+                {
+                    startIndex = endIndex + 1;
+                    endIndex = startIndex;
+                    while (csv[endIndex] != '"')
+                    {
+                        endIndex++;
+                    }
+                    result.Add(csv.Substring(startIndex, endIndex - startIndex));
+                    startIndex = endIndex + 2;
+                    endIndex = startIndex;
+                }
+                else if (csv[endIndex] == ',')
+                {
+                    result.Add(csv.Substring(startIndex, endIndex - startIndex));
+                    startIndex = endIndex + 1;
+                }
+                else if (endIndex == csv.Length - 1)
+                {
+                    result.Add(csv.Substring(startIndex, endIndex - startIndex + 1));
+                    startIndex = endIndex + 1;
+                }
+            }
+        }
+        return result.ToArray();
     }
 }
 
@@ -323,12 +366,6 @@ public class ChapterConfig
 {
     public string ID;
     public string name;
-
-    public ChapterConfig()
-    {
-        ID = "";
-        name = "";
-    }
 }
 
 public class EpisodeConfig
@@ -351,6 +388,7 @@ public class DialogConfig
     public List<string> getItemID;
     public RoleType character;
     public List<string> choices;
+    public string showImgUrl;
 }
 
 public class ChoiceConfig

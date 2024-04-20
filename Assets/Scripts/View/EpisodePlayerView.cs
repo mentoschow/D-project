@@ -45,7 +45,6 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
         {
             typeTimer += Time.deltaTime * typeSpeed;
             content.text = targetText.Substring(0, (int)typeTimer);
-            Debug.Log(content);
             if (content.text == targetText)
             {
                 ChangeStatus(EpisodePlayerStatus.Pause);
@@ -87,8 +86,8 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
         {
             curEpisodeID = episodeID;
         }
-        horizontalChoiceLayout.gameObject.SetActive(false);
-        verticalChoiceLayout.gameObject.SetActive(false);
+        //horizontalChoiceLayout.gameObject.SetActive(false);
+        //verticalChoiceLayout.gameObject.SetActive(false);
         nextBtn.interactable = true;
         var tempQueue = dialogQueue;
         var config = ConfigController.Instance;
