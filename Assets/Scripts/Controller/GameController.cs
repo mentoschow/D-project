@@ -40,6 +40,9 @@ public class GameController : Singleton<GameController>
             case GameNodeType.NormalEpisode:
                 switch (node.gameLineNode.ID)
                 {
+                    case "TEST01":
+                        FreeOperate();
+                        break;
                     case "MS01_010_010":
                         UIController.Instance.PlayEpisode("MS01_010_020");
                         break;
@@ -52,11 +55,12 @@ public class GameController : Singleton<GameController>
                 break;
             case GameNodeType.Puzzle:
                 break;
-            case GameNodeType.FreeOperate:
-                UIController.Instance.ShowScene();
-                GameDataProxy.Instance.canMainRoleMove = true;
-                break;
         }
+    }
+
+    private void FreeOperate()
+    {
+        GameDataProxy.Instance.canMainRoleMove = true;
     }
 
     public void GameStart()

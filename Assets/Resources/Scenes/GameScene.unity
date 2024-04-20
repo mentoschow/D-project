@@ -583,7 +583,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   homepageObj: {fileID: 6010286809094170743, guid: 9f606fa92e7072b41a5f60bf4a87f9ec, type: 3}
   loadingObj: {fileID: 6497115259499853773, guid: 115c985a7c82f4442bac183d5af3ce32, type: 3}
+  stageViewObj: {fileID: 6497115259499853773, guid: 5482a82e5b6b4214faf681fcebfaaa37, type: 3}
   normalEpisodePlayerObj: {fileID: 2873157605445166545, guid: 0c679b46e8c975243a136f1783530915, type: 3}
+  getItemTipObj: {fileID: 6497115259499853773, guid: 0bc171a1e09c7d143a6b1e55f39b6743, type: 3}
 --- !u!81 &2202462677185376993
 AudioListener:
   m_ObjectHideFlags: 0

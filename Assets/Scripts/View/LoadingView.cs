@@ -18,6 +18,7 @@ public class LoadingView : MonoBehaviour
 
     public void PlayTransition(TransitionType type)
     {
+        curType = type;
         Invoke("PlayTransitionOver", 2);
     }
 
