@@ -11,6 +11,7 @@ public class MessageData
     public readonly float valueFloat;
     public readonly string valueString;
     public readonly System.Object valueObject;
+    public readonly GameLineNode gameLineNode;
 
     public MessageData(bool value)
     {
@@ -35,5 +36,10 @@ public class MessageData
     public MessageData(System.Object value)
     {
         valueObject = value;
+    }
+
+    public MessageData(GameLineNode node)
+    {
+        gameLineNode = node;
     }
 }

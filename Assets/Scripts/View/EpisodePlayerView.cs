@@ -15,7 +15,6 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
     }
 
     public Image leftImg;
-    public Image rightImg;
     public Text content;
     public HorizontalLayoutGroup horizontalChoiceLayout;
     public VerticalLayoutGroup verticalChoiceLayout;
@@ -30,6 +29,7 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
     protected int typeSpeed = 0;
     protected List<ChoiceConfig> choices = new List<ChoiceConfig>();
     protected List<DialogChoicePartView> choiceView = new List<DialogChoicePartView>();
+    protected string curEpisodeID = "";
 
     void Start()
     {
@@ -83,16 +83,20 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
         {
             return;
         }
+        if (curEpisodeID == "")
+        {
+            curEpisodeID = episodeID;
+        }
         horizontalChoiceLayout.gameObject.SetActive(false);
         verticalChoiceLayout.gameObject.SetActive(false);
         nextBtn.interactable = true;
         var tempQueue = dialogQueue;
         var config = ConfigController.Instance;
         dialogQueue = new Queue<DialogConfig>();
-        EpisodeConfig episode = config.GetNormalEpisode(episodeID);
+        EpisodeConfig episode = config.GetEpisodeConfig(episodeID);
         foreach (var id in episode.dialogList)
         {
-            DialogConfig dialog = config.GetDialog(id);
+            DialogConfig dialog = config.GetDialogConfig(id);
             if (dialog != null)
             {
                 dialogQueue.Enqueue(dialog);  // 中途插进来的先播
@@ -108,10 +112,15 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
 
     public void GoNext()
     {
-        if (dialogQueue.Count == 0)
+        if (dialogQueue.Count == 0)  // 结束了
         {
             ChangeStatus(EpisodePlayerStatus.Stop);
             this.gameObject.SetActive(false);
+            GameLineNode node = new GameLineNode();
+            node.type = GameNodeType.NormalEpisode;
+            node.ID = curEpisodeID;
+            MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
+            curEpisodeID = "";
             return;
         }
         var configController = ConfigController.Instance;
@@ -123,7 +132,7 @@ public class EpisodePlayerView : MonoSingleton<EpisodePlayerView>
                 // 出现选项
                 foreach (var choiceID in dialog.choices)
                 {
-                    ChoiceConfig choice = configController.GetChoice(choiceID);
+                    ChoiceConfig choice = configController.GetChoiceConfig(choiceID);
                     if (choice != null)
                     {
                         choices.Add(choice);

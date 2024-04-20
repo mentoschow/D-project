@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class LoadingView : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void PlayTransition(TransitionType type)
+    {
+        Invoke("PlayTransitionOver", 2);
+    }
+
+    private void PlayTransitionOver()
+    {
+        gameObject.SetActive(false);
     }
 }

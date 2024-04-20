@@ -203,7 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdaaff5352cd98e449498f0cfcff2fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneID: []
+  sceneObj:
+  - {fileID: 3163663043471574251, guid: 44230197463e19a47874341e4b307721, type: 3}
   sceneBgWidth: 0
   sceneBgHeight: 0
 --- !u!1 &787745550
@@ -460,7 +461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad739a549c4328543b123336e86ac248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curRoleType: 0
+  girlRoleView: {fileID: 5397822557925926759, guid: 0c868e2581a21b74a83c093e475b837a, type: 3}
+  boyRoleView: {fileID: 5397822557925926759, guid: c93b45e43b83c9b4e8830de58ff6b00f, type: 3}
   curRoleView: {fileID: 0}
 --- !u!1 &1768503950
 GameObject:
