@@ -23,6 +23,9 @@ public class ConfigController : Singleton<ConfigController>
         //{"ItemConfig", configPath + "配置文档_-_道具" + fileTailPath},
     };
 
+    private string testJsonPath = configPath + "puzzle.json";
+
+
     public int normalTypingSpeed = 5;
     public int maxTypingSpeed = 10;
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
@@ -33,11 +36,19 @@ public class ConfigController : Singleton<ConfigController>
     private Dictionary<string, EquipmentConfig> equipmentConfigList = new Dictionary<string, EquipmentConfig>();  // 场景设备（物品）属性
     private Dictionary<string, ItemConfig> itemConfigList = new Dictionary<string, ItemConfig>();  // 道具（线索）属性
 
+    public TextAsset jsonTextAsset; // 在Unity编辑器中，将JSON文件拖拽到这个字段上
+    public PuzzleConfig puzzleConfig;
+
     public ConfigController()
     {
         GenerateConfig();
-    }
+        // Unity主线程不能进行文件I/O操作，所以使用协程
+        // 读取JSON文件的内容
+        string json = File.ReadAllText(testJsonPath);
 
+        // 使用JsonUtility解析JSON字符串到自定义类
+        puzzleConfig = JsonUtility.FromJson<PuzzleConfig>(json);
+    }
     public ChapterConfig GetChapterConfig(string chapterID)
     {
         if (!chapterConfigList.ContainsKey(chapterID))
@@ -384,6 +395,19 @@ public class PuzzleConfig
 {
     public string ID;
     public PuzzleType type;
+    public List<PuzzleItemConfig> itemConfigList;
+}
+
+public class PuzzleItemConfig {
+    public string itemID;
+    public string url;
+    public List<PuzzleCombineConfig> combineList;
+}
+
+public class PuzzleCombineConfig {
+    public float xPos;
+    public float yPos;
+    public string partCode;
 }
 
 public class ClickPointConfig

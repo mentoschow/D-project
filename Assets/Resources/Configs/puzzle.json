@@ -1,0 +1,52 @@
+{
+    "ID": "puzzle_1",
+    "type": 1,
+    "itemConfigList": [
+        {
+            "itemID": "item_1",
+            "url": "",
+            "combineList": []
+        },
+        {
+            "itemID": "item_2",
+            "url": "",
+            "combineList": []
+        },
+        {
+            "itemID": "item_3",
+            "url": "",
+            "combineList": [
+                {
+                    "xPos": 30,
+                    "yPos": 30,
+                    "partCode": "item_1"
+                },
+                {
+                    "xPos": -30,
+                    "yPos": 30,
+                    "partCode": "item_2"
+                },
+                {
+                    "xPos": 30,
+                    "yPos": -30,
+                    "partCode": "item_4"
+                },
+                {
+                    "xPos": -30,
+                    "yPos": -30,
+                    "partCode": "item_5"
+                }
+            ]
+        },
+        {
+            "itemID": "item_4",
+            "url": "",
+            "combineList": []
+        },
+        {
+            "itemID": "item_5",
+            "url": "",
+            "combineList": []
+        }
+    ]
+}

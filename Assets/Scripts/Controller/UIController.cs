@@ -8,10 +8,12 @@ public class UIController : MonoSingleton<UIController>
     // Ô¤ÖÆÌå
     public GameObject homepageObj;
     public GameObject loadingObj;
+    public GameObject puzzleViewObj;
 
     private HomepageView homepageView;
     private LoadingView loadingView;
     private EpisodePlayerView episodePlayerView;
+    private PuzzleView puzzleView;
 
     void Start()
     {
@@ -29,6 +31,7 @@ public class UIController : MonoSingleton<UIController>
     {
         homepageView = CreateView<HomepageView>(homepageObj, transform.Find("layer1"));
         loadingView = CreateView<LoadingView>(loadingObj, transform.Find("layer4"));
+        puzzleView = CreateView<PuzzleView>(puzzleViewObj, transform.Find("layer4"));
 
         HideAllView();
         OpenHomepage();
@@ -89,7 +92,7 @@ public class UIController : MonoSingleton<UIController>
         }
     }
 
-    private T CreateView<T>(GameObject prefab, Transform parent)
+    public T CreateView<T>(GameObject prefab, Transform parent)
     {
         var obj = Instantiate(prefab);
         if (obj != null)
