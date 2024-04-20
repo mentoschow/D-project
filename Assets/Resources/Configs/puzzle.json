@@ -4,17 +4,17 @@
     "itemConfigList": [
         {
             "itemID": "item_1",
-            "url": "",
+            "url": "Images/UI/Puzzle/item_1",
             "combineList": []
         },
         {
             "itemID": "item_2",
-            "url": "",
+            "url": "Images/UI/Puzzle/item_2",
             "combineList": []
         },
         {
             "itemID": "item_3",
-            "url": "",
+            "url": "Images/UI/Puzzle/wolf",
             "combineList": [
                 {
                     "xPos": 30,
@@ -40,12 +40,12 @@
         },
         {
             "itemID": "item_4",
-            "url": "",
+            "url": "Images/UI/Puzzle/item_3",
             "combineList": []
         },
         {
             "itemID": "item_5",
-            "url": "",
+            "url": "Images/UI/Puzzle/item_4",
             "combineList": []
         }
     ]
