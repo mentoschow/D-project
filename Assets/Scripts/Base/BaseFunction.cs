@@ -1,23 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class BaseFunction
 {
-    public static void UpdateActive(Component component, bool active)
+    public static Sprite LoadImage(string imgUrl)
     {
-        if (component)
-        {
-            component.gameObject.SetActive(active);
-        }
+        var imageData = File.ReadAllBytes(imgUrl);
+        var texture = new Texture2D(8, 8);
+        texture.LoadImage(imageData);
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        return sprite;
     }
 
-    public static void UpdateActive(GameObject gameObject, bool active)
-    {
-        if (gameObject)
-        {
-            gameObject.SetActive(active);
-        }
-    }
 }

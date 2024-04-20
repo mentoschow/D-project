@@ -44,9 +44,5 @@ public class SceneController : MonoSingleton<SceneController>
         sceneBgHeight = texture.height;
         Debug.Log("sceneBgWidth:" + sceneBgWidth);
         Debug.Log("sceneBgHeight:" + sceneBgHeight);
-        GameLineNode node = new GameLineNode();
-        node.type = GameNodeType.Transition;
-        node.ID = scene.ToString();
-        MessageManager.Instance.Send(MessageDefine.ChangeSceneDone, new MessageData(node));
     }
 }

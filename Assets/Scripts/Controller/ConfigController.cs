@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
@@ -15,12 +16,12 @@ public class ConfigController : Singleton<ConfigController>
     private const string configPath = "Assets/Resources/Configs/";
     private const string fileTailPath = ".csv";
     private Dictionary<string, string> dataFilePathDic = new Dictionary<string, string>() {
-        {"ChapterConfig", configPath + "ÅäÖÃÎÄµµ_-_ÕÂ½Ú" + fileTailPath},
-        //{"EpisodeConfig", configPath + "ÅäÖÃÎÄµµ_-_Çé½Ú" + fileTailPath},
-        //{"DialogConfig", configPath + "ÅäÖÃÎÄµµ_-_¶Ô»°" + fileTailPath},
-        //{"ChoiceConfig", configPath + "ÅäÖÃÎÄµµ_-_¶Ô»°Ñ¡Ïî" + fileTailPath},
-        //{"EquipmentConfig", configPath + "ÅäÖÃÎÄµµ_-_ÎïÆ·" + fileTailPath},
-        //{"ItemConfig", configPath + "ÅäÖÃÎÄµµ_-_µÀ¾ß" + fileTailPath},
+        {"ChapterConfig", configPath + "ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½-ï¿½Â½ï¿½" + fileTailPath},
+        {"EpisodeConfig", configPath + "ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½-ï¿½ï¿½ï¿½" + fileTailPath},
+        {"DialogConfig", configPath + "ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½-ï¿½Ô»ï¿½" + fileTailPath},
+        //{"ChoiceConfig", configPath + "ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½_-_ï¿½Ô»ï¿½Ñ¡ï¿½ï¿½" + fileTailPath},
+        //{"EquipmentConfig", configPath + "ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½_-_ï¿½ï¿½Æ·" + fileTailPath},
+        //{"ItemConfig", configPath + "ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½_-_ï¿½ï¿½ï¿½ï¿½" + fileTailPath},
     };
 
     private string testJsonPath = configPath + "puzzle.json";
@@ -28,25 +29,27 @@ public class ConfigController : Singleton<ConfigController>
 
     public int normalTypingSpeed = 5;
     public int maxTypingSpeed = 10;
+    public int normalTypingSpeed = 10;
+    public int maxTypingSpeed = 20;
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
-    private Dictionary<string, ChapterConfig> chapterConfigList = new Dictionary<string, ChapterConfig>();  // ÕÂ½ÚÊôÐÔ
-    private Dictionary<string, EpisodeConfig> episodeConfigList = new Dictionary<string, EpisodeConfig>();  // ¶Ô»°Çé½ÚÊôÐÔ
-    private Dictionary<string, DialogConfig> dialogConfigList = new Dictionary<string, DialogConfig>();  // ¶Ô»°ÊôÐÔ
-    private Dictionary<string, ChoiceConfig> choiceConfigList = new Dictionary<string, ChoiceConfig>();  // Ñ¡ÏîÊôÐÔ
-    private Dictionary<string, EquipmentConfig> equipmentConfigList = new Dictionary<string, EquipmentConfig>();  // ³¡¾°Éè±¸£¨ÎïÆ·£©ÊôÐÔ
-    private Dictionary<string, ItemConfig> itemConfigList = new Dictionary<string, ItemConfig>();  // µÀ¾ß£¨ÏßË÷£©ÊôÐÔ
+    private Dictionary<string, ChapterConfig> chapterConfigList = new Dictionary<string, ChapterConfig>();  // ï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Dictionary<string, EpisodeConfig> episodeConfigList = new Dictionary<string, EpisodeConfig>();  // ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Dictionary<string, DialogConfig> dialogConfigList = new Dictionary<string, DialogConfig>();  // ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Dictionary<string, ChoiceConfig> choiceConfigList = new Dictionary<string, ChoiceConfig>();  // Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Dictionary<string, EquipmentConfig> equipmentConfigList = new Dictionary<string, EquipmentConfig>();  // ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Dictionary<string, ItemConfig> itemConfigList = new Dictionary<string, ItemConfig>();  // ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    public TextAsset jsonTextAsset; // ÔÚUnity±à¼­Æ÷ÖÐ£¬½«JSONÎÄ¼þÍÏ×§µ½Õâ¸ö×Ö¶ÎÉÏ
+    public TextAsset jsonTextAsset; // ï¿½ï¿½Unityï¿½à¼­ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½JSONï¿½Ä¼ï¿½ï¿½ï¿½×§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½
     public PuzzleConfig puzzleConfig;
 
     public ConfigController()
     {
         GenerateConfig();
-        // UnityÖ÷Ïß³Ì²»ÄÜ½øÐÐÎÄ¼þI/O²Ù×÷£¬ËùÒÔÊ¹ÓÃÐ­³Ì
-        // ¶ÁÈ¡JSONÎÄ¼þµÄÄÚÈÝ
+        // Unityï¿½ï¿½ï¿½ß³Ì²ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½I/Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Ð­ï¿½ï¿½
+        // ï¿½ï¿½È¡JSONï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         string json = File.ReadAllText(testJsonPath);
 
-        // Ê¹ÓÃJsonUtility½âÎöJSON×Ö·û´®µ½×Ô¶¨ÒåÀà
+        // Ê¹ï¿½ï¿½JsonUtilityï¿½ï¿½ï¿½ï¿½JSONï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
         puzzleConfig = JsonUtility.FromJson<PuzzleConfig>(json);
     }
     public ChapterConfig GetChapterConfig(string chapterID)
@@ -57,7 +60,7 @@ public class ConfigController : Singleton<ConfigController>
             var dt = datatableDic["ChapterConfig"];
             if (dt.Rows.Count == 0)
             {
-                Debug.LogError("ÕÂ½ÚÅäÖÃ²»´æÔÚ£¬id£º" + chapterID);
+                Debug.LogError("ï¿½Â½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½Ú£ï¿½idï¿½ï¿½" + chapterID);
                 return null;
             }
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -87,7 +90,7 @@ public class ConfigController : Singleton<ConfigController>
             var dt = datatableDic["EpisodeConfig"];
             if (dt.Rows.Count == 0)
             {
-                Debug.LogError("Çé½ÚÅäÖÃ²»´æÔÚ£¬id£º" + episodeID);
+                Debug.LogError("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½Ú£ï¿½idï¿½ï¿½" + episodeID);
                 return null;
             }
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -96,7 +99,7 @@ public class ConfigController : Singleton<ConfigController>
                 if (row["ID"].ToString() == episodeID.ToString())
                 {
                     config.ID = episodeID;
-                    config.isNeedRecord = bool.Parse(row["isNeedRecord"].ToString());
+                    config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
                     config.episodeType = (EpisodeType)int.Parse(row["episodeType"].ToString());
                     string dialogList = row["dialogList"].ToString();
                     config.dialogList = new List<string>(dialogList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
@@ -129,7 +132,7 @@ public class ConfigController : Singleton<ConfigController>
             var dt = datatableDic["DialogConfig"];
             if (dt.Rows.Count == 0)
             {
-                Debug.LogError("¶Ô»°ÅäÖÃ²»´æÔÚ£¬id£º" + dialogID);
+                Debug.LogError("ï¿½Ô»ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½Ú£ï¿½idï¿½ï¿½" + dialogID);
                 return null;
             }
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -145,6 +148,7 @@ public class ConfigController : Singleton<ConfigController>
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string choices = row["choices"].ToString();
                     config.choices = new List<string>(choices.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.showImgUrl = row["showImgUrl"].ToString();
 
                     dialogConfigList[dialogID] = config;
                     break;
@@ -166,7 +170,7 @@ public class ConfigController : Singleton<ConfigController>
             var dt = datatableDic["ChoiceConfig"];
             if (dt.Rows.Count == 0)
             {
-                Debug.LogError("Ñ¡ÏîÅäÖÃ²»´æÔÚ£¬id£º" + choiceID);
+                Debug.LogError("Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½Ú£ï¿½idï¿½ï¿½" + choiceID);
                 return null;
             }
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -198,7 +202,7 @@ public class ConfigController : Singleton<ConfigController>
             var dt = datatableDic["EquipmentConfig"];
             if (dt.Rows.Count == 0)
             {
-                Debug.LogError("Éè±¸ÅäÖÃ²»´æÔÚ£¬id£º" + equipmentID);
+                Debug.LogError("ï¿½è±¸ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½Ú£ï¿½idï¿½ï¿½" + equipmentID);
                 return null;
             }
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -237,7 +241,7 @@ public class ConfigController : Singleton<ConfigController>
             var dt = datatableDic["ItemConfig"];
             if (dt.Rows.Count == 0)
             {
-                Debug.LogError("µÀ¾ßÅäÖÃ²»´æÔÚ£¬id£º" + itemID);
+                Debug.LogError("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½Ú£ï¿½idï¿½ï¿½" + itemID);
                 return null;
             }
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -270,18 +274,17 @@ public class ConfigController : Singleton<ConfigController>
             DataTable dt = new DataTable();
             try
             {
-                //ÎÄ¼þÁ÷¶ÁÈ¡
+                //ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½È¡
                 System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open);
                 System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.GetEncoding("gb2312"));
                 string tempText = "";
                 bool isFirst = true;
                 while ((tempText = sr.ReadLine()) != null)
                 {
-                    string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    //Ò»°ãµÚÒ»ÐÐÎª±êÌâ
+                    //Ò»ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
                     if (isFirst)
                     {
+                        string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         foreach (string str in arr)
                         {
                             dt.Columns.Add(str);
@@ -290,6 +293,7 @@ public class ConfigController : Singleton<ConfigController>
                     }
                     else
                     {
+                        string[] arr = FromCsvLine(tempText);
                         DataRow dr = dt.NewRow();
                         for (int i = 0; i < dt.Columns.Count; i++)
                         {
@@ -300,7 +304,7 @@ public class ConfigController : Singleton<ConfigController>
                     }
                 }
                 datatableDic[item.Key] = dt;
-                //¹Ø±ÕÁ÷
+                //ï¿½Ø±ï¿½ï¿½ï¿½
                 sr.Close();
                 fs.Close();
             }
@@ -309,6 +313,47 @@ public class ConfigController : Singleton<ConfigController>
                 Debug.LogError(error);
             }
         }
+    }
+
+    /// <summary>
+    /// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½CSVï¿½ï¿½ï¿½ï¿½
+    /// </summary>
+    /// <param name="csv">csvï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
+    /// <returns></returns>
+    public static string[] FromCsvLine(string csv)
+    {
+        List<string> result = new List<string>();
+
+        if (!string.IsNullOrEmpty(csv))
+        {
+            int startIndex = 0;
+            for (int endIndex = 0; endIndex < csv.Length; endIndex++)
+            {
+                if (csv[endIndex] == '"')
+                {
+                    startIndex = endIndex + 1;
+                    endIndex = startIndex;
+                    while (csv[endIndex] != '"')
+                    {
+                        endIndex++;
+                    }
+                    result.Add(csv.Substring(startIndex, endIndex - startIndex));
+                    startIndex = endIndex + 2;
+                    endIndex = startIndex;
+                }
+                else if (csv[endIndex] == ',')
+                {
+                    result.Add(csv.Substring(startIndex, endIndex - startIndex));
+                    startIndex = endIndex + 1;
+                }
+                else if (endIndex == csv.Length - 1)
+                {
+                    result.Add(csv.Substring(startIndex, endIndex - startIndex + 1));
+                    startIndex = endIndex + 1;
+                }
+            }
+        }
+        return result.ToArray();
     }
 }
 
@@ -320,26 +365,19 @@ public class GameLineNode
 
 public enum GameNodeType
 {
-    GameStart,  // ÓÎÏ·¿ªÊ¼
-    Transition,  // ×ª³¡
-    NormalEpisode,  // ÆÕÍ¨¶Ô»°
-    PhoneEpisode,  // ÊÖ»ú¶Ô»°
-    Tutorial,  // ½Ì³Ì
-    FreeOperate,  // ×ÔÓÉ²Ù×÷
-    Puzzle,  // ÃÕÌâ
-    GameEnd,  // ÓÎÏ·½áÊø
+    GameStart,  // ï¿½ï¿½Ï·ï¿½ï¿½Ê¼
+    Transition,  // ×ªï¿½ï¿½
+    NormalEpisode,  // ï¿½ï¿½Í¨ï¿½Ô»ï¿½
+    PhoneEpisode,  // ï¿½Ö»ï¿½ï¿½Ô»ï¿½
+    Tutorial,  // ï¿½Ì³ï¿½
+    Puzzle,  // ï¿½ï¿½ï¿½ï¿½
+    GameEnd,  // ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½
 }
 
 public class ChapterConfig
 {
     public string ID;
     public string name;
-
-    public ChapterConfig()
-    {
-        ID = "";
-        name = "";
-    }
 }
 
 public class EpisodeConfig
@@ -362,6 +400,7 @@ public class DialogConfig
     public List<string> getItemID;
     public RoleType character;
     public List<string> choices;
+    public string showImgUrl;
 }
 
 public class ChoiceConfig
@@ -440,10 +479,10 @@ public enum EpisodeType
     Phone
 }
 
-public enum TransitionType  // ×ª³¡ÀàÐÍ
+public enum TransitionType  // ×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
     GameStart,
-    Blackout,  // Í£µç
+    Blackout,  // Í£ï¿½ï¿½
     ChangeScene,
 }
 

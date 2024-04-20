@@ -1,0 +1,4 @@
+ID,dialogList,episodeType,enableEquipmentID,disableEquipmentID,isNeedRecord,needFinishEpisodeID,needItemID
+TEST01,"TEST01_010_010_010,TEST01_010_010_020,TEST01_010_010_030,TEST01_010_010_040,TEST01_010_010_050",0,,,1,,
+MS01_010_010,,,,,0,,
+MS01_010_020,,,,,0,,

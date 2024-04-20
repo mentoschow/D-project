@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UIController : MonoSingleton<UIController>
 {
-    // Ô¤ÖÆÌå
+    // Ô¤ï¿½ï¿½ï¿½ï¿½
     public GameObject homepageObj;
     public GameObject loadingObj;
     public GameObject puzzleViewObj;
@@ -14,11 +14,22 @@ public class UIController : MonoSingleton<UIController>
     private LoadingView loadingView;
     private EpisodePlayerView episodePlayerView;
     private PuzzleView puzzleView;
+    public GameObject stageViewObj;
+    public GameObject normalEpisodePlayerObj;
+    public GameObject getItemTipObj;
 
-    void Start()
+    private HomepageView homepageView;
+    private LoadingView loadingView;
+    private EpisodePlayerView normalEpisodePlayerView;
+
+    private Transform layer1;
+    private Transform layer2;
+    private Transform layer3;
+    private Transform layer4;
+
+    void Awake()
     {
         MessageManager.Instance.Register(MessageDefine.GameStart, GameStart);
-        MessageManager.Instance.Register(MessageDefine.ChangeSceneDone, OpenStageView);
         Init();
     }
 
@@ -29,10 +40,18 @@ public class UIController : MonoSingleton<UIController>
 
     private void Init()
     {
-        homepageView = CreateView<HomepageView>(homepageObj, transform.Find("layer1"));
-        loadingView = CreateView<LoadingView>(loadingObj, transform.Find("layer4"));
+        // homepageView = CreateView<HomepageView>(homepageObj, transform.Find("layer1"));
+        // loadingView = CreateView<LoadingView>(loadingObj, transform.Find("layer4"));
+        // puzzleView = CreateView<PuzzleView>(puzzleViewObj, transform.Find("layer4"));
+        layer1 = transform.Find("layer1");
+        layer2 = transform.Find("layer2");
+        layer3 = transform.Find("layer3");
+        layer4 = transform.Find("layer4");
+        homepageView = CreateView<HomepageView>(homepageObj, layer1);
+        loadingView = CreateView<LoadingView>(loadingObj, layer4);
+        normalEpisodePlayerView = CreateView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
         puzzleView = CreateView<PuzzleView>(puzzleViewObj, transform.Find("layer4"));
-
+        
         HideAllView();
         OpenHomepage();
     }
@@ -41,16 +60,12 @@ public class UIController : MonoSingleton<UIController>
     {
         homepageView?.gameObject.SetActive(false);
         loadingView?.gameObject.SetActive(false);
+        normalEpisodePlayerView?.gameObject.SetActive(false);
     }
 
     private void OpenHomepage()
     {
         homepageView?.gameObject.SetActive(true);
-    }
-
-    private void OpenStageView(MessageData data)
-    {
-
     }
 
     public void GameStart(MessageData data)
@@ -59,11 +74,6 @@ public class UIController : MonoSingleton<UIController>
     }
 
     public void GameEnd()
-    {
-
-    }
-
-    public void ShowScene()
     {
 
     }
@@ -82,9 +92,11 @@ public class UIController : MonoSingleton<UIController>
     public void PlayEpisode(string ID)
     {
         var config = ConfigController.Instance.GetEpisodeConfig(ID);
+        normalEpisodePlayerView.gameObject.SetActive(false);
         if (config.episodeType == EpisodeType.Normal)
         {
-
+            normalEpisodePlayerView.gameObject.SetActive(true);
+            normalEpisodePlayerView.PlayEpisode(ID);
         }
         else if (config.episodeType == EpisodeType.Phone)
         {
@@ -105,5 +117,26 @@ public class UIController : MonoSingleton<UIController>
             return view;
         }
         return default(T);
+    }
+
+    public void GetItemTip(List<string> itemList, Transform parent)
+    {
+        if (parent == null)
+        {
+            parent = layer4;
+        }
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            var obj = Instantiate(getItemTipObj);
+            if (obj != null)
+            {
+                obj.transform.SetParent(parent);
+                var rect = obj.GetComponent<RectTransform>();
+                float y = -((rect.rect.height + 50) * i + 100);
+                rect.anchoredPosition = new Vector3(0, y);
+                var view = obj.GetComponent<GetItemTipPartView>();
+                //view?.UpdateView(itemList[i]);
+            }
+        }
     }
 }

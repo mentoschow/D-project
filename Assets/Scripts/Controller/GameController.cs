@@ -6,9 +6,10 @@ public class GameController : Singleton<GameController>
 {
     public GameController() 
     {
-        MessageManager.Instance.Register(MessageDefine.ChangeSceneDone, CheckNextGameNode);
+        MessageManager.Instance.Register(MessageDefine.PlayTransitionDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.GameStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
+        var c = ConfigController.Instance;
     }
 
     public void CheckNextGameNode(MessageData node)
@@ -26,13 +27,9 @@ public class GameController : Singleton<GameController>
                 SceneController.Instance.ChangeScene(SceneType.LibraryOut);
                 break;
             case GameNodeType.Transition:
-                if (node.gameLineNode.ID == SceneType.LibraryOut.ToString())
+                if (node.gameLineNode.ID == TransitionType.GameStart.ToString())
                 {
-                    //UIController.Instance.PlayEpisode("MS01_010_010");
-                }
-                else if (node.gameLineNode.ID == SceneType.LibraryIn.ToString())
-                {
-
+                    UIController.Instance.PlayEpisode("TEST01");
                 }
                 break;
             case GameNodeType.GameEnd:
@@ -43,6 +40,9 @@ public class GameController : Singleton<GameController>
             case GameNodeType.NormalEpisode:
                 switch (node.gameLineNode.ID)
                 {
+                    case "TEST01":
+                        FreeOperate();
+                        break;
                     case "MS01_010_010":
                         UIController.Instance.PlayEpisode("MS01_010_020");
                         break;
@@ -55,11 +55,12 @@ public class GameController : Singleton<GameController>
                 break;
             case GameNodeType.Puzzle:
                 break;
-            case GameNodeType.FreeOperate:
-                UIController.Instance.ShowScene();
-                GameDataProxy.Instance.canMainRoleMove = true;
-                break;
         }
+    }
+
+    private void FreeOperate()
+    {
+        GameDataProxy.Instance.canMainRoleMove = true;
     }
 
     public void GameStart()
