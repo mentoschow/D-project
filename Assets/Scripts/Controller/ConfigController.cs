@@ -135,6 +135,7 @@ public class ConfigController : Singleton<ConfigController>
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string choices = row["choices"].ToString();
                     config.choices = new List<string>(choices.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.showImgUrl = row["showImgUrl"].ToString();
 
                     dialogConfigList[dialogID] = config;
                     break;
@@ -365,12 +366,6 @@ public class ChapterConfig
 {
     public string ID;
     public string name;
-
-    public ChapterConfig()
-    {
-        ID = "";
-        name = "";
-    }
 }
 
 public class EpisodeConfig
@@ -393,6 +388,7 @@ public class DialogConfig
     public List<string> getItemID;
     public RoleType character;
     public List<string> choices;
+    public string showImgUrl;
 }
 
 public class ChoiceConfig
