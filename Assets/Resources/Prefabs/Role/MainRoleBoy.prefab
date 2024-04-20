@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 7548680700285076699}
   - component: {fileID: 8921779998287753018}
   m_Layer: 0
-  m_Name: RoleView
+  m_Name: MainRoleBoy
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8e8352c5c65ce2419cd3f5f25477200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterType: 1
   roleSp: {fileID: 6475872879733971829}
   moveSpeed: 5
   slopeCheckDis: 0.5
@@ -245,6 +246,7 @@ MonoBehaviour:
     m_Bits: 128
   noFriction: {fileID: 6200000, guid: cc6ca27c0f46bdf4fba4fa87869787ec, type: 2}
   fullFriction: {fileID: 6200000, guid: 93d26471ed16c92449384fad1885f63a, type: 2}
+  moveVec: 0
 --- !u!50 &7548680700285076699
 Rigidbody2D:
   serializedVersion: 4

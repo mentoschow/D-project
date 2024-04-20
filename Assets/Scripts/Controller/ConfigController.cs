@@ -14,29 +14,24 @@ public class ConfigController : Singleton<ConfigController>
 {
     private const string configPath = "Assets/Resources/Configs/";
     private const string fileTailPath = ".csv";
-    private const string episodeConfigFilePath = configPath + "配置文档_-_情节" + fileTailPath;
-    private const string dialogConfigFilePath = configPath + "配置文档_-_对话" + fileTailPath;
-    private const string choiceConfigFilePath = configPath + "配置文档_-_对话选项" + fileTailPath;
-    private const string equipmentConfigFilePath = configPath + "配置文档_-_物品" + fileTailPath;
-    private const string itemConfigFilePath = configPath + "配置文档_-_道具" + fileTailPath;
-    private const string clickPointConfigFilePath = configPath + "配置文档_-_点击交互按钮" + fileTailPath;
     private Dictionary<string, string> dataFilePathDic = new Dictionary<string, string>() {
         {"ChapterConfig", configPath + "配置文档_-_章节" + fileTailPath},
-        //{"EpisodeConfig", ""},
+        //{"EpisodeConfig", configPath + "配置文档_-_情节" + fileTailPath},
+        //{"DialogConfig", configPath + "配置文档_-_对话" + fileTailPath},
+        //{"ChoiceConfig", configPath + "配置文档_-_对话选项" + fileTailPath},
+        //{"EquipmentConfig", configPath + "配置文档_-_物品" + fileTailPath},
+        //{"ItemConfig", configPath + "配置文档_-_道具" + fileTailPath},
     };
 
     public int normalTypingSpeed = 5;
     public int maxTypingSpeed = 10;
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
-    public List<GameLineConfig> gameLineConfigs = new List<GameLineConfig>();  // 游戏流程配置
     private Dictionary<string, ChapterConfig> chapterConfigList = new Dictionary<string, ChapterConfig>();  // 章节属性
-    private List<EpisodeConfig> episodeConfigList = new List<EpisodeConfig>();  // 普通对话情节属性
-    private List<PhoneEpisodeConfig> phoneEpisodeConfigList = new List<PhoneEpisodeConfig>();  // 手机对话情节属性
-    private List<DialogConfig> dialogConfigList = new List<DialogConfig>();  // 对话属性
-    private List<ChoiceConfig> choiceConfigList = new List<ChoiceConfig>();  // 选项属性
-    private List<EquipmentConfig> equipmentConfigList = new List<EquipmentConfig>();  // 场景设备（物品）属性
-    private List<ItemConfig> itemConfigList = new List<ItemConfig>();  // 道具（线索）属性
-    private List<ClickPointConfig> clickPointConfigs = new List<ClickPointConfig>(); // 点击交互按钮
+    private Dictionary<string, EpisodeConfig> episodeConfigList = new Dictionary<string, EpisodeConfig>();  // 对话情节属性
+    private Dictionary<string, DialogConfig> dialogConfigList = new Dictionary<string, DialogConfig>();  // 对话属性
+    private Dictionary<string, ChoiceConfig> choiceConfigList = new Dictionary<string, ChoiceConfig>();  // 选项属性
+    private Dictionary<string, EquipmentConfig> equipmentConfigList = new Dictionary<string, EquipmentConfig>();  // 场景设备（物品）属性
+    private Dictionary<string, ItemConfig> itemConfigList = new Dictionary<string, ItemConfig>();  // 道具（线索）属性
 
     public ConfigController()
     {
@@ -73,64 +68,187 @@ public class ConfigController : Singleton<ConfigController>
         }
     }
 
-    public EpisodeConfig GetNormalEpisode(string episodeID)
+    public EpisodeConfig GetEpisodeConfig(string episodeID)
     {
-        foreach (var episode in episodeConfigList)
+        if (!episodeConfigList.ContainsKey(episodeID))
         {
-            if (episode.ID == episodeID)
+            EpisodeConfig config = new EpisodeConfig();
+            var dt = datatableDic["EpisodeConfig"];
+            if (dt.Rows.Count == 0)
             {
-                return episode;
+                Debug.LogError("情节配置不存在，id：" + episodeID);
+                return null;
             }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var row = dt.Rows[i];
+                if (row["ID"].ToString() == episodeID.ToString())
+                {
+                    config.ID = episodeID;
+                    config.isNeedRecord = bool.Parse(row["isNeedRecord"].ToString());
+                    config.episodeType = (EpisodeType)int.Parse(row["episodeType"].ToString());
+                    string dialogList = row["dialogList"].ToString();
+                    config.dialogList = new List<string>(dialogList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    string enableEquipmentID = row["enableEquipmentID"].ToString();
+                    config.enableEquipmentID = new List<string>(enableEquipmentID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    string disableEquipmentID = row["disableEquipmentID"].ToString();
+                    config.disableEquipmentID = new List<string>(disableEquipmentID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    string needFinishEpisodeID = row["needFinishEpisodeID"].ToString();
+                    config.disableEquipmentID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    string needItemID = row["needItemID"].ToString();
+                    config.disableEquipmentID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+                    episodeConfigList[episodeID] = config;
+                    break;
+                }
+            }
+            return config;
         }
-        return null;
+        else
+        {
+            return episodeConfigList[episodeID];
+        }
     }
 
-    public DialogConfig GetDialog(string dialogID)
+    public DialogConfig GetDialogConfig(string dialogID)
     {
-        foreach (var dialog in dialogConfigList)
+        if (!dialogConfigList.ContainsKey(dialogID))
         {
-            if (dialog.ID == dialogID)
+            DialogConfig config = new DialogConfig();
+            var dt = datatableDic["DialogConfig"];
+            if (dt.Rows.Count == 0)
             {
-                return dialog;
+                Debug.LogError("对话配置不存在，id：" + dialogID);
+                return null;
             }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var row = dt.Rows[i];
+                if (row["ID"].ToString() == dialogID.ToString())
+                {
+                    config.ID = dialogID;
+                    config.content = row["content"].ToString();
+                    config.nextDialogID = row["nextDialogID"].ToString();
+                    config.character = (RoleType)int.Parse(row["character"].ToString());
+                    string getItemID = row["getItemID"].ToString();
+                    config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    string choices = row["choices"].ToString();
+                    config.choices = new List<string>(choices.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+                    dialogConfigList[dialogID] = config;
+                    break;
+                }
+            }
+            return config;
         }
-        return null;
+        else
+        {
+            return dialogConfigList[dialogID];
+        }
     }
 
-    public ChoiceConfig GetChoice(string choiceID)
+    public ChoiceConfig GetChoiceConfig(string choiceID)
     {
-        foreach (var choice in choiceConfigList)
+        if (!choiceConfigList.ContainsKey(choiceID))
         {
-            if (choice.ID == choiceID)
+            ChoiceConfig config = new ChoiceConfig();
+            var dt = datatableDic["ChoiceConfig"];
+            if (dt.Rows.Count == 0)
             {
-                return choice;
+                Debug.LogError("选项配置不存在，id：" + choiceID);
+                return null;
             }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var row = dt.Rows[i];
+                if (row["ID"].ToString() == choiceID.ToString())
+                {
+                    config.ID = choiceID;
+                    config.content = row["content"].ToString();
+                    config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
+
+                    choiceConfigList[choiceID] = config;
+                    break;
+                }
+            }
+            return config;
         }
-        return null;
+        else
+        {
+            return choiceConfigList[choiceID];
+        }
     }
 
-    public EquipmentConfig GetEquipment(string equipmentID)
+    public EquipmentConfig GetEquipmentConfig(string equipmentID)
     {
-        foreach (var equipment in equipmentConfigList)
+        if (!equipmentConfigList.ContainsKey(equipmentID))
         {
-            if (equipment.ID == equipmentID)
+            EquipmentConfig config = new EquipmentConfig();
+            var dt = datatableDic["EquipmentConfig"];
+            if (dt.Rows.Count == 0)
             {
-                return equipment;
+                Debug.LogError("设备配置不存在，id：" + equipmentID);
+                return null;
             }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var row = dt.Rows[i];
+                if (row["ID"].ToString() == equipmentID.ToString())
+                {
+                    config.ID = equipmentID;
+                    config.name = row["name"].ToString();
+                    config.description = row["description"].ToString();
+                    config.imageUrl = row["imageUrl"].ToString();
+                    config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
+                    config.triggerPuzzleID = row["triggerPuzzleID"].ToString();
+                    string getItemID = row["getItemID"].ToString();
+                    config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    string mustDoneEpisodeID = row["mustDoneEpisodeID"].ToString();
+                    config.mustDoneEpisodeID = new List<string>(mustDoneEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+                    equipmentConfigList[equipmentID] = config;
+                    break;
+                }
+            }
+            return config;
         }
-        return null;
+        else
+        {
+            return equipmentConfigList[equipmentID];
+        }
     }
 
-    public ItemConfig GetItem(string itemID)
+    public ItemConfig GetItemConfig(string itemID)
     {
-        foreach (var item in itemConfigList)
+        if (!itemConfigList.ContainsKey(itemID))
         {
-            if (item.ID == itemID)
+            ItemConfig config = new ItemConfig();
+            var dt = datatableDic["ItemConfig"];
+            if (dt.Rows.Count == 0)
             {
-                return item;
+                Debug.LogError("道具配置不存在，id：" + itemID);
+                return null;
             }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var row = dt.Rows[i];
+                if (row["ID"].ToString() == itemID.ToString())
+                {
+                    config.ID = itemID;
+                    config.name = row["name"].ToString();
+                    config.description = row["description"].ToString();
+                    config.imageUrl = row["imageUrl"].ToString();
+
+                    itemConfigList[itemID] = config;
+                    break;
+                }
+            }
+            return config;
         }
-        return null;
+        else
+        {
+            return itemConfigList[itemID];
+        }
     }
 
     private void GenerateConfig()
@@ -139,47 +257,54 @@ public class ConfigController : Singleton<ConfigController>
         {
             string filePath = item.Value;
             DataTable dt = new DataTable();
-            //文件流读取
-            System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open);
-            System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.GetEncoding("gb2312"));
-            string tempText = "";
-            bool isFirst = true;
-            while ((tempText = sr.ReadLine()) != null)
+            try
             {
-                string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                //文件流读取
+                System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open);
+                System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.GetEncoding("gb2312"));
+                string tempText = "";
+                bool isFirst = true;
+                while ((tempText = sr.ReadLine()) != null)
+                {
+                    string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-                //一般第一行为标题
-                if (isFirst)
-                {
-                    foreach (string str in arr)
+                    //一般第一行为标题
+                    if (isFirst)
                     {
-                        dt.Columns.Add(str);
+                        foreach (string str in arr)
+                        {
+                            dt.Columns.Add(str);
+                        }
+                        isFirst = false;
                     }
-                    isFirst = false;
-                }
-                else
-                {
-                    DataRow dr = dt.NewRow();
-                    for (int i = 0; i < dt.Columns.Count; i++)
+                    else
                     {
-                        string valueName = dt.Columns[i].ToString();
-                        dr[valueName] = i < arr.Length ? arr[i] : "";
+                        DataRow dr = dt.NewRow();
+                        for (int i = 0; i < dt.Columns.Count; i++)
+                        {
+                            string valueName = dt.Columns[i].ToString();
+                            dr[valueName] = i < arr.Length ? arr[i] : "";
+                        }
+                        dt.Rows.Add(dr);
                     }
-                    dt.Rows.Add(dr);
                 }
+                datatableDic[item.Key] = dt;
+                //关闭流
+                sr.Close();
+                fs.Close();
             }
-            datatableDic[item.Key] = dt;
-            //关闭流
-            sr.Close();
-            fs.Close();
+            catch(Exception error)
+            {
+                Debug.LogError(error);
+            }
         }
     }
 }
 
-public class GameLineConfig
+public class GameLineNode
 {
-    public GameNodeType type;
     public string ID;
+    public GameNodeType type;
 }
 
 public enum GameNodeType
@@ -190,7 +315,6 @@ public enum GameNodeType
     PhoneEpisode,  // 手机对话
     Tutorial,  // 教程
     FreeOperate,  // 自由操作
-    ChangeScene,  // 切换场景
     Puzzle,  // 谜题
     GameEnd,  // 游戏结束
 }
@@ -213,11 +337,10 @@ public class EpisodeConfig
     public List<string> dialogList;
     public List<string> enableEquipmentID;
     public List<string> disableEquipmentID;
-}
-
-public class PhoneEpisodeConfig : EpisodeConfig
-{
-    
+    public bool isNeedRecord;
+    public List<string> needFinishEpisodeID;
+    public List<string> needItemID;
+    public EpisodeType episodeType;
 }
 
 public class DialogConfig
@@ -227,7 +350,6 @@ public class DialogConfig
     public string nextDialogID;
     public List<string> getItemID;
     public RoleType character;
-    public bool isLeft;
     public List<string> choices;
 }
 
@@ -244,7 +366,6 @@ public class EquipmentConfig
     public string name;
     public string description;
     public string imageUrl;
-    public bool isCollider;
     public List<string> getItemID;
     public string triggerEpisodeID;
     public string triggerPuzzleID;
@@ -283,12 +404,23 @@ public enum RoleType
     MainRoleBoy,
 }
 
+public enum SceneType
+{
+    LibraryOut = 1,
+    LibraryIn,
+}
+
+public enum EpisodeType
+{
+    Normal,
+    Phone
+}
+
 public enum TransitionType  // 转场类型
 {
     GameStart,
     Blackout,  // 停电
     ChangeScene,
-    ChangeCharacter
 }
 
 public enum PuzzleType

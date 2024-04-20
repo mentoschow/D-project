@@ -4,43 +4,52 @@ using UnityEngine;
 
 public class RoleController : MonoSingleton<RoleController>
 {
-    public RoleType curRoleType = RoleType.MainRoleGirl;
-    public RoleView curRoleView = null;
-    private List<RoleView> roleViewList = new List<RoleView>();
+    public GameObject girlRoleView;
+    public GameObject boyRoleView;
+    private Dictionary<RoleType, RoleView> roleViewDic = new Dictionary<RoleType, RoleView>();
+    private RoleType curRoleType = RoleType.MainRoleGirl;
+    public RoleView curRoleView;
 
     private void Start()
     {
-        foreach(Transform child in transform)
-        {
-            var view = child.GetComponent<RoleView>();
-            if (view != null)
-            {
-                roleViewList.Add(view);
-            }
-        }
-        UpdateRoleEnable();
+        ChangeRole(RoleType.MainRoleGirl);
     }
 
     public void ChangeRole(RoleType type)
     {
         curRoleType = type;
-        UpdateRoleEnable();
-    }
-
-    private void UpdateRoleEnable()
-    {
-        foreach (RoleView view in roleViewList)
+        if (!roleViewDic.ContainsKey(type))
         {
-            if (view.characterType == curRoleType)
+            CreateRole(type);
+        }
+        curRoleView = roleViewDic[type];
+        foreach (var (key, view) in roleViewDic)
+        {
+            if (key == type)
             {
                 view.gameObject.SetActive(true);
-                curRoleView = view;
             }
             else
             {
                 view.gameObject.SetActive(false);
             }
         }
+    }
+
+    private void CreateRole(RoleType type)
+    {
+        GameObject obj = null;
+        if (type == RoleType.MainRoleGirl)
+        {
+            obj = girlRoleView;
+        }
+        else if (type == RoleType.MainRoleBoy)
+        {
+            obj = boyRoleView;
+        }
+        var view = Instantiate(obj).GetComponent<RoleView>();
+        view.transform.SetParent(transform);
+        roleViewDic[type] = view;
     }
 
     private void Update()

@@ -4,38 +4,52 @@ using UnityEngine;
 
 public class GameController : Singleton<GameController>
 {
-    private Queue<GameLineConfig> gameLineConfig = new Queue<GameLineConfig>();
-
     public GameController() 
     {
-        foreach (GameLineConfig config in ConfigController.Instance.gameLineConfigs)
-        {
-            gameLineConfig.Enqueue(config);
-        }
+        MessageManager.Instance.Register(MessageDefine.ChangeSceneDone, CheckNextGameNode);
+        MessageManager.Instance.Register(MessageDefine.GameStart, CheckNextGameNode);
+        MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
     }
 
-    public void CheckNextGameNode()
+    public void CheckNextGameNode(MessageData node)
     {
+        Debug.Log("检查是否能自动进行下一步" + node.gameLineNode);
         GameDataProxy.Instance.canMainRoleMove = false;
-        GameLineConfig nextNodeConfig = gameLineConfig.Dequeue();
-        if (nextNodeConfig == null)
+        if (node.gameLineNode == null)
         {
             return;
         }
-        switch (nextNodeConfig.type)
+        switch (node.gameLineNode.type)
         {
-            case GameNodeType.GameEnd:
-
+            case GameNodeType.GameStart:
+                UIController.Instance.ShowTransition(TransitionType.GameStart);
+                SceneController.Instance.ChangeScene(SceneType.LibraryOut);
                 break;
             case GameNodeType.Transition:
-                UIController.Instance.ShowTransition(nextNodeConfig.ID);
+                if (node.gameLineNode.ID == SceneType.LibraryOut.ToString())
+                {
+                    //UIController.Instance.PlayEpisode("MS01_010_010");
+                }
+                else if (node.gameLineNode.ID == SceneType.LibraryIn.ToString())
+                {
+
+                }
                 break;
-            case GameNodeType.ChangeScene:
-                SceneController.Instance.ChangeScene(nextNodeConfig.ID);
+            case GameNodeType.GameEnd:
+                UIController.Instance.GameEnd();
                 break;
             case GameNodeType.Tutorial:
                 break;
             case GameNodeType.NormalEpisode:
+                switch (node.gameLineNode.ID)
+                {
+                    case "MS01_010_010":
+                        UIController.Instance.PlayEpisode("MS01_010_020");
+                        break;
+                    case "MS01_010_020":
+                        UIController.Instance.ShowTutorial();
+                        break;
+                }
                 break;
             case GameNodeType.PhoneEpisode:
                 break;
@@ -51,8 +65,9 @@ public class GameController : Singleton<GameController>
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        //CheckNextGameNode();
-        UIController.Instance.GameStart();
+        GameLineNode node = new GameLineNode();
+        node.type = GameNodeType.GameStart;
+        MessageManager.Instance.Send(MessageDefine.GameStart, new MessageData(node));
         GameDataProxy.Instance.canMainRoleMove = true;
     }
 }

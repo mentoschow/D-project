@@ -15,6 +15,8 @@ public class UIController : MonoSingleton<UIController>
 
     void Start()
     {
+        MessageManager.Instance.Register(MessageDefine.GameStart, GameStart);
+        MessageManager.Instance.Register(MessageDefine.ChangeSceneDone, OpenStageView);
         Init();
     }
 
@@ -27,15 +29,10 @@ public class UIController : MonoSingleton<UIController>
     {
         homepageView = CreateView<HomepageView>(homepageObj, transform.Find("layer1"));
         loadingView = CreateView<LoadingView>(loadingObj, transform.Find("layer4"));
-        //homepageView = Instantiate(homepageObj)?.GetComponent<HomepageView>();
-        //homepageView?.transform.SetParent(transform.Find("layer1"));
-        //loadingView = Instantiate(loadingObg)?.GetComponent<LoadingView>();
-        //loadingView?.transform.SetParent(transform.Find("layer4"));
 
         HideAllView();
         OpenHomepage();
     }
-
 
     private void HideAllView()
     {
@@ -48,9 +45,19 @@ public class UIController : MonoSingleton<UIController>
         homepageView?.gameObject.SetActive(true);
     }
 
-    public void GameStart()
+    private void OpenStageView(MessageData data)
+    {
+
+    }
+
+    public void GameStart(MessageData data)
     {
         homepageView?.gameObject.SetActive(false);
+    }
+
+    public void GameEnd()
+    {
+
     }
 
     public void ShowScene()
@@ -58,14 +65,28 @@ public class UIController : MonoSingleton<UIController>
 
     }
 
-    public void ShowTransition(string ID)
+    public void ShowTransition(TransitionType type)
+    {
+        loadingView?.gameObject.SetActive(true);
+        loadingView?.PlayTransition(type);
+    }
+
+    public void ShowTutorial()
     {
 
     }
 
-    public void OpenTransitionView(TransitionType type)
+    public void PlayEpisode(string ID)
     {
-        Debug.Log("进入转场" + type);
+        var config = ConfigController.Instance.GetEpisodeConfig(ID);
+        if (config.episodeType == EpisodeType.Normal)
+        {
+
+        }
+        else if (config.episodeType == EpisodeType.Phone)
+        {
+
+        }
     }
 
     private T CreateView<T>(GameObject prefab, Transform parent)
