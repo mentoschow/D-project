@@ -4,7 +4,7 @@ using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class EpisodePlayerView : MonoBehaviour
 {
     public enum EpisodePlayerStatus
@@ -14,39 +14,62 @@ public class EpisodePlayerView : MonoBehaviour
         Pause,  // 打字机播放完，dialogQueue不为空
     }
 
-    public GameObject choicePartViewPrefab;
-    public Sprite boySp;
-    public Sprite girlSp;
+    [SerializeField]
+    private int normalTypingSpeed = 10;
+    [SerializeField]
+    private int maxTypingSpeed = 20;
+    [SerializeField]
+    private GameObject choicePartViewPrefab;
+    [SerializeField]
+    private Sprite boySp;
+    [SerializeField]
+    private Sprite girlSp;
+    [SerializeField]
+    private GameObject leftDialogObj;
+    [SerializeField]
+    private GameObject rightDialogObj;
+    [SerializeField]
+    private Button nextBtn;
+    [SerializeField]
+    private GameObject nextArrow;
+    [SerializeField]
+    private Text nameText;
+    [SerializeField]
+    private Image roleImg;
+    [SerializeField]
+    private Text content;
+    [SerializeField]
+    private HorizontalLayoutGroup horizontalChoiceLayout;
+    [SerializeField]
+    private VerticalLayoutGroup verticalChoiceLayout;
+    [SerializeField]
+    private bool useTypeEffect = true;
+    [SerializeField]
+    private ScrollRect phoneScrollRect;
 
-    protected Image roleImg;
-    protected Text content;
-    protected HorizontalLayoutGroup horizontalChoiceLayout;
-    protected VerticalLayoutGroup verticalChoiceLayout;
-    protected Button nextBtn;
-    protected GameObject nextArrow;
-    protected Text nameText;
-
-    protected Queue<DialogConfig> dialogQueue = new Queue<DialogConfig>();
-    protected EpisodePlayerStatus curStatus;
-    protected string targetText;
-    protected float typeTimer = 0;
-    protected bool useTypeEffect = true;
-    protected int typeSpeed = 0;
-    protected List<ChoiceConfig> choices = new List<ChoiceConfig>();
-    protected List<DialogChoicePartView> choiceView = new List<DialogChoicePartView>();
-    protected string curEpisodeID = "";
+    private Queue<DialogConfig> dialogQueue = new Queue<DialogConfig>();
+    private EpisodePlayerStatus curStatus;
+    private string targetText;
+    private float typeTimer = 0;
+    private int typeSpeed = 0;
+    private List<ChoiceConfig> choices = new List<ChoiceConfig>();
+    private List<DialogChoicePartView> choiceView = new List<DialogChoicePartView>();
+    private string curEpisodeID = "";
+    private EpisodeType curType;
+    private List<PhoneEpisodePartView> phoneDialogList = new List<PhoneEpisodePartView>();
 
     void Awake()
     {
-        roleImg = transform.Find("roleImg")?.GetComponent<Image>();
-        content = transform.Find("textArea")?.Find("contentText")?.GetComponent<Text>();
-        nextBtn = transform.Find("nextBtn")?.GetComponent<Button>();
-        nextArrow = transform.Find("textArea")?.Find("arrow")?.gameObject;
-        nameText = transform.Find("textArea")?.Find("nameText")?.GetComponent<Text>();
-
-        nextBtn?.onClick.AddListener(onNextBtnClick);
+        if (nextBtn != null)
+        {
+            nextBtn.onClick.AddListener(onNextBtnClick);
+            nextBtn.interactable = false;
+        }
+        if (phoneScrollRect != null)
+        {
+            
+        }
         ChangeStatus(EpisodePlayerStatus.Stop);
-        nextBtn.interactable = false;
     }
 
     void Update()
@@ -78,7 +101,7 @@ public class EpisodePlayerView : MonoBehaviour
             case EpisodePlayerStatus.Stop:
                 break;
             case EpisodePlayerStatus.Typing:
-                typeSpeed = ConfigController.Instance.maxTypingSpeed;
+                typeSpeed = maxTypingSpeed;
                 break;
             case EpisodePlayerStatus.Pause:
                 GoNext();
@@ -86,7 +109,7 @@ public class EpisodePlayerView : MonoBehaviour
         }
     }
 
-    public virtual void UpdateView(DialogConfig dialog)
+    public virtual void UpdateNormalView(DialogConfig dialog)
     {
         var configController = ConfigController.Instance;
         // 选项
@@ -109,7 +132,7 @@ public class EpisodePlayerView : MonoBehaviour
         if (useTypeEffect)
         {
             targetText = dialog.content;
-            typeSpeed = configController.normalTypingSpeed;
+            typeSpeed = normalTypingSpeed;
             typeTimer = 0;
             ChangeStatus(EpisodePlayerStatus.Typing);
         }
@@ -129,7 +152,7 @@ public class EpisodePlayerView : MonoBehaviour
 
         }
         // 立绘、名字
-        switch (dialog.character)
+        switch (dialog.roleType)
         {
             case RoleType.MainRoleGirl:
                 nameText.text = "女主角";
@@ -158,11 +181,11 @@ public class EpisodePlayerView : MonoBehaviour
         }
         //horizontalChoiceLayout.gameObject.SetActive(false);
         //verticalChoiceLayout.gameObject.SetActive(false);
-        nextBtn.interactable = true;
         var tempQueue = dialogQueue;
         var config = ConfigController.Instance;
         dialogQueue = new Queue<DialogConfig>();
         EpisodeConfig episode = config.GetEpisodeConfig(episodeID);
+        curType = episode.episodeType;
         foreach (var id in episode.dialogList)
         {
             DialogConfig dialog = config.GetDialogConfig(id);
@@ -183,8 +206,8 @@ public class EpisodePlayerView : MonoBehaviour
     {
         if (dialogQueue.Count == 0)  // 结束了
         {
+            gameObject.SetActive(false);
             ChangeStatus(EpisodePlayerStatus.Stop);
-            this.gameObject.SetActive(false);
             GameLineNode node = new GameLineNode();
             node.type = GameNodeType.NormalEpisode;
             node.ID = curEpisodeID;
@@ -225,5 +248,57 @@ public class EpisodePlayerView : MonoBehaviour
             choiceView[i]?.UpdateView(choices[i]);
         }
 
+    }
+
+    private void UpdateView(DialogConfig dialog)
+    {
+        if (curType == EpisodeType.Normal) {
+            UpdateNormalView(dialog);
+        }
+        else if (curType == EpisodeType.Phone)
+        {
+            UpdatePhoneView(dialog);
+        }
+        if (nextBtn != null)
+        {
+            nextBtn.interactable = true;
+        }
+    }
+
+    private void UpdatePhoneView(DialogConfig dialog)
+    {
+        GameObject obj = null;
+        Sprite icon = null;
+        string name = "";
+        switch (dialog.roleType)
+        {
+            case RoleType.MainRoleGirl:
+                obj = rightDialogObj;
+                icon = girlSp;
+                name = "女主角";
+                break;
+            case RoleType.MainRoleBoy:
+                obj = leftDialogObj;
+                icon = boySp;
+                name = "男主角";
+                break;
+        }
+        var view = BaseFunction.CreateView<PhoneEpisodePartView>(obj, transform);
+        if (view != null)
+        {
+            ChangeStatus(EpisodePlayerStatus.Pause);
+            view.UpdateView(icon, name, dialog.content);
+            phoneDialogList.Add(view);
+        }
+        Invoke("ScrollToEnd", 0.1f);
+    }
+
+    private void ScrollToEnd()
+    {
+        var startValue = phoneScrollRect.verticalScrollbar.value;
+        DOTween.To(value =>
+        {
+            phoneScrollRect.verticalScrollbar.value = value;
+        }, startValue, 0, 0.3f);
     }
 }

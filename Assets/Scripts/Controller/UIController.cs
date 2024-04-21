@@ -11,10 +11,12 @@ public class UIController : MonoSingleton<UIController>
     public GameObject stageViewObj;
     public GameObject normalEpisodePlayerObj;
     public GameObject getItemTipObj;
+    public GameObject phoneObj;
 
     private HomepageView homepageView;
     private LoadingView loadingView;
     private EpisodePlayerView normalEpisodePlayerView;
+    private PhoneView phoneView;
 
     private Transform layer1;
     private Transform layer2;
@@ -41,16 +43,18 @@ public class UIController : MonoSingleton<UIController>
         homepageView = CreateView<HomepageView>(homepageObj, layer1);
         loadingView = CreateView<LoadingView>(loadingObj, layer4);
         normalEpisodePlayerView = CreateView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
+        phoneView = CreateView<PhoneView>(phoneObj, layer2);
 
         HideAllView();
         OpenHomepage();
     }
 
-    private void HideAllView()
+    public void HideAllView()
     {
         homepageView?.gameObject.SetActive(false);
         loadingView?.gameObject.SetActive(false);
         normalEpisodePlayerView?.gameObject.SetActive(false);
+        phoneView?.gameObject.SetActive(false);
     }
 
     private void OpenHomepage()
@@ -82,7 +86,6 @@ public class UIController : MonoSingleton<UIController>
     public void PlayEpisode(string ID)
     {
         var config = ConfigController.Instance.GetEpisodeConfig(ID);
-        normalEpisodePlayerView.gameObject.SetActive(false);
         if (config.episodeType == EpisodeType.Normal)
         {
             normalEpisodePlayerView.gameObject.SetActive(true);
@@ -90,7 +93,7 @@ public class UIController : MonoSingleton<UIController>
         }
         else if (config.episodeType == EpisodeType.Phone)
         {
-
+            phoneView.PlayPhoneEpisode(ID);
         }
     }
 
