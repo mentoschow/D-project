@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,16 +10,39 @@ public class PuzzleView : MonoSingleton<PuzzleView>
 {
     // Start is called before the first frame update
     public GameObject mainObject;
-    public GameObject subObject;
-    public HorizontalLayoutGroup layout;
 
+    PuzzleConfig useConfig;
+
+    public GameObject mainObjectNode;
     public Button closeBtn;
 
-    Dictionary<string, PuzzleItemView> itemViewMap = new Dictionary<string, PuzzleItemView>();
+    Dictionary<JewelryType, PuzzleItemView> itemViewMap = new Dictionary<JewelryType, PuzzleItemView>();
+    PuzzleItemView mainObjectView;
+
+
+    Dictionary<int, GameObject> itemAttachNodeMap = new Dictionary<int, GameObject>();
+
+    JewelryType moveItemType = JewelryType.Not;
+    int moveItemCode = 0;
+    GameObject curDragNode = null;
+
+    public GameObject curDragAttachNode;
 
     private void Awake()
     {
         closeBtn.onClick.AddListener(onCloseBtnClick);
+        this.initAttachNodeMap();
+    }
+
+    void initAttachNodeMap()
+    {
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                GameObject itemAttachNode = CommonUtils.findChildByName(transform, "GameObject_" + i.ToString()).gameObject;
+                itemAttachNodeMap.Add(i, itemAttachNode);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -29,40 +53,158 @@ public class PuzzleView : MonoSingleton<PuzzleView>
 
     public void updateView(PuzzleConfig config)
     {
+        this.useConfig = config;
+
         List<PuzzleItemConfig> configList = config?.itemConfigList ?? new List<PuzzleItemConfig>();
         int len = configList?.Count??0;
         if (len>0)
         {
             foreach (PuzzleItemConfig itemConfig in configList)
             {
-                GameObject prefab = itemConfig.combineList.Count>0 ? mainObject : subObject;
-                string viewID = itemConfig?.itemID ?? "";
-
-                PuzzleItemView itemView;
-                bool isExist = itemViewMap.TryGetValue(viewID,out itemView);
-                if(!isExist)
+                GameObject prefab = PuzzleItemView.getPrefab(itemConfig.jewelryType);
+                JewelryType viewID = itemConfig?.jewelryType ?? 0;
+                if (prefab != null)
                 {
-                    Transform content = layout.transform;
-                    // 在"Content"对象下实例化一个新的节点
-                    GameObject newNode = Instantiate(prefab, content);
-                    itemView = newNode.AddComponent<PuzzleItemView>();
-                    //itemView = newNode.GetComponent<PuzzleItemView>();
-           
-                    // 设置新面板的位置（可选）
-                    //RectTransform rt = itemView.GetComponent<RectTransform>();
-                   // rt.anchoredPosition = new Vector2(0, 0); // 根据Layout规则设置位置
+                    bool isSub = GameDataProxy.Instance.getCombineConfig(viewID) != null;
+                    Action<GameObject, int> dragStartCallback = null;
+                    Action<Vector2> dragMoveCallback = null;
+                    Action<Vector2, int> dragOverCallback = null;
 
-                    itemViewMap[viewID] = itemView;
+
+                    PuzzleItemView itemView = null;
+                    if (isSub)
+                    {
+                        bool isExist = itemViewMap.TryGetValue(viewID, out itemView);
+                        if (!isExist)
+                        {
+                            GameObject layout = null;
+                            itemAttachNodeMap.TryGetValue((int)viewID, out layout);
+
+                            Transform content = layout.transform;
+                            // 在"Content"对象下实例化一个新的节点
+                            GameObject newNode = Instantiate(prefab, content);
+                            itemView = newNode.AddComponent<PuzzleItemView>();
+
+                            itemViewMap[viewID] = itemView;
+                        }
+                        dragStartCallback = (GameObject dragNode, int code) => {
+                            this.moveItemType = viewID;
+                            this.moveItemCode = code;
+                            if (this.curDragNode)
+                            {
+                                Destroy(this.curDragNode);
+                            }
+                            this.curDragNode = Instantiate(dragNode, curDragAttachNode.transform);
+                        };
+                        dragMoveCallback = (Vector2 pos) =>
+                        {
+                            this.curDragNode.transform.position = pos;
+                        };
+                        dragOverCallback = (Vector2 inputPos, int code) =>
+                        {
+                            this.moveItemType = JewelryType.Not;
+                            this.moveItemCode = 0;
+                            if (this.curDragNode)
+                            {
+                                Destroy(this.curDragNode);
+                            }
+
+                            this.checkCanInsert(viewID, code, inputPos);
+                            this.refreshItemContainState();
+                            this.refreshDragState();
+
+                            this.mainObjectView?.updateInsertView();
+                        };
+                    }
+                    else
+                    {
+                        itemView = this.mainObjectView;
+                        if (!itemView)
+                        {
+                            Transform content = mainObjectNode.transform;
+                            // 在"Content"对象下实例化一个新的节点
+                            GameObject newNode = Instantiate(prefab, content);
+                            itemView = newNode.AddComponent<PuzzleItemView>();
+                            this.mainObjectView = itemView;
+
+                            this.mainObjectView?.updateInsertView();
+                        }
+                    }
+                    itemView?.updateView(itemConfig, isSub, dragStartCallback, dragMoveCallback, dragOverCallback);
                 }
-                itemView?.updateView(itemConfig);
+                else
+                {
+                    Debug.LogError("空的预制体"+ ((int)viewID).ToString());
+                }
             }
-
+            this.refreshItemContainState();
 
         }
     }
 
+    void checkCanInsert(JewelryType type,int code,Vector2 pos)
+    {
+       bool canUse = GameDataProxy.Instance.checkJewelryCanUse(code,type);
+        if(canUse)
+        {
+            bool canInsert = canUse;
+            if (canInsert)
+            {
+                PuzzleCombineConfig config = GameDataProxy.Instance.getCombineConfig(type);
+
+                if (mainObjectView)
+                {
+                    Vector3 worldPosition3D = mainObjectView.gameObject.transform.position;
+                    Vector2 target = new Vector2(worldPosition3D.x + config.xPos, worldPosition3D.y + config.yPos);
+                    float distanceThreshold = 60f;
+                    bool isClose = Vector2.Distance(target, pos) < distanceThreshold;
+
+                    if (isClose)
+                    {
+                        GameDataProxy.Instance.jewelryCmpletion[type] = true;
+                    }
+                }
+            }
+        }
+    }
     void onCloseBtnClick()
     {
         gameObject.SetActive(false);
+    }
+
+    void refreshDragState()
+    {
+        foreach (KeyValuePair<JewelryType, PuzzleItemView> item in itemViewMap)
+        {
+            bool isSub = GameDataProxy.Instance.getCombineConfig(item.Key) != null;
+            bool canDrag = (item.Key == this.moveItemType)||(this.moveItemType == JewelryType.Not);
+            canDrag = canDrag && !GameDataProxy.Instance.checkJewelryComplete(item.Key);
+  
+            item.Value?.updateCanDrag(canDrag,this.moveItemCode);
+        }
+    }
+
+    void refreshItemContainState()
+    {
+        bool allComplete = true;
+        foreach (KeyValuePair<JewelryType, PuzzleItemView> item in itemViewMap)
+        {
+            PuzzleCombineConfig config = GameDataProxy.Instance.getCombineConfig(item.Key);
+            bool isSub = config != null;
+            if (isSub)
+            {
+                bool isComplete = GameDataProxy.Instance.checkJewelryComplete(item.Key);
+                if (!isComplete)
+                {
+                    allComplete = false;
+                }
+                int useCode = isComplete ? config.code : 0;
+                item.Value?.refreshContainState(useCode);
+            }
+        }
+        if (allComplete)
+        {
+            //todo
+        }
     }
 }

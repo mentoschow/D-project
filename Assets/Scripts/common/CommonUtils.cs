@@ -1,12 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.Rendering;
-using UnityEngine.U2D;
 using UnityEngine.UI;
-
-public class CommonUtils
+public class CommonUtils : MonoSingleton<CommonUtils>
 {
     static public void updateImage(string imageResourcePath, Image uiImage)
     {
@@ -18,8 +13,24 @@ public class CommonUtils
         if (image != null && uiImage != null)
         {
             uiImage.sprite = image;
+            uiImage.SetNativeSize();
+            uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 255f);
         }
 
+    }
+
+    static public T CreateViewByType<T>(GameObject prefab, Transform parent) where T : Component
+    {
+        // 实例化prefab
+        GameObject obj = Instantiate(prefab, parent);
+        if (obj != null)
+        {
+            // 尝试添加组件T
+            T view = obj.AddComponent<T>();
+            return view;
+        }
+        // 如果prefab是null或者没有成功实例化，返回默认值
+        return default(T);
     }
 
     static public Transform findChildByName(Transform parentTransform, string childName)

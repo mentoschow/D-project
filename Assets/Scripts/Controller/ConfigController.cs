@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,6 +11,41 @@ using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+
+public enum JewelryType
+{
+    Not = 0,
+    Earring = 1,
+    Necklace = 2,
+    Bracelet = 3,
+    Ring = 4,
+    Watch = 5,
+    Human = 6,
+}
+
+
+[Serializable]
+public class PuzzleConfig
+{
+    public string ID;
+    public PuzzleType type;
+    public List<PuzzleItemConfig> itemConfigList;
+}
+[Serializable]
+public class PuzzleItemConfig
+{
+    public string itemID;
+    public JewelryType jewelryType;
+    public List<PuzzleCombineConfig> combineList;
+}
+[Serializable]
+public class PuzzleCombineConfig
+{
+    public float xPos;
+    public float yPos;
+    public int code;
+    public JewelryType jewelryType;
+}
 
 public class ConfigController : Singleton<ConfigController>
 {
@@ -40,10 +76,33 @@ public class ConfigController : Singleton<ConfigController>
     public ConfigController()
     {
         GenerateConfig();
-        string json = File.ReadAllText(testJsonPath);
-        puzzleConfig = JsonUtility.FromJson<PuzzleConfig>(json);
 
+        this.initPuzzleConfig();
         //PuzzleConfig ggboy = JsonUtility.FromJson(PuzzleConfig)("");
+    }
+
+    void initPuzzleConfig()
+    {
+        string json = File.ReadAllText(testJsonPath);
+        this.puzzleConfig = JsonUtility.FromJson<PuzzleConfig>(json);
+
+        List<PuzzleItemConfig> configList = this.puzzleConfig?.itemConfigList ?? new List<PuzzleItemConfig>();
+        int len = configList?.Count ?? 0;
+        if (len > 0)
+        {
+            foreach (PuzzleItemConfig itemConfig in configList)
+            {
+               List<PuzzleCombineConfig> list = itemConfig?.combineList ?? new List<PuzzleCombineConfig>();
+                if (list.Count > 0)
+                {
+                    foreach(PuzzleCombineConfig combineConfig in list)
+                    {
+                        GameDataProxy.Instance.jewelryCmpletion.Add(combineConfig.jewelryType, false);
+                    }
+                    GameDataProxy.Instance.puzzleCombineConfigs = list.ToList();
+                }
+            }
+        }
     }
 
     public ChapterConfig GetChapterConfig(string chapterID)
@@ -349,6 +408,15 @@ public class ConfigController : Singleton<ConfigController>
         }
         return result.ToArray();
     }
+
+    public string getJewelryUrl(JewelryType type,int code)
+    {
+        string url = "Images/UI/Puzzle/";
+        string itemName = Enum.GetName(typeof(JewelryType), type);
+        url = url + itemName +"_"+ code.ToString();
+
+        return url;
+    }
 }
 
 public class GameLineNode
@@ -424,27 +492,8 @@ public class ItemConfig
     public string imageUrl;
 }
 
-[Serializable]
-public class PuzzleConfig
-{
-    public string ID;
-    public PuzzleType type;
-    public List<PuzzleItemConfig> itemConfigList;
-}
-[Serializable]
-public class PuzzleItemConfig
-{
-    public string itemID;
-    public string url;
-    public List<PuzzleCombineConfig> combineList;
-}
-[Serializable]
-public class PuzzleCombineConfig
-{
-    public float xPos;
-    public float yPos;
-    public string partCode;
-}
+
+
 
 public class ClickPointConfig
 {
