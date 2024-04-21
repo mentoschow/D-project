@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class BaseFunction
+public class BaseFunction : MonoBehaviour
 {
     public static Sprite LoadImage(string imgUrl)
     {
@@ -15,4 +15,15 @@ public class BaseFunction
         return sprite;
     }
 
+    public static T CreateView<T>(GameObject prefab, Transform parent)
+    {
+        var obj = Instantiate(prefab);
+        if (obj != null)
+        {
+            obj.transform.SetParent(parent);
+            var view = obj.GetComponent<T>();
+            return view;
+        }
+        return default(T);
+    }
 }

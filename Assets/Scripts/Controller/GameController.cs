@@ -29,7 +29,7 @@ public class GameController : Singleton<GameController>
             case GameNodeType.Transition:
                 if (node.gameLineNode.ID == TransitionType.GameStart.ToString())
                 {
-                    UIController.Instance.PlayEpisode("TEST01");
+                    UIController.Instance.PlayEpisode("TEST01_010_010");
                 }
                 break;
             case GameNodeType.GameEnd:
@@ -40,7 +40,10 @@ public class GameController : Singleton<GameController>
             case GameNodeType.NormalEpisode:
                 switch (node.gameLineNode.ID)
                 {
-                    case "TEST01":
+                    case "TEST01_010_010":
+                        UIController.Instance.PlayEpisode("TEST01_010_020");
+                        break;
+                    case "TEST01_010_020":
                         FreeOperate();
                         break;
                     case "MS01_010_010":
@@ -60,6 +63,7 @@ public class GameController : Singleton<GameController>
 
     private void FreeOperate()
     {
+        UIController.Instance.HideAllView();
         GameDataProxy.Instance.canMainRoleMove = true;
     }
 

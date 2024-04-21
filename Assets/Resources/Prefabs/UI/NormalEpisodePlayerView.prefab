@@ -168,9 +168,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c9a8e1b9ccc554e915dffdb17a1e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalTypingSpeed: 10
+  maxTypingSpeed: 20
   choicePartViewPrefab: {fileID: 0}
   boySp: {fileID: 21300000, guid: 321e69947ca94374cbb787227811a8e4, type: 3}
   girlSp: {fileID: 21300000, guid: 321e69947ca94374cbb787227811a8e4, type: 3}
+  leftDialogObj: {fileID: 0}
+  rightDialogObj: {fileID: 0}
+  nextBtn: {fileID: 7418522349334785059}
+  nextArrow: {fileID: 6637219796208042410}
+  nameText: {fileID: 1234642648678879406}
+  roleImg: {fileID: 8731795527966134849}
+  content: {fileID: 2400773128728525267}
+  horizontalChoiceLayout: {fileID: 0}
+  verticalChoiceLayout: {fileID: 0}
 --- !u!1 &4664373231186801944
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +458,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!1 &8246828358602119488
 GameObject:
   m_ObjectHideFlags: 0

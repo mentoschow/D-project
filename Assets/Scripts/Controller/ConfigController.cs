@@ -24,8 +24,6 @@ public class ConfigController : Singleton<ConfigController>
         //{"ItemConfig", configPath + "配置文档_-_道具" + fileTailPath},
     };
 
-    public int normalTypingSpeed = 10;
-    public int maxTypingSpeed = 20;
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
     private Dictionary<string, ChapterConfig> chapterConfigList = new Dictionary<string, ChapterConfig>();  // 章节属性
     private Dictionary<string, EpisodeConfig> episodeConfigList = new Dictionary<string, EpisodeConfig>();  // 对话情节属性
@@ -130,7 +128,7 @@ public class ConfigController : Singleton<ConfigController>
                     config.ID = dialogID;
                     config.content = row["content"].ToString();
                     config.nextDialogID = row["nextDialogID"].ToString();
-                    config.character = (RoleType)int.Parse(row["character"].ToString());
+                    config.roleType = (RoleType)int.Parse(row["character"].ToString());
                     string getItemID = row["getItemID"].ToString();
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string choices = row["choices"].ToString();
@@ -385,7 +383,7 @@ public class DialogConfig
     public string content;
     public string nextDialogID;
     public List<string> getItemID;
-    public RoleType character;
+    public RoleType roleType;
     public List<string> choices;
     public string showImgUrl;
 }

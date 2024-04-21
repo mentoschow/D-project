@@ -586,6 +586,7 @@ MonoBehaviour:
   stageViewObj: {fileID: 6497115259499853773, guid: 5482a82e5b6b4214faf681fcebfaaa37, type: 3}
   normalEpisodePlayerObj: {fileID: 2873157605445166545, guid: 0c679b46e8c975243a136f1783530915, type: 3}
   getItemTipObj: {fileID: 6497115259499853773, guid: 0bc171a1e09c7d143a6b1e55f39b6743, type: 3}
+  phoneObj: {fileID: 6497115259499853773, guid: ab070feacd192c4409fe9a901173ebfb, type: 3}
 --- !u!81 &2202462677185376993
 AudioListener:
   m_ObjectHideFlags: 0
