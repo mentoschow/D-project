@@ -29,9 +29,9 @@ public class UIController : MonoSingleton<UIController>
         Init();
     }
 
-    void OnDestroy()
+    private void Update()
     {
-
+        CheckInput();
     }
 
     private void Init()
@@ -112,24 +112,32 @@ public class UIController : MonoSingleton<UIController>
         return default(T);
     }
 
-    public void GetItemTip(List<string> itemList, Transform parent)
+    public void GetItemTip(List<string> itemList)
     {
-        if (parent == null)
-        {
-            parent = layer4;
-        }
         for (int i = 0; i < itemList.Count; i++)
         {
             var obj = Instantiate(getItemTipObj);
             if (obj != null)
             {
-                obj.transform.SetParent(parent);
+                obj.transform.SetParent(layer4);
                 var rect = obj.GetComponent<RectTransform>();
                 float y = -((rect.rect.height + 50) * i + 100);
-                rect.anchoredPosition = new Vector3(0, y);
+                rect.anchoredPosition = new Vector3(rect.rect.width, y);
                 var view = obj.GetComponent<GetItemTipPartView>();
-                //view?.UpdateView(itemList[i]);
+                view?.UpdateView(itemList[i]);
             }
+        }
+    }
+
+    private void CheckInput()
+    {
+        if (!GameDataProxy.Instance.canOperate)
+        {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            phoneView.ShowPhone();
         }
     }
 }

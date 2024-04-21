@@ -995,6 +995,8 @@ MonoBehaviour:
   episodeBtn: {fileID: 1947888680361967159}
   closeBtn: {fileID: 5936640545750559134}
   phoneEpisodePlayer: {fileID: 4455128408104432499}
+  phoneHomepage: {fileID: 8563631996496034622}
+  episodePage: {fileID: 4145730948638825454}
 --- !u!1 &6587588884935891685
 GameObject:
   m_ObjectHideFlags: 0

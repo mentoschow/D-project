@@ -13,17 +13,23 @@ public class PhoneView : MonoBehaviour
     private Button closeBtn;
     [SerializeField]
     private EpisodePlayerView phoneEpisodePlayer;
+    [SerializeField]
+    private GameObject phoneHomepage;
+    [SerializeField]
+    private GameObject episodePage;
 
     void Start()
     {
-        itemBtn?.onClick.AddListener(OnItemBtnClick);
-        episodeBtn?.onClick.AddListener(OnEpisodeBtnClick);
+        itemBtn?.onClick.AddListener(ShowItemView);
+        episodeBtn?.onClick.AddListener(ShowEpisodeView);
         closeBtn?.onClick.AddListener(Close);
     }
 
     public void ShowPhone()
     {
         gameObject.SetActive(true);
+        phoneHomepage?.SetActive(true);
+        episodePage.SetActive(false);
         closeBtn.interactable = true;
     }
 
@@ -37,22 +43,13 @@ public class PhoneView : MonoBehaviour
 
     private void ShowEpisodeView()
     {
+        episodePage.SetActive(true);
         phoneEpisodePlayer.gameObject.SetActive(true);
     }
 
     private void ShowItemView()
     {
 
-    }
-
-    private void OnItemBtnClick()
-    {
-        ShowItemView();
-    }
-
-    private void OnEpisodeBtnClick()
-    {
-        ShowEpisodeView();
     }
 
     private void Close()

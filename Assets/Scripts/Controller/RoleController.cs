@@ -64,7 +64,7 @@ public class RoleController : MonoSingleton<RoleController>
             Debug.LogError("roleview is null");
             return;
         }
-        if (GameDataProxy.Instance.canMainRoleMove)
+        if (GameDataProxy.Instance.canOperate)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
