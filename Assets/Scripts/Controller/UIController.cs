@@ -53,10 +53,10 @@ public class UIController : MonoSingleton<UIController>
         layer2 = transform.Find("layer2");
         layer3 = transform.Find("layer3");
         layer4 = transform.Find("layer4");
-        homepageView = CreateView<HomepageView>(homepageObj, layer1);
-        loadingView = CreateView<LoadingView>(loadingObj, layer4);
-        normalEpisodePlayerView = CreateView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
-        phoneView = CreateView<PhoneView>(phoneObj, layer2);
+        homepageView = CreatePanelView<HomepageView>(homepageObj, layer1);
+        loadingView = CreatePanelView<LoadingView>(loadingObj, layer4);
+        normalEpisodePlayerView = CreatePanelView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
+        phoneView = CreatePanelView<PhoneView>(phoneObj, layer2);
 
         HideAllView();
         OpenHomepage();
@@ -73,7 +73,7 @@ public class UIController : MonoSingleton<UIController>
         }
         if (testControlView == null)
         {
-            testControlView = CreateView<TestControlView>(testControlViewPrefab, layer4);
+            testControlView = CreatePanelView<TestControlView>(testControlViewPrefab, layer4);
         }
 
         testControlView?.gameObject.SetActive(true);
@@ -97,7 +97,7 @@ public class UIController : MonoSingleton<UIController>
         }
         if (puzzleView == null)
         {
-            puzzleView = CreateView<PuzzleView>(puzzleViewPrefab, layer4);
+            puzzleView = CreatePanelView<PuzzleView>(puzzleViewPrefab, layer4);
         }
 
         puzzleView?.gameObject.SetActive(true);
@@ -144,11 +144,11 @@ public class UIController : MonoSingleton<UIController>
         }
         else if (config.episodeType == EpisodeType.Phone)
         {
-            phoneView.PlayPhoneEpisode(ID);
+            phoneView.PlayPhoneEpisode(config);
         }
     }
 
-    private T CreateView<T>(GameObject prefab, Transform parent)
+    private T CreatePanelView<T>(GameObject prefab, Transform parent)
     {
         var obj = Instantiate(prefab);
         if (obj != null)

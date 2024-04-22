@@ -12,7 +12,7 @@ public class PhoneEpisodePartView : MonoBehaviour
     [SerializeField]
     private Text nameText;
     [SerializeField]
-    private float maxTextWidth;
+    private int maxTextWidth;
 
     public void UpdateView(Sprite icon, string name, string content)
     {

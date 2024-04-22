@@ -9,6 +9,8 @@ public class GameRes : ScriptableObject
     public List<ImageRes> clueItemImage = new List<ImageRes>();
     [Header("对话中的图片资源")]
     public List<ImageRes> dialogImage = new List<ImageRes>();
+    [Header("角色图片资源")]
+    public List<RoleRes> roleRes = new List<RoleRes>();
 }
 
 [System.Serializable]
@@ -16,4 +18,12 @@ public class ImageRes
 {
     public string ID;
     public Sprite sprite;
+}
+[System.Serializable]
+public class RoleRes
+{
+    public RoleType type;
+    public string name;
+    public Sprite icon;
+    public Sprite fullBody;
 }
