@@ -150,7 +150,6 @@ public class ConfigController : Singleton<ConfigController>
                 if (row["ID"].ToString() == episodeID.ToString())
                 {
                     config.ID = episodeID;
-                    config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
                     config.episodeType = (EpisodeType)int.Parse(row["episodeType"].ToString());
                     string dialogList = row["dialogList"].ToString();
                     config.dialogList = new List<string>(dialogList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
@@ -162,6 +161,7 @@ public class ConfigController : Singleton<ConfigController>
                     config.disableEquipmentID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string needItemID = row["needItemID"].ToString();
                     config.disableEquipmentID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
 
                     episodeConfigList[episodeID] = config;
                     break;
@@ -199,7 +199,8 @@ public class ConfigController : Singleton<ConfigController>
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string choices = row["choices"].ToString();
                     config.choices = new List<string>(choices.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-                    config.showImgUrl = row["showImgUrl"].ToString();
+                    config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
+                    config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
 
                     dialogConfigList[dialogID] = config;
                     break;
@@ -264,7 +265,6 @@ public class ConfigController : Singleton<ConfigController>
                     config.ID = equipmentID;
                     config.name = row["name"].ToString();
                     config.description = row["description"].ToString();
-                    config.imageUrl = row["imageUrl"].ToString();
                     config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
                     config.triggerPuzzleID = row["triggerPuzzleID"].ToString();
                     string getItemID = row["getItemID"].ToString();
@@ -303,7 +303,6 @@ public class ConfigController : Singleton<ConfigController>
                     config.ID = itemID;
                     config.name = row["name"]?.ToString();
                     config.description = row["description"]?.ToString();
-                    config.imageUrl = row["imageUrl"]?.ToString();
                     config.isSaveBag = int.Parse(row["isSaveBag"]?.ToString()) == 1 ? true : false;
 
                     itemConfigList[itemID] = config;
@@ -452,10 +451,17 @@ public class EpisodeConfig
     public List<string> dialogList;
     public List<string> enableEquipmentID;
     public List<string> disableEquipmentID;
-    public bool isNeedRecord;
     public List<string> needFinishEpisodeID;
     public List<string> needItemID;
     public EpisodeType episodeType;
+    public BelongPhoneGroup belongGroup;
+}
+
+public enum BelongPhoneGroup
+{
+    None,
+    MainRoleBoy,
+
 }
 
 public class DialogConfig
@@ -466,7 +472,8 @@ public class DialogConfig
     public List<string> getItemID;
     public RoleType roleType;
     public List<string> choices;
-    public string showImgUrl;
+    public bool isNeedRecord;
+    public BelongPhoneGroup belongGroup;
 }
 
 public class ChoiceConfig
@@ -481,7 +488,6 @@ public class EquipmentConfig
     public string ID;
     public string name;
     public string description;
-    public string imageUrl;
     public List<string> getItemID;
     public string triggerEpisodeID;
     public string triggerPuzzleID;
@@ -493,7 +499,6 @@ public class ItemConfig
     public string ID;
     public string name;
     public string description;
-    public string imageUrl;
     public bool isSaveBag;
 }
 

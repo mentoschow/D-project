@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,39 +13,72 @@ public class PhoneView : MonoBehaviour
     [SerializeField]
     private Button closeBtn;
     [SerializeField]
-    private EpisodePlayerView phoneEpisodePlayer;
-    [SerializeField]
     private GameObject phoneHomepage;
     [SerializeField]
-    private GameObject episodePage;
+    private PhoneWechatView wechatPage;
+    [SerializeField]
+    private Transform wechatDialogPage;
+    [SerializeField]
+    private GameObject wechatDialogPageObj;
 
-    void Start()
+    private Dictionary<BelongPhoneGroup, EpisodePlayerView> rolePhoneDialogGroupList = new Dictionary<BelongPhoneGroup, EpisodePlayerView>();
+
+    void Awake()
     {
         itemBtn?.onClick.AddListener(ShowItemView);
-        episodeBtn?.onClick.AddListener(ShowEpisodeView);
+        episodeBtn?.onClick.AddListener(ShowWechat);
         closeBtn?.onClick.AddListener(Close);
+        MessageManager.Instance.Register(MessageDefine.OpenWechatDialogPage, OnOpenWechatDialogPage);
     }
 
     public void ShowPhone()
     {
         gameObject.SetActive(true);
         phoneHomepage?.SetActive(true);
-        episodePage.SetActive(false);
+        wechatPage?.gameObject.SetActive(false);
+        wechatDialogPage?.gameObject.SetActive(false);
         closeBtn.interactable = true;
     }
 
-    public void PlayPhoneEpisode(string id)
+    public void PlayPhoneEpisode(EpisodeConfig config)
     {
         gameObject.SetActive(true);
         closeBtn.interactable = false;
-        ShowEpisodeView();
-        phoneEpisodePlayer.PlayEpisode(id);
+        ShowEpisodeView(config.belongGroup, config.ID);
     }
 
-    private void ShowEpisodeView()
+    private void ShowWechat()
     {
-        episodePage.SetActive(true);
-        phoneEpisodePlayer.gameObject.SetActive(true);
+        wechatPage?.gameObject.SetActive(true);
+        wechatPage.UpdateView();
+    }
+
+    private void ShowEpisodeView(BelongPhoneGroup group, string ID)
+    {
+        if (!rolePhoneDialogGroupList.ContainsKey(group))
+        {
+            var playerView = BaseFunction.CreateView<EpisodePlayerView>(wechatDialogPageObj, wechatDialogPage);
+            rolePhoneDialogGroupList[group] = playerView;
+        }
+        var player = rolePhoneDialogGroupList[group];
+        player.gameObject.SetActive(true);
+        player.PlayEpisode(ID);
+    }
+
+    private void OnOpenWechatDialogPage(MessageData data)
+    {
+        var group = (BelongPhoneGroup)data.valueObject;
+        foreach (var view in rolePhoneDialogGroupList) 
+        {
+            if (view.Key == group)
+            {
+                view.Value.gameObject.SetActive(true);
+            }
+            else
+            {
+                view.Value.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void ShowItemView()
