@@ -1,0 +1,67 @@
+{
+    "ID": "puzzle_2",
+    "type": 1,
+    "itemConfigList": [
+        {
+            "itemID": "item_1",
+            "jewelryType": 1,
+            "combineList": []
+        },
+        {
+            "itemID": "item_2",
+            "jewelryType": 2,
+            "combineList": []
+        },
+        {
+            "itemID": "item_3",
+            "jewelryType": 3,
+            "combineList": []
+        },
+        {
+            "itemID": "item_4",
+            "jewelryType": 4,
+            "combineList": []
+        },
+         {
+            "itemID": "item_5",
+            "jewelryType": 5,
+            "combineList": []
+        },
+         {
+            "itemID": "item_6",
+            "jewelryType": 6,
+            "combineList": [
+                {
+                    "xPos": -76,
+                    "yPos": 129,
+                    "code": 1,
+                    "jewelryType": 1
+                },
+                          {
+                    "xPos": -10,
+                    "yPos": -35,
+                    "code": 1,
+                    "jewelryType": 2
+                },
+                          {
+                    "xPos": -87,
+                    "yPos": -230,
+                    "code": 4,
+                    "jewelryType": 3
+                },
+                          {
+                    "xPos": 177.8,
+                    "yPos": -257.6,
+                    "code": 4,
+                    "jewelryType": 4
+                },
+                          {
+                    "xPos": 7.9,
+                    "yPos": 227,
+                    "code": 4,
+                    "jewelryType": 5
+                }
+            ]
+        }
+    ]
+}

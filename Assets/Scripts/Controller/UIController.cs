@@ -1,17 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic;  
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoSingleton<UIController>
 {
-    // Ԥ����
+    // Ԥ����
     public GameObject homepageObj;
     public GameObject loadingObj;
+
+    GameObject puzzleViewPrefab;
+    GameObject testControlViewPrefab;
+
     public GameObject stageViewObj;
     public GameObject normalEpisodePlayerObj;
     public GameObject getItemTipObj;
     public GameObject phoneObj;
+
+    private EpisodePlayerView episodePlayerView;
+    private PuzzleView puzzleView;
+    private TestControlView testControlView;
 
     private HomepageView homepageView;
     private LoadingView loadingView;
@@ -23,6 +32,7 @@ public class UIController : MonoSingleton<UIController>
     private Transform layer3;
     private Transform layer4;
 
+    public Button testBtn;
     void Awake()
     {
         MessageManager.Instance.Register(MessageDefine.GameStart, GameStart);
@@ -36,6 +46,9 @@ public class UIController : MonoSingleton<UIController>
 
     private void Init()
     {
+        // homepageView = CreateView<HomepageView>(homepageObj, transform.Find("layer1"));
+        // loadingView = CreateView<LoadingView>(loadingObj, transform.Find("layer4"));
+        // puzzleView = CreateView<PuzzleView>(puzzleViewObj, transform.Find("layer4"));
         layer1 = transform.Find("layer1");
         layer2 = transform.Find("layer2");
         layer3 = transform.Find("layer3");
@@ -47,6 +60,23 @@ public class UIController : MonoSingleton<UIController>
 
         HideAllView();
         OpenHomepage();
+
+        testBtn.onClick.AddListener(onTestBtnClick);
+    }
+
+     void onTestBtnClick()
+    {
+        if (testControlViewPrefab == null)
+        {
+            string resourceName = "Prefabs/UI/TestControlView"; // 资源名称
+            testControlViewPrefab = Resources.Load<GameObject>(resourceName);
+        }
+        if (testControlView == null)
+        {
+            testControlView = CreateView<TestControlView>(testControlViewPrefab, layer4);
+        }
+
+        testControlView?.gameObject.SetActive(true);
     }
 
     public void HideAllView()
@@ -55,6 +85,27 @@ public class UIController : MonoSingleton<UIController>
         loadingView?.gameObject.SetActive(false);
         normalEpisodePlayerView?.gameObject.SetActive(false);
         phoneView?.gameObject.SetActive(false);
+        puzzleView?.gameObject.SetActive(false);
+    }
+
+    public void showPuzzleView()
+    {
+        if (puzzleViewPrefab == null)
+        {
+            string resourceName = "Prefabs/UI/puzzle/GamePuzzleView"; // 资源名称
+            puzzleViewPrefab = Resources.Load<GameObject>(resourceName);
+        }
+        if (puzzleView == null)
+        {
+            puzzleView = CreateView<PuzzleView>(puzzleViewPrefab, layer4);
+        }
+
+        puzzleView?.gameObject.SetActive(true);
+        var config = ConfigController.Instance.puzzleConfig;
+        if (config != null)
+        {
+            puzzleView?.updateView(config);
+        }
     }
 
     private void OpenHomepage()
