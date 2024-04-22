@@ -29,7 +29,7 @@ public class EpisodePlayerView : MonoBehaviour
     [SerializeField]
     private GameObject rightDialogObj;
     [SerializeField]
-    private Button nextBtn;
+    public Button nextBtn;
     [SerializeField]
     private GameObject nextArrow;
     [SerializeField]
@@ -46,6 +46,8 @@ public class EpisodePlayerView : MonoBehaviour
     private bool useTypeEffect = true;
     [SerializeField]
     private ScrollRect phoneScrollRect;
+    [SerializeField]
+    private Transform contentNode;
 
     private Queue<DialogConfig> dialogQueue = new Queue<DialogConfig>();
     private EpisodePlayerStatus curStatus;
@@ -62,12 +64,8 @@ public class EpisodePlayerView : MonoBehaviour
     {
         if (nextBtn != null)
         {
-            nextBtn.onClick.AddListener(onNextBtnClick);
+            nextBtn.onClick.AddListener(OnNextBtnClick);
             nextBtn.gameObject.SetActive(false);
-        }
-        if (phoneScrollRect != null)
-        {
-            
         }
         ChangeStatus(EpisodePlayerStatus.Stop);
     }
@@ -94,7 +92,7 @@ public class EpisodePlayerView : MonoBehaviour
         }
     }
 
-    private void onNextBtnClick()
+    public void OnNextBtnClick()
     {
         switch (curStatus)
         {
@@ -153,7 +151,6 @@ public class EpisodePlayerView : MonoBehaviour
             node.type = GameNodeType.NormalEpisode;
             node.ID = curEpisodeID;
             MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
-            CheckSaveHistory();
             // 最后再清空
             curEpisodeID = "";
             return;
@@ -245,10 +242,7 @@ public class EpisodePlayerView : MonoBehaviour
             ChangeStatus(EpisodePlayerStatus.Pause);
         }
         // 中间的图片
-        if (!string.IsNullOrEmpty(dialog.showImgUrl))
-        {
-
-        }
+        
         // 立绘、名字
         switch (dialog.roleType)
         {
@@ -264,6 +258,10 @@ public class EpisodePlayerView : MonoBehaviour
                 nameText.text = "";
                 roleImg.sprite = null;
                 break;
+        }
+        if (dialog.isNeedRecord)
+        {
+            GameDataProxy.Instance.normalHistoryDialog.Add(dialog);
         }
     }
 
@@ -285,12 +283,20 @@ public class EpisodePlayerView : MonoBehaviour
                 name = "男主角";
                 break;
         }
-        var view = BaseFunction.CreateView<PhoneEpisodePartView>(obj, transform);
+        var view = BaseFunction.CreateView<PhoneEpisodePartView>(obj, contentNode);
         if (view != null)
         {
             ChangeStatus(EpisodePlayerStatus.Pause);
             view.UpdateView(icon, name, dialog.content);
             phoneDialogList.Add(view);
+        }
+        if (dialog.isNeedRecord)
+        {
+            if (!GameDataProxy.Instance.phoneHistoryDialog.ContainsKey(dialog.belongGroup))
+            {
+                GameDataProxy.Instance.phoneHistoryDialog[dialog.belongGroup] = new List<DialogConfig>();
+            }
+            GameDataProxy.Instance.phoneHistoryDialog[dialog.belongGroup].Add(dialog);
         }
         Invoke("ScrollToEnd", 0.1f);
     }
@@ -302,10 +308,5 @@ public class EpisodePlayerView : MonoBehaviour
         {
             phoneScrollRect.verticalScrollbar.value = value;
         }, startValue, 0, 0.3f);
-    }
-
-    private void CheckSaveHistory()
-    {
-
     }
 }
