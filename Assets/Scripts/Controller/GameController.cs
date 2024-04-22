@@ -15,14 +15,14 @@ public class GameController : Singleton<GameController>
     public void CheckNextGameNode(MessageData node)
     {
         Debug.Log("检查是否能自动进行下一步" + node.gameLineNode);
-        GameDataProxy.Instance.canMainRoleMove = false;
+        GameDataProxy.Instance.canOperate = false;
         if (node.gameLineNode == null)
         {
             return;
         }
         switch (node.gameLineNode.type)
         {
-            case GameNodeType.GameStart:
+            case GameNodeType.Stage1Start:
                 UIController.Instance.ShowTransition(TransitionType.GameStart);
                 SceneController.Instance.ChangeScene(SceneType.LibraryOut);
                 break;
@@ -64,15 +64,15 @@ public class GameController : Singleton<GameController>
     private void FreeOperate()
     {
         UIController.Instance.HideAllView();
-        GameDataProxy.Instance.canMainRoleMove = true;
+        GameDataProxy.Instance.canOperate = true;
     }
 
     public void GameStart()
     {
         Debug.Log("游戏开始了");
         GameLineNode node = new GameLineNode();
-        node.type = GameNodeType.GameStart;
+        node.type = GameNodeType.Stage1Start;
         MessageManager.Instance.Send(MessageDefine.GameStart, new MessageData(node));
-        GameDataProxy.Instance.canMainRoleMove = true;
+        GameDataProxy.Instance.canOperate = true;
     }
 }

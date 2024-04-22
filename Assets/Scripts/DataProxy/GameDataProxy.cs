@@ -8,7 +8,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
 {
     public List<DialogConfig> historyDialog = new List<DialogConfig>();
     public List<ItemConfig> bagItem = new List<ItemConfig>();
-    public bool canMainRoleMove = false;
+    public bool canOperate = false;
     public string doingTutorial = "";
 
     public Dictionary<JewelryType,bool> jewelryCmpletion = new Dictionary<JewelryType, bool>();
@@ -17,7 +17,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
     {
         historyDialog = new List<DialogConfig>();
         bagItem = new List<ItemConfig>();
-        canMainRoleMove = false;
+        canOperate = false;
     }
 
     public bool checkJewelryComplete(JewelryType type)

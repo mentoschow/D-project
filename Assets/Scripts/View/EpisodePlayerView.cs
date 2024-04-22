@@ -63,7 +63,7 @@ public class EpisodePlayerView : MonoBehaviour
         if (nextBtn != null)
         {
             nextBtn.onClick.AddListener(onNextBtnClick);
-            nextBtn.interactable = false;
+            nextBtn.gameObject.SetActive(false);
         }
         if (phoneScrollRect != null)
         {
@@ -109,66 +109,6 @@ public class EpisodePlayerView : MonoBehaviour
         }
     }
 
-    public virtual void UpdateNormalView(DialogConfig dialog)
-    {
-        var configController = ConfigController.Instance;
-        // 选项
-        if (dialog.choices.Count > 0)
-        {
-            foreach (var choiceID in dialog.choices)
-            {
-                ChoiceConfig choice = configController.GetChoiceConfig(choiceID);
-                if (choice != null)
-                {
-                    choices.Add(choice);
-                }
-            }
-        }
-        else
-        {
-            choices = null;
-        }
-        // 打字机
-        if (useTypeEffect)
-        {
-            targetText = dialog.content;
-            typeSpeed = normalTypingSpeed;
-            typeTimer = 0;
-            ChangeStatus(EpisodePlayerStatus.Typing);
-        }
-        else
-        {
-            content.text = dialog.content;
-            ChangeStatus(EpisodePlayerStatus.Pause);
-        }
-        // 获得道具
-        if (dialog.getItemID.Count > 0)
-        {
-            UIController.Instance.GetItemTip(dialog.getItemID, transform);
-        }
-        // 中间的图片
-        if (!string.IsNullOrEmpty(dialog.showImgUrl))
-        {
-
-        }
-        // 立绘、名字
-        switch (dialog.roleType)
-        {
-            case RoleType.MainRoleGirl:
-                nameText.text = "女主角";
-                roleImg.sprite = girlSp;
-                break;
-            case RoleType.MainRoleBoy:
-                nameText.text = "男主角";
-                roleImg.sprite = boySp;
-                break;
-            default:
-                nameText.text = "";
-                roleImg.sprite = null;
-                break;
-        }
-    }
-
     public void PlayEpisode(string episodeID)
     {
         if (episodeID == "" || episodeID == null)
@@ -206,12 +146,15 @@ public class EpisodePlayerView : MonoBehaviour
     {
         if (dialogQueue.Count == 0)  // 结束了
         {
+            nextBtn.gameObject.SetActive(false);
             gameObject.SetActive(false);
             ChangeStatus(EpisodePlayerStatus.Stop);
             GameLineNode node = new GameLineNode();
             node.type = GameNodeType.NormalEpisode;
             node.ID = curEpisodeID;
             MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
+            CheckSaveHistory();
+            // 最后再清空
             curEpisodeID = "";
             return;
         }
@@ -219,7 +162,6 @@ public class EpisodePlayerView : MonoBehaviour
         if (dialog != null)
         {
             UpdateView(dialog);
-            GameDataProxy.Instance.historyDialog.Add(dialog);
         }
     }
 
@@ -230,7 +172,7 @@ public class EpisodePlayerView : MonoBehaviour
 
     protected void ShowChoices()
     {
-        nextBtn.interactable = false;
+        nextBtn.gameObject.SetActive(false);
         if (choiceView.Count > choices.Count)
         {
             for (int i = choices.Count; i < choiceView.Count; i++)
@@ -252,6 +194,28 @@ public class EpisodePlayerView : MonoBehaviour
 
     private void UpdateView(DialogConfig dialog)
     {
+        var configController = ConfigController.Instance;
+        // 选项
+        if (dialog.choices.Count > 0)
+        {
+            foreach (var choiceID in dialog.choices)
+            {
+                ChoiceConfig choice = configController.GetChoiceConfig(choiceID);
+                if (choice != null)
+                {
+                    choices.Add(choice);
+                }
+            }
+        }
+        else
+        {
+            choices = null;
+        }
+        // 获得道具
+        if (dialog.getItemID.Count > 0)
+        {
+            UIController.Instance.GetItemTip(dialog.getItemID);
+        }
         if (curType == EpisodeType.Normal) {
             UpdateNormalView(dialog);
         }
@@ -261,7 +225,45 @@ public class EpisodePlayerView : MonoBehaviour
         }
         if (nextBtn != null)
         {
-            nextBtn.interactable = true;
+            nextBtn.gameObject.SetActive(true);
+        }
+    }
+
+    private void UpdateNormalView(DialogConfig dialog)
+    {
+        // 打字机
+        if (useTypeEffect)
+        {
+            targetText = dialog.content;
+            typeSpeed = normalTypingSpeed;
+            typeTimer = 0;
+            ChangeStatus(EpisodePlayerStatus.Typing);
+        }
+        else
+        {
+            content.text = dialog.content;
+            ChangeStatus(EpisodePlayerStatus.Pause);
+        }
+        // 中间的图片
+        if (!string.IsNullOrEmpty(dialog.showImgUrl))
+        {
+
+        }
+        // 立绘、名字
+        switch (dialog.roleType)
+        {
+            case RoleType.MainRoleGirl:
+                nameText.text = "女主角";
+                roleImg.sprite = girlSp;
+                break;
+            case RoleType.MainRoleBoy:
+                nameText.text = "男主角";
+                roleImg.sprite = boySp;
+                break;
+            default:
+                nameText.text = "";
+                roleImg.sprite = null;
+                break;
         }
     }
 
@@ -300,5 +302,10 @@ public class EpisodePlayerView : MonoBehaviour
         {
             phoneScrollRect.verticalScrollbar.value = value;
         }, startValue, 0, 0.3f);
+    }
+
+    private void CheckSaveHistory()
+    {
+
     }
 }
