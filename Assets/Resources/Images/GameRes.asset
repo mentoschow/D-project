@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74de00521a916b9479da88f955780ced, type: 3}
   m_Name: GameRes
   m_EditorClassIdentifier: 
-  imageRes:
-  - name: 
+  clueItemImage:
+  - ID: 
+    sprite: {fileID: 0}
+  dialogImage:
+  - ID: 
     sprite: {fileID: 0}
