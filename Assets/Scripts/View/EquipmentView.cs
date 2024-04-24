@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EquipmentView : MonoBehaviour
 {
-    public int equipmentID;
+    public string equipmentID;
 
     private EquipmentConfig equipmentConfig;
     private PolygonCollider2D pCollider;
