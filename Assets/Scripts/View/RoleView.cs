@@ -92,7 +92,7 @@ public class RoleView : MonoBehaviour
         {
             tips.SetActive(true);
             triggerObj = collision.gameObject;
-            int equipmentID = triggerObj.GetComponent<EquipmentView>().equipmentID;
+            string equipmentID = triggerObj.GetComponent<EquipmentView>().equipmentID;
             Debug.Log("当前发生碰撞的设备id：" + equipmentID);
         }
     }
