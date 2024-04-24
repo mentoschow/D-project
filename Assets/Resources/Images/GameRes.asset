@@ -18,3 +18,8 @@ MonoBehaviour:
   dialogImage:
   - ID: 
     sprite: {fileID: 0}
+  roleRes:
+  - type: 0
+    name: 
+    icon: {fileID: 0}
+    fullBody: {fileID: 0}

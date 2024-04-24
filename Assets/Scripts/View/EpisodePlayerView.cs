@@ -119,6 +119,7 @@ public class EpisodePlayerView : MonoBehaviour
         }
         //horizontalChoiceLayout.gameObject.SetActive(false);
         //verticalChoiceLayout.gameObject.SetActive(false);
+        GameDataProxy.Instance.canOperate = false;
         var tempQueue = dialogQueue;
         var config = ConfigController.Instance;
         dialogQueue = new Queue<DialogConfig>();
