@@ -28,6 +28,17 @@ public class BaseFunction : MonoBehaviour
         return default(T);
     }
 
+    public static T CreateView<T>(GameObject prefab)
+    {
+        var obj = Instantiate(prefab);
+        if (obj != null)
+        {
+            var view = obj.GetComponent<T>();
+            return view;
+        }
+        return default(T);
+    }
+
     public static string StripLength(Text text, int width)
     {
         int totalLength = 0;

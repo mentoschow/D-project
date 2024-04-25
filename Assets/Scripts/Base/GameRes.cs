@@ -27,3 +27,11 @@ public class RoleRes
     public Sprite icon;
     public Sprite fullBody;
 }
+
+[System.Serializable]
+public class WechatGroupRes
+{
+    public BelongPhoneGroup group;
+    public string name;
+    public Sprite icon;
+}

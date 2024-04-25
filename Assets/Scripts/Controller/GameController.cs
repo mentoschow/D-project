@@ -29,7 +29,7 @@ public class GameController : Singleton<GameController>
             case GameNodeType.Transition:
                 if (node.gameLineNode.ID == TransitionType.GameStart.ToString())
                 {
-                    UIController.Instance.PlayEpisode("TEST01_010_010");
+                    UIController.Instance.PlayEpisode("TEST01_010_020");
                 }
                 break;
             case GameNodeType.GameEnd:

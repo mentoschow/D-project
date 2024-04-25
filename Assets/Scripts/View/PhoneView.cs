@@ -15,25 +15,47 @@ public class PhoneView : MonoBehaviour
     }
 
     [SerializeField]
-    private Button itemBtn;
-    [SerializeField]
-    private Button wechatBtn;
-    [SerializeField]
     private Button closeBtn;
+
+    // 信号切换的图
+    [SerializeField]
+    private GameObject signal;
+    [SerializeField] 
+    private GameObject nosignal;
+
+    // 边边按钮
     [SerializeField]
     private Button backBtn;
     [SerializeField]
     private Button fastItemBtn;
     [SerializeField] 
     private Button fastWechatBtn;
+
+    // 主页
     [SerializeField]
     private GameObject phoneHomepage;
+    [SerializeField]
+    private Button itemBtn;
+    [SerializeField]
+    private Button wechatBtn;
+    [SerializeField]
+    private GameObject wechatBtnRedPoint;
+
+    // 线索
     [SerializeField] 
     private Transform cluePage;
+
+    // 聊聊
     [SerializeField]
     private PhoneWechatView wechatPage;
+
+    // 聊聊对话
+    [SerializeField]
+    private GameObject dialogRoot;
     [SerializeField]
     private Transform wechatDialogPage;
+    [SerializeField]
+    private Text dialogGroupName;
 
     // 资源
     [SerializeField]
@@ -59,7 +81,10 @@ public class PhoneView : MonoBehaviour
         phoneHomepage?.SetActive(true);
         cluePage?.gameObject.SetActive(false);
         wechatPage?.gameObject.SetActive(false);
-        wechatDialogPage?.gameObject.SetActive(false);
+        dialogRoot?.gameObject.SetActive(false);
+        backBtn.gameObject.SetActive(true);
+        fastItemBtn.gameObject.SetActive(false);
+        fastWechatBtn.gameObject.SetActive(false);
         curPage = PhonePageType.Homepage;
     }
 
@@ -76,15 +101,22 @@ public class PhoneView : MonoBehaviour
             return;
         }
         cluePage?.gameObject.SetActive(false);
-        wechatDialogPage?.gameObject?.SetActive(false);
+        dialogRoot?.gameObject?.SetActive(false);
         wechatPage?.gameObject.SetActive(true);
-        wechatPage.UpdateView();
+        backBtn.gameObject.SetActive(true);
+        fastItemBtn.gameObject.SetActive(true);
+        fastWechatBtn.gameObject.SetActive(true);
         curPage = PhonePageType.Wechat;
+        wechatPage.UpdateView();
     }
 
     private void ShowEpisodeView(BelongPhoneGroup group, string ID)
     {
-        wechatDialogPage.gameObject.SetActive(true);
+        dialogRoot.gameObject.SetActive(true);
+        backBtn.gameObject.SetActive(false);
+        fastItemBtn.gameObject.SetActive(false);
+        fastWechatBtn.gameObject.SetActive(false);
+        curPage = PhonePageType.WechatDialog;
         if (!rolePhoneDialogGroupList.ContainsKey(group))
         {
             var playerView = BaseFunction.CreateView<EpisodePlayerView>(wechatDialogPageObj, wechatDialogPage);
@@ -93,12 +125,11 @@ public class PhoneView : MonoBehaviour
         var player = rolePhoneDialogGroupList[group];
         player.gameObject.SetActive(true);
         player.PlayEpisode(ID);
-        curPage = PhonePageType.WechatDialog;
     }
 
     private void OnOpenWechatDialogPage(MessageData data)
     {
-        wechatDialogPage.gameObject.SetActive(true);
+        dialogRoot.gameObject.SetActive(true);
         var group = (BelongPhoneGroup)data.valueObject;
         foreach (var view in rolePhoneDialogGroupList) 
         {
@@ -112,6 +143,8 @@ public class PhoneView : MonoBehaviour
                 view.Value.gameObject.SetActive(false);
             }
         }
+        string name = ResourcesController.Instance.wechatGroupRes[group].name;
+        dialogGroupName.text = name;
     }
 
     private void ShowItemView()
@@ -120,10 +153,13 @@ public class PhoneView : MonoBehaviour
         {
             return;
         }
-        wechatPage?.gameObject.SetActive(false);
-        wechatDialogPage?.gameObject.SetActive(false);
-        cluePage?.gameObject.SetActive(true);
         curPage = PhonePageType.Clue;
+        wechatPage?.gameObject.SetActive(false);
+        dialogRoot?.gameObject.SetActive(false);
+        cluePage?.gameObject.SetActive(true);
+        backBtn.gameObject.SetActive(true);
+        fastItemBtn.gameObject.SetActive(true);
+        fastWechatBtn.gameObject.SetActive(true);
     }
 
     private void BackPage()
@@ -146,7 +182,7 @@ public class PhoneView : MonoBehaviour
                 curPage = PhonePageType.Homepage;
                 break;
             case PhonePageType.WechatDialog:
-                wechatDialogPage.gameObject.SetActive(false);
+                dialogRoot.gameObject.SetActive(false);
                 curPage = PhonePageType.Wechat;
                 break;
         }
