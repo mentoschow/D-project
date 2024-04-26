@@ -43,7 +43,7 @@ public class PhoneView : MonoBehaviour
 
     // ÏßË÷
     [SerializeField] 
-    private Transform cluePage;
+    private ClueItemView cluePage;
 
     // ÁÄÁÄ
     [SerializeField]
@@ -160,6 +160,8 @@ public class PhoneView : MonoBehaviour
         backBtn.gameObject.SetActive(true);
         fastItemBtn.gameObject.SetActive(true);
         fastWechatBtn.gameObject.SetActive(true);
+
+        cluePage.UpdateView();
     }
 
     private void BackPage()

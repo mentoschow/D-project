@@ -804,6 +804,7 @@ MonoBehaviour:
   normalEpisodePlayerObj: {fileID: 2873157605445166545, guid: 0c679b46e8c975243a136f1783530915, type: 3}
   getItemTipObj: {fileID: 6497115259499853773, guid: 0bc171a1e09c7d143a6b1e55f39b6743, type: 3}
   phoneObj: {fileID: 6497115259499853773, guid: ab070feacd192c4409fe9a901173ebfb, type: 3}
+  clueItemViewObj: {fileID: 2224314662894617154, guid: ea726c3c493bec24984237a75fb823c6, type: 3}
   testBtn: {fileID: 1279332610}
 --- !u!81 &2202462677185376993
 AudioListener:
