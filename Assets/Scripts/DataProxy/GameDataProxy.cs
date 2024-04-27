@@ -11,7 +11,10 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public bool canMainRoleMove = false;
     public string doingTutorial = "";
 
-    public Dictionary<JewelryType,bool> jewelryCmpletion = new Dictionary<JewelryType, bool>();
+    //public Dictionary<JewelryType,bool> jewelryCmpletion = new Dictionary<JewelryType, bool>();
+    public Dictionary<JewelryType,int> insertjewelryMap = new Dictionary<JewelryType, int>();
+    public Dictionary<JewelryType, int> rightInsertMap = new Dictionary<JewelryType, int>();
+
     public List<PuzzleCombineConfig> puzzleCombineConfigs = new List<PuzzleCombineConfig>();
     public GameDataProxy()
     {
@@ -22,29 +25,10 @@ public class GameDataProxy : Singleton<GameDataProxy>
 
     public bool checkJewelryComplete(JewelryType type)
     {
-        bool complete = false;
-        this.jewelryCmpletion.TryGetValue(type, out complete);
-        return complete;
-    }
-    public bool checkJewelryCanUse(int code,JewelryType type)
-    {
-        bool result = false;
-        JewelryType checkType = JewelryType.Not;
-        foreach (KeyValuePair<JewelryType, bool> item in jewelryCmpletion)
-        {
-            if (!item.Value)
-            {
-                checkType = item.Key;
-
-                break;
-            }
-        }
-        if(checkType > 0 && checkType  == type)
-        {
-            PuzzleCombineConfig config = this.getCombineConfig(checkType);
-            result = config.code == code;
-        }
-        return result;
+        int useCode = 0;
+        bool isExist = insertjewelryMap.TryGetValue(type, out useCode);
+        bool isComplete = isExist && (useCode > 0);
+        return isComplete;
     }
     public PuzzleCombineConfig getCombineConfig(JewelryType type)
     {
@@ -55,5 +39,19 @@ public class GameDataProxy : Singleton<GameDataProxy>
         }
 
         return combineConfig;
+    }
+
+    public bool checkInsertOver()
+    {
+        bool result = false;
+        if(insertjewelryMap.Count == rightInsertMap.Count)
+        {
+            result = insertjewelryMap.SequenceEqual(rightInsertMap);
+            if (!result)
+            {
+                insertjewelryMap.Clear();
+            }
+        }
+        return result;
     }
 }

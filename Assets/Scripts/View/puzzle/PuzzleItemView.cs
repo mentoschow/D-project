@@ -139,9 +139,14 @@ public class PuzzleItemView : MonoSingleton<PuzzleItemView>
                     insertViewMap[viewID] = itemView;
                 }
                 bool complete = GameDataProxy.Instance.checkJewelryComplete(viewID);
-                string setUrl = ConfigController.Instance.getJewelryUrl(viewID, itemConfig.code);
+                int useCode = 0;
+                GameDataProxy.Instance.insertjewelryMap.TryGetValue(itemConfig.jewelryType,out useCode);
 
-                string url = complete ? setUrl : null;
+                string url = null;
+                if(complete && useCode > 0)
+                {
+                    url = ConfigController.Instance.getJewelryUrl(viewID, useCode);
+                }
                 itemView?.updateView(url);
                 //string url = complete?:null
                 //?.updateView()
