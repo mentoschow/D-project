@@ -29,7 +29,7 @@ public class GetItemTipPartView : MonoBehaviour
 
     public void UpdateView(string itemID)
     {
-        var config = ConfigController.Instance.GetItemConfig(itemID);
+        var config = ConfigController.Instance.GetClueItemConfig(itemID);
         if (config != null)
         {
             var curRoleType = RoleController.Instance.curRoleView.characterType;
