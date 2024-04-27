@@ -10,11 +10,18 @@ public class CommonUtils : MonoSingleton<CommonUtils>
             return;
         }
         Sprite image = Resources.Load<Sprite>(imageResourcePath);
-        if (image != null && uiImage != null)
+        if(uiImage != null)
         {
-            uiImage.sprite = image;
-            uiImage.SetNativeSize();
-            uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 255f);
+            if (image != null)
+            {
+                uiImage.sprite = image;
+                uiImage.SetNativeSize();
+                uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 255f);
+            }
+            else
+            {
+                uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 0f);
+            }
         }
 
     }

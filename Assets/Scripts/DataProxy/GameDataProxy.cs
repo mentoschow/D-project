@@ -16,6 +16,9 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public Dictionary<JewelryType,int> insertjewelryMap = new Dictionary<JewelryType, int>();
     public Dictionary<JewelryType, int> rightInsertMap = new Dictionary<JewelryType, int>();
 
+    public List<int> rightMimaList = new List<int> { 5, 4, 3, 3, 1 };
+    public List<int> useMimaList = new List<int> ();
+
     public List<PuzzleCombineConfig> puzzleCombineConfigs = new List<PuzzleCombineConfig>();
     public GameDataProxy()
     {
@@ -53,6 +56,15 @@ public class GameDataProxy : Singleton<GameDataProxy>
                 insertjewelryMap.Clear();
             }
         }
+        return result;
+    }
+
+    public bool checkMimaOver()
+    {
+        bool result = false;
+        bool isEqual = useMimaList.SequenceEqual(rightMimaList);
+        result = isEqual;
+
         return result;
     }
 }

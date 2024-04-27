@@ -573,5 +573,6 @@ public enum TransitionType  // 转场类型
 
 public enum PuzzleType
 {
-
+    JewelryPuzzleDone = 0,//密码锁
+    MimaPuzzleDone = 1//首饰
 }
