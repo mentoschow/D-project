@@ -10,4 +10,6 @@ public static class MessageDefine
     public static readonly string PlayPuzzleDone = "PlayTransitionDone";
     public static readonly string GetItemTipDone = "GetItemTipDone";
     public static readonly string OpenWechatDialogPage = "OpenWechatDialogPage";
+    public static readonly string ClueItemClick = "ClueItemClick";
+    public static readonly string InteractWithEquipment = "InteractWithEquipment";
 }

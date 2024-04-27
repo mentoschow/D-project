@@ -80,9 +80,18 @@ public class RoleController : MonoSingleton<RoleController>
             {
                 curRoleView.moveVec = MoveVector.None;
             }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                // ½»»¥
+                curRoleView.InteractWithEquipment();
+            }
         }
     }
 
+    public void SetRolePos(float posX)
+    {
+        curRoleView.transform.position = new Vector2(posX, 0);
+    }
 }
 public enum MoveVector
 {

@@ -203,8 +203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdaaff5352cd98e449498f0cfcff2fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneObj:
-  - {fileID: 3163663043471574251, guid: 44230197463e19a47874341e4b307721, type: 3}
   sceneBgWidth: 0
   sceneBgHeight: 0
 --- !u!1 &276897484
@@ -659,7 +657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542169990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -804,6 +802,7 @@ MonoBehaviour:
   normalEpisodePlayerObj: {fileID: 2873157605445166545, guid: 0c679b46e8c975243a136f1783530915, type: 3}
   getItemTipObj: {fileID: 6497115259499853773, guid: 0bc171a1e09c7d143a6b1e55f39b6743, type: 3}
   phoneObj: {fileID: 6497115259499853773, guid: ab070feacd192c4409fe9a901173ebfb, type: 3}
+  clueItemViewObj: {fileID: 2224314662894617154, guid: ea726c3c493bec24984237a75fb823c6, type: 3}
   testBtn: {fileID: 1279332610}
 --- !u!81 &2202462677185376993
 AudioListener:
@@ -902,4 +901,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55809fb7445159145b3fe62bfb234ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameCam: {fileID: 0}

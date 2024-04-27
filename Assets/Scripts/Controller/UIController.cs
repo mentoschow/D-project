@@ -17,6 +17,7 @@ public class UIController : MonoSingleton<UIController>
     public GameObject normalEpisodePlayerObj;
     public GameObject getItemTipObj;
     public GameObject phoneObj;
+    public GameObject clueItemViewObj;
 
     private EpisodePlayerView episodePlayerView;
     private PuzzleView puzzleView;
@@ -26,6 +27,7 @@ public class UIController : MonoSingleton<UIController>
     private LoadingView loadingView;
     private EpisodePlayerView normalEpisodePlayerView;
     private PhoneView phoneView;
+    private ClueItemView mainRoleBoyClueView;
 
     private Transform layer1;
     private Transform layer2;
@@ -46,9 +48,6 @@ public class UIController : MonoSingleton<UIController>
 
     private void Init()
     {
-        // homepageView = CreateView<HomepageView>(homepageObj, transform.Find("layer1"));
-        // loadingView = CreateView<LoadingView>(loadingObj, transform.Find("layer4"));
-        // puzzleView = CreateView<PuzzleView>(puzzleViewObj, transform.Find("layer4"));
         layer1 = transform.Find("layer1");
         layer2 = transform.Find("layer2");
         layer3 = transform.Find("layer3");
@@ -57,6 +56,7 @@ public class UIController : MonoSingleton<UIController>
         loadingView = CreatePanelView<LoadingView>(loadingObj, layer4);
         normalEpisodePlayerView = CreatePanelView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
         phoneView = CreatePanelView<PhoneView>(phoneObj, layer2);
+        mainRoleBoyClueView = CreatePanelView<ClueItemView>(clueItemViewObj, layer2);
 
         HideAllView();
         OpenHomepage();
@@ -86,6 +86,7 @@ public class UIController : MonoSingleton<UIController>
         normalEpisodePlayerView?.gameObject.SetActive(false);
         phoneView?.gameObject.SetActive(false);
         puzzleView?.gameObject.SetActive(false);
+        mainRoleBoyClueView?.gameObject.SetActive(false);
     }
 
     public void showPuzzleView()

@@ -26,15 +26,18 @@ public class PhoneWechatPartView : MonoBehaviour
     public void UpdateView(BelongPhoneGroup _group, DialogConfig dialog)
     {
         group = _group;
-        var res = ResourcesController.Instance.roleRes[dialog.roleType];
-        if (res != null)
+        if (ResourcesController.Instance.roleRes.ContainsKey(dialog.roleType))
         {
+            var res = ResourcesController.Instance.roleRes[dialog.roleType];
             icon.sprite = res.icon;
             nameText.text = res.name;
-            dialogPreviewText.text = dialog.content;
         }
+        dialogPreviewText.text = dialog.content;
         var newString = BaseFunction.StripLength(dialogPreviewText, maxTextWidth);
-        dialogPreviewText.text = newString + "...";
+        if (dialogPreviewText.text != newString)
+        {
+            dialogPreviewText.text = newString + "...";
+        }
     }
 
     private void OnButtonClick()
