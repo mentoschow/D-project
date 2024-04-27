@@ -67,7 +67,7 @@ public class ClueItemView : MonoBehaviour
     private void ShowDetail(MessageData data)
     {
         string itemID = data.valueString;
-        ItemConfig item = ConfigController.Instance.GetItemConfig(itemID);
+        ItemConfig item = ConfigController.Instance.GetClueItemConfig(itemID);
         if (item != null )
         {
             detailPage?.SetActive(true);

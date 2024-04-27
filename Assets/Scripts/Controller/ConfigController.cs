@@ -67,6 +67,7 @@ public class ConfigController : Singleton<ConfigController>
     private Dictionary<string, ChoiceConfig> choiceConfigList = new Dictionary<string, ChoiceConfig>();  // 选项属性
     private Dictionary<string, EquipmentConfig> equipmentConfigList = new Dictionary<string, EquipmentConfig>();  // 场景设备（物品）属性
     private Dictionary<string, ItemConfig> itemConfigList = new Dictionary<string, ItemConfig>();  // 道具（线索）属性
+    private Dictionary<string, MergeClueConfig> mergeClueConfigList = new Dictionary<string, MergeClueConfig>();
 
     private string testJsonPath = configPath + "puzzle.json";
     public TextAsset jsonTextAsset; 
@@ -308,7 +309,7 @@ public class ConfigController : Singleton<ConfigController>
         }
     }
 
-    public ItemConfig GetItemConfig(string itemID)
+    public ItemConfig GetClueItemConfig(string itemID)
     {
         if (!itemConfigList.ContainsKey(itemID))
         {
@@ -343,6 +344,46 @@ public class ConfigController : Singleton<ConfigController>
         else
         {
             return itemConfigList[itemID];
+        }
+    }
+
+    public MergeClueConfig GetMergeClueConfig(string ID)
+    {
+        if (!mergeClueConfigList.ContainsKey(ID))
+        {
+            MergeClueConfig config = new MergeClueConfig();
+            if (!datatableDic.ContainsKey("MergeClueConfig"))
+            {
+                Debug.LogError("没有线索合并配置表");
+                return null;
+            }
+            var dt = datatableDic["MergeClueConfig"];
+            if (dt.Rows.Count == 0)
+            {
+                Debug.LogError("线索合并配置不存在，id：" + ID);
+                return null;
+            }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var row = dt.Rows[i];
+                if (row["ID"]?.ToString() == ID.ToString())
+                {
+                    config.ID = ID;
+                    string prepareClueList = row["prepareClueList"].ToString();
+                    config.prepareClueList = new List<string>(prepareClueList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    string correctClueList = row["correctClueList"].ToString();
+                    config.correctClueList = new List<string>(correctClueList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.completeClue = row["completeClue"].ToString();
+
+                    mergeClueConfigList[ID] = config;
+                    break;
+                }
+            }
+            return config;
+        }
+        else
+        {
+            return mergeClueConfigList[ID];
         }
     }
 
@@ -531,7 +572,13 @@ public class ItemConfig
     public bool isSaveBag;
 }
 
-
+public class MergeClueConfig
+{
+    public string ID;
+    public List<string> prepareClueList;
+    public List<string> correctClueList;
+    public string completeClue;
+}
 
 
 public class ClickPointConfig
