@@ -25,7 +25,10 @@ public class ClueItemPartView : MonoBehaviour
         {
             item = _item;
             content.text = item.name;
-            icon.sprite = ResourcesController.Instance.clueItemRes[item.ID].sprite;
+            if (ResourcesController.Instance.clueItemRes.ContainsKey(item.ID))
+            {
+                icon.sprite = ResourcesController.Instance.clueItemRes[item.ID].sprite;
+            }
         }
     }
 

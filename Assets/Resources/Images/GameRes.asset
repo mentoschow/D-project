@@ -23,3 +23,7 @@ MonoBehaviour:
     name: 
     icon: {fileID: 0}
     fullBody: {fileID: 0}
+  - type: 1
+    name: 
+    icon: {fileID: 0}
+    fullBody: {fileID: 0}
