@@ -8,6 +8,7 @@ public class ResourcesController : MonoSingleton<ResourcesController>
     private GameRes gameRes;
 
     public Dictionary<RoleType, RoleRes> roleRes = new Dictionary<RoleType, RoleRes>();
+    public Dictionary<BelongPhoneGroup, WechatGroupRes> wechatGroupRes = new Dictionary<BelongPhoneGroup, WechatGroupRes>();
     public Dictionary<string, ImageRes> clueItemRes = new Dictionary<string, ImageRes>();
     public Dictionary<string, ImageRes> dialogItemRes = new Dictionary<string, ImageRes>();
 
