@@ -5,8 +5,7 @@ using UnityEngine.U2D;
 
 public class CameraController : MonoSingleton<CameraController>
 {
-    public Camera gameCam;
-
+    private Camera gameCam;
     private bool canMove;
     
     void Start()
@@ -36,7 +35,7 @@ public class CameraController : MonoSingleton<CameraController>
         }
         if (canMove)
         {
-            transform.position = new Vector3(newX, 0, -1);
+            transform.position = new Vector3(newX, 0, -10);
         }
     }
 

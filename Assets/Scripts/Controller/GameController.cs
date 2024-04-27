@@ -9,6 +9,7 @@ public class GameController : Singleton<GameController>
         MessageManager.Instance.Register(MessageDefine.PlayTransitionDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.GameStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
+        MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
         var c = ConfigController.Instance;
     }
 
@@ -24,7 +25,7 @@ public class GameController : Singleton<GameController>
         {
             case GameNodeType.Stage1Start:
                 UIController.Instance.ShowTransition(TransitionType.GameStart);
-                SceneController.Instance.ChangeScene(SceneType.LibraryOut);
+                SceneController.Instance.ChangeScene(SceneType.LibraryIn);
                 break;
             case GameNodeType.Transition:
                 if (node.gameLineNode.ID == TransitionType.GameStart.ToString())
@@ -74,5 +75,27 @@ public class GameController : Singleton<GameController>
         node.type = GameNodeType.Stage1Start;
         MessageManager.Instance.Send(MessageDefine.GameStart, new MessageData(node));
         GameDataProxy.Instance.canOperate = true;
+    }
+
+    private void OnInteractWithEquipment(MessageData data)
+    {
+        string equipmentID = data.valueString;
+        Debug.Log("与设备交互：" + equipmentID);
+        if (string.IsNullOrEmpty(equipmentID))
+        {
+            return;
+        }
+        EquipmentConfig equipmentConfig = ConfigController.Instance.GetEquipmentConfig(equipmentID);
+        if (equipmentConfig != null)
+        {
+            if (equipmentConfig.triggerEpisodeID != null)
+            {
+                // 触发剧情
+            }
+            else if (equipmentConfig.triggerPuzzleID != null)
+            {
+                // 触发解谜
+            }
+        }
     }
 }

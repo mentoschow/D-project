@@ -33,6 +33,7 @@ public class RoleView : MonoBehaviour
     private GameObject triggerObj;
     private GameObject tips;
     private float originScaleX;  // 向右
+    private string colliderEquipmentID = null;
 
     private void Start()
     {
@@ -83,23 +84,23 @@ public class RoleView : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
         if (collision.tag == "Equipment")
         {
             tips.SetActive(true);
             triggerObj = collision.gameObject;
-            string equipmentID = triggerObj.GetComponent<EquipmentView>().equipmentID;
-            Debug.Log("当前发生碰撞的设备id：" + equipmentID);
+            colliderEquipmentID = triggerObj.GetComponent<EquipmentView>().equipmentID;
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         tips.SetActive(false);
+        colliderEquipmentID = null;
     }
 
     private void CheckSlope()
@@ -132,5 +133,13 @@ public class RoleView : MonoBehaviour
     private void SlopeCheckHorizontal(Vector2 checkPos)
     {
         
+    }
+
+    public void InteractWithEquipment()
+    {
+        if (colliderEquipmentID != null)
+        {
+            MessageManager.Instance.Send(MessageDefine.InteractWithEquipment, new MessageData(colliderEquipmentID));
+        }
     }
 }

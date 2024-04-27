@@ -6,33 +6,44 @@ public class EquipmentView : MonoBehaviour
 {
     public string equipmentID;
 
+    [SerializeField]
+    private GameObject star;  // …¡À∏–«–«
+    [SerializeField]
+    private float flashTime = 2;
+
     private EquipmentConfig equipmentConfig;
-    private PolygonCollider2D pCollider;
-    private BoxCollider2D trigger;
-    private SpriteRenderer spriteRenderer;
+    private bool interactiveable = true;
+    private float timer = 0;
 
     void Start()
     {
-        trigger = GetComponent<BoxCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        
+        timer = 0;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            spriteRenderer.color = Color.red;
+            
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        spriteRenderer.color = Color.white;
+        
     }
 
     void Update()
     {
+        if (timer < flashTime)
+        {
+            timer += Time.deltaTime;
+        }
+        else if (timer == flashTime)
+        {
+            timer = -flashTime;
+        }
         
+        star.SetActive(timer > 0);
     }
 }

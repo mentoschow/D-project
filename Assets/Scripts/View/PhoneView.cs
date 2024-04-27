@@ -143,8 +143,11 @@ public class PhoneView : MonoBehaviour
                 view.Value.gameObject.SetActive(false);
             }
         }
-        string name = ResourcesController.Instance.wechatGroupRes[group].name;
-        dialogGroupName.text = name;
+        if (ResourcesController.Instance.wechatGroupRes.ContainsKey(group))
+        {
+            string name = ResourcesController.Instance.wechatGroupRes[group].name;
+            dialogGroupName.text = name;
+        }
     }
 
     private void ShowItemView()
