@@ -9,27 +9,28 @@ public class GameController : Singleton<GameController>
         MessageManager.Instance.Register(MessageDefine.PlayTransitionDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.GameStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
+        MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
         var c = ConfigController.Instance;
     }
 
     public void CheckNextGameNode(MessageData node)
     {
         Debug.Log("检查是否能自动进行下一步" + node.gameLineNode);
-        GameDataProxy.Instance.canMainRoleMove = false;
+        GameDataProxy.Instance.canOperate = false;
         if (node.gameLineNode == null)
         {
             return;
         }
         switch (node.gameLineNode.type)
         {
-            case GameNodeType.GameStart:
+            case GameNodeType.Stage1Start:
                 UIController.Instance.ShowTransition(TransitionType.GameStart);
-                SceneController.Instance.ChangeScene(SceneType.LibraryOut);
+                SceneController.Instance.ChangeScene(SceneType.LibraryIn);
                 break;
             case GameNodeType.Transition:
                 if (node.gameLineNode.ID == TransitionType.GameStart.ToString())
                 {
-                    UIController.Instance.PlayEpisode("TEST01_010_010");
+                    UIController.Instance.PlayEpisode("TEST01_010_020");
                 }
                 break;
             case GameNodeType.GameEnd:
@@ -64,15 +65,37 @@ public class GameController : Singleton<GameController>
     private void FreeOperate()
     {
         UIController.Instance.HideAllView();
-        GameDataProxy.Instance.canMainRoleMove = true;
+        GameDataProxy.Instance.canOperate = true;
     }
 
     public void GameStart()
     {
         Debug.Log("游戏开始了");
         GameLineNode node = new GameLineNode();
-        node.type = GameNodeType.GameStart;
+        node.type = GameNodeType.Stage1Start;
         MessageManager.Instance.Send(MessageDefine.GameStart, new MessageData(node));
-        GameDataProxy.Instance.canMainRoleMove = true;
+        GameDataProxy.Instance.canOperate = true;
+    }
+
+    private void OnInteractWithEquipment(MessageData data)
+    {
+        string equipmentID = data.valueString;
+        Debug.Log("与设备交互：" + equipmentID);
+        if (string.IsNullOrEmpty(equipmentID))
+        {
+            return;
+        }
+        EquipmentConfig equipmentConfig = ConfigController.Instance.GetEquipmentConfig(equipmentID);
+        if (equipmentConfig != null)
+        {
+            if (equipmentConfig.triggerEpisodeID != null)
+            {
+                // 触发剧情
+            }
+            else if (equipmentConfig.triggerPuzzleID != null)
+            {
+                // 触发解谜
+            }
+        }
     }
 }

@@ -55,9 +55,9 @@ public class ConfigController : Singleton<ConfigController>
         {"ChapterConfig", configPath + "配置文档-章节" + fileTailPath},
         {"EpisodeConfig", configPath + "配置文档-情节" + fileTailPath},
         {"DialogConfig", configPath + "配置文档-对话" + fileTailPath},
-        //{"ChoiceConfig", configPath + "配置文档_-_对话选项" + fileTailPath},
-        //{"EquipmentConfig", configPath + "配置文档_-_物品" + fileTailPath},
-        //{"ItemConfig", configPath + "配置文档_-_道具" + fileTailPath},
+        //{"ChoiceConfig", configPath + "配置文档-对话选项" + fileTailPath},
+        //{"EquipmentConfig", configPath + "配置文档-物品" + fileTailPath},
+        {"ItemConfig", configPath + "配置文档-道具" + fileTailPath},
     };
 
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
@@ -108,6 +108,10 @@ public class ConfigController : Singleton<ConfigController>
         if (!chapterConfigList.ContainsKey(chapterID))
         {
             ChapterConfig config = new ChapterConfig();
+            if (!datatableDic.ContainsKey("ChapterConfig")) {
+                Debug.LogError("没有章节配置表");
+                return null;
+            }
             var dt = datatableDic["ChapterConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -138,6 +142,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!episodeConfigList.ContainsKey(episodeID))
         {
             EpisodeConfig config = new EpisodeConfig();
+            if (!datatableDic.ContainsKey("EpisodeConfig"))
+            {
+                Debug.LogError("没有情节配置表");
+                return null;
+            }
             var dt = datatableDic["EpisodeConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -150,7 +159,6 @@ public class ConfigController : Singleton<ConfigController>
                 if (row["ID"].ToString() == episodeID.ToString())
                 {
                     config.ID = episodeID;
-                    config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
                     config.episodeType = (EpisodeType)int.Parse(row["episodeType"].ToString());
                     string dialogList = row["dialogList"].ToString();
                     config.dialogList = new List<string>(dialogList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
@@ -162,6 +170,7 @@ public class ConfigController : Singleton<ConfigController>
                     config.disableEquipmentID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string needItemID = row["needItemID"].ToString();
                     config.disableEquipmentID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
 
                     episodeConfigList[episodeID] = config;
                     break;
@@ -180,6 +189,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!dialogConfigList.ContainsKey(dialogID))
         {
             DialogConfig config = new DialogConfig();
+            if (!datatableDic.ContainsKey("DialogConfig"))
+            {
+                Debug.LogError("没有对话配置表");
+                return null;
+            }
             var dt = datatableDic["DialogConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -199,7 +213,8 @@ public class ConfigController : Singleton<ConfigController>
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string choices = row["choices"].ToString();
                     config.choices = new List<string>(choices.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-                    config.showImgUrl = row["showImgUrl"].ToString();
+                    config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
+                    config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
 
                     dialogConfigList[dialogID] = config;
                     break;
@@ -218,6 +233,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!choiceConfigList.ContainsKey(choiceID))
         {
             ChoiceConfig config = new ChoiceConfig();
+            if (!datatableDic.ContainsKey("ChoiceConfig"))
+            {
+                Debug.LogError("没有选项配置表");
+                return null;
+            }
             var dt = datatableDic["ChoiceConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -250,6 +270,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!equipmentConfigList.ContainsKey(equipmentID))
         {
             EquipmentConfig config = new EquipmentConfig();
+            if (!datatableDic.ContainsKey("EquipmentConfig"))
+            {
+                Debug.LogError("没有设备配置表");
+                return null;
+            }
             var dt = datatableDic["EquipmentConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -264,7 +289,6 @@ public class ConfigController : Singleton<ConfigController>
                     config.ID = equipmentID;
                     config.name = row["name"].ToString();
                     config.description = row["description"].ToString();
-                    config.imageUrl = row["imageUrl"].ToString();
                     config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
                     config.triggerPuzzleID = row["triggerPuzzleID"].ToString();
                     string getItemID = row["getItemID"].ToString();
@@ -289,6 +313,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!itemConfigList.ContainsKey(itemID))
         {
             ItemConfig config = new ItemConfig();
+            if (!datatableDic.ContainsKey("ItemConfig"))
+            {
+                Debug.LogError("没有道具配置表");
+                return null;
+            }
             var dt = datatableDic["ItemConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -298,12 +327,12 @@ public class ConfigController : Singleton<ConfigController>
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 var row = dt.Rows[i];
-                if (row["ID"].ToString() == itemID.ToString())
+                if (row["ID"]?.ToString() == itemID.ToString())
                 {
                     config.ID = itemID;
-                    config.name = row["name"].ToString();
-                    config.description = row["description"].ToString();
-                    config.imageUrl = row["imageUrl"].ToString();
+                    config.name = row["name"]?.ToString();
+                    config.description = row["description"]?.ToString();
+                    config.isSaveBag = int.Parse(row["isSaveBag"]?.ToString()) == 1 ? true : false;
 
                     itemConfigList[itemID] = config;
                     break;
@@ -425,7 +454,12 @@ public class GameLineNode
 
 public enum GameNodeType
 {
-    GameStart,  // 游戏开始
+    Stage1Start,  // 第1慕
+    Stage2Start,  // 第2慕
+    Stage3Start,  // 第3慕
+    Stage4Start,  // 第4慕
+    Stage5Start,  // 第5慕
+    Stage6Start,  // 第6慕
     Transition,  // 转场
     NormalEpisode,  // 普通对话
     PhoneEpisode,  // 手机对话
@@ -446,10 +480,17 @@ public class EpisodeConfig
     public List<string> dialogList;
     public List<string> enableEquipmentID;
     public List<string> disableEquipmentID;
-    public bool isNeedRecord;
     public List<string> needFinishEpisodeID;
     public List<string> needItemID;
     public EpisodeType episodeType;
+    public BelongPhoneGroup belongGroup;
+}
+
+public enum BelongPhoneGroup
+{
+    None,
+    MainRoleBoy,
+
 }
 
 public class DialogConfig
@@ -460,7 +501,8 @@ public class DialogConfig
     public List<string> getItemID;
     public RoleType roleType;
     public List<string> choices;
-    public string showImgUrl;
+    public bool isNeedRecord;
+    public BelongPhoneGroup belongGroup;
 }
 
 public class ChoiceConfig
@@ -475,7 +517,6 @@ public class EquipmentConfig
     public string ID;
     public string name;
     public string description;
-    public string imageUrl;
     public List<string> getItemID;
     public string triggerEpisodeID;
     public string triggerPuzzleID;
@@ -487,7 +528,7 @@ public class ItemConfig
     public string ID;
     public string name;
     public string description;
-    public string imageUrl;
+    public bool isSaveBag;
 }
 
 

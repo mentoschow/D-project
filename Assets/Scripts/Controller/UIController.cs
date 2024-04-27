@@ -17,6 +17,7 @@ public class UIController : MonoSingleton<UIController>
     public GameObject normalEpisodePlayerObj;
     public GameObject getItemTipObj;
     public GameObject phoneObj;
+    public GameObject clueItemViewObj;
 
     private EpisodePlayerView episodePlayerView;
     private PuzzleView puzzleView;
@@ -26,6 +27,7 @@ public class UIController : MonoSingleton<UIController>
     private LoadingView loadingView;
     private EpisodePlayerView normalEpisodePlayerView;
     private PhoneView phoneView;
+    private ClueItemView mainRoleBoyClueView;
 
     private Transform layer1;
     private Transform layer2;
@@ -39,24 +41,22 @@ public class UIController : MonoSingleton<UIController>
         Init();
     }
 
-    void OnDestroy()
+    private void Update()
     {
-
+        CheckInput();
     }
 
     private void Init()
     {
-        // homepageView = CreateView<HomepageView>(homepageObj, transform.Find("layer1"));
-        // loadingView = CreateView<LoadingView>(loadingObj, transform.Find("layer4"));
-        // puzzleView = CreateView<PuzzleView>(puzzleViewObj, transform.Find("layer4"));
         layer1 = transform.Find("layer1");
         layer2 = transform.Find("layer2");
         layer3 = transform.Find("layer3");
         layer4 = transform.Find("layer4");
-        homepageView = CreateView<HomepageView>(homepageObj, layer1);
-        loadingView = CreateView<LoadingView>(loadingObj, layer4);
-        normalEpisodePlayerView = CreateView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
-        phoneView = CreateView<PhoneView>(phoneObj, layer2);
+        homepageView = CreatePanelView<HomepageView>(homepageObj, layer1);
+        loadingView = CreatePanelView<LoadingView>(loadingObj, layer4);
+        normalEpisodePlayerView = CreatePanelView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
+        phoneView = CreatePanelView<PhoneView>(phoneObj, layer2);
+        mainRoleBoyClueView = CreatePanelView<ClueItemView>(clueItemViewObj, layer2);
 
         HideAllView();
         OpenHomepage();
@@ -73,7 +73,7 @@ public class UIController : MonoSingleton<UIController>
         }
         if (testControlView == null)
         {
-            testControlView = CreateView<TestControlView>(testControlViewPrefab, layer4);
+            testControlView = CreatePanelView<TestControlView>(testControlViewPrefab, layer4);
         }
 
         testControlView?.gameObject.SetActive(true);
@@ -86,6 +86,7 @@ public class UIController : MonoSingleton<UIController>
         normalEpisodePlayerView?.gameObject.SetActive(false);
         phoneView?.gameObject.SetActive(false);
         puzzleView?.gameObject.SetActive(false);
+        mainRoleBoyClueView?.gameObject.SetActive(false);
     }
 
     public void showPuzzleView()
@@ -97,7 +98,7 @@ public class UIController : MonoSingleton<UIController>
         }
         if (puzzleView == null)
         {
-            puzzleView = CreateView<PuzzleView>(puzzleViewPrefab, layer4);
+            puzzleView = CreatePanelView<PuzzleView>(puzzleViewPrefab, layer4);
         }
 
         puzzleView?.gameObject.SetActive(true);
@@ -144,11 +145,11 @@ public class UIController : MonoSingleton<UIController>
         }
         else if (config.episodeType == EpisodeType.Phone)
         {
-            phoneView.PlayPhoneEpisode(ID);
+            phoneView.PlayPhoneEpisode(config);
         }
     }
 
-    private T CreateView<T>(GameObject prefab, Transform parent)
+    private T CreatePanelView<T>(GameObject prefab, Transform parent)
     {
         var obj = Instantiate(prefab);
         if (obj != null)
@@ -163,24 +164,32 @@ public class UIController : MonoSingleton<UIController>
         return default(T);
     }
 
-    public void GetItemTip(List<string> itemList, Transform parent)
+    public void GetItemTip(List<string> itemList)
     {
-        if (parent == null)
-        {
-            parent = layer4;
-        }
         for (int i = 0; i < itemList.Count; i++)
         {
             var obj = Instantiate(getItemTipObj);
             if (obj != null)
             {
-                obj.transform.SetParent(parent);
+                obj.transform.SetParent(layer4);
                 var rect = obj.GetComponent<RectTransform>();
                 float y = -((rect.rect.height + 50) * i + 100);
-                rect.anchoredPosition = new Vector3(0, y);
+                rect.anchoredPosition = new Vector3(rect.rect.width, y);
                 var view = obj.GetComponent<GetItemTipPartView>();
-                //view?.UpdateView(itemList[i]);
+                view?.UpdateView(itemList[i]);
             }
+        }
+    }
+
+    private void CheckInput()
+    {
+        if (!GameDataProxy.Instance.canOperate)
+        {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            phoneView.ShowPhone();
         }
     }
 }
