@@ -110,9 +110,10 @@ public class PuzzleView : MonoSingleton<PuzzleView>
                             }
 
                             this.checkCanInsert(viewID, code, inputPos);
+                            this.checkInsertOver();
+
                             this.refreshItemContainState();
                             this.refreshDragState();
-
                             this.mainObjectView?.updateInsertView();
                         };
                     }
@@ -144,7 +145,7 @@ public class PuzzleView : MonoSingleton<PuzzleView>
 
     void checkCanInsert(JewelryType type,int code,Vector2 pos)
     {
-       bool canUse = GameDataProxy.Instance.checkJewelryCanUse(code,type);
+       bool canUse = !GameDataProxy.Instance.checkJewelryComplete(type);
         if(canUse)
         {
             bool canInsert = canUse;
@@ -161,7 +162,7 @@ public class PuzzleView : MonoSingleton<PuzzleView>
 
                     if (isClose)
                     {
-                        GameDataProxy.Instance.jewelryCmpletion[type] = true;
+                        GameDataProxy.Instance.insertjewelryMap.Add(type, code);
                     }
                 }
             }
@@ -198,13 +199,27 @@ public class PuzzleView : MonoSingleton<PuzzleView>
                 {
                     allComplete = false;
                 }
-                int useCode = isComplete ? config.code : 0;
+                int useCode = 0;
+                GameDataProxy.Instance.insertjewelryMap.TryGetValue(item.Key, out useCode);
                 item.Value?.refreshContainState(useCode);
             }
         }
         if (allComplete)
         {
             //todo
+        }
+    }
+
+    void checkInsertOver()
+    {
+        bool isOver = GameDataProxy.Instance.checkInsertOver();
+        if (isOver)
+        {
+            Debug.Log("装饰已完成");
+            GameLineNode lineNode = new GameLineNode();
+            lineNode.type = GameNodeType.Puzzle;
+            lineNode.ID = Enum.GetName(typeof(PuzzleType), PuzzleType.JewelryPuzzleDone);
+            MessageManager.Instance.Send(MessageDefine.PlayPuzzleDone, new MessageData(lineNode));
         }
     }
 }
