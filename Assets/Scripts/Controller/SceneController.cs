@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class SceneController : MonoSingleton<SceneController>
 {
-    public List<GameObject> sceneObj;
     public Dictionary<SceneType, GameObject> sceneMap = new Dictionary<SceneType, GameObject>();
     private SceneType curSceneID;
 
@@ -15,20 +14,24 @@ public class SceneController : MonoSingleton<SceneController>
 
     void Start()
     {
-
-    }
-
-    private void CreateScene(SceneType sceneName)
-    {
-        foreach (var obj in sceneObj)
+        if (ResourcesController.Instance.sceneRes.Count > 0)
         {
-            if (obj.name == sceneName.ToString())
+            foreach (var scene in ResourcesController.Instance.sceneRes)
             {
-                var scene = Instantiate(obj);
-                scene.transform.SetParent(transform);
-                sceneMap[sceneName] = scene;
+                CreateScene(scene.Key, scene.Value.prefab);
             }
         }
+    }
+
+    private void CreateScene(SceneType sceneName, GameObject obj)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+        var scene = Instantiate(obj);
+        scene.transform.SetParent(transform);
+        sceneMap[sceneName] = scene;
     }
 
     public void ChangeScene(SceneType scene)
@@ -36,13 +39,35 @@ public class SceneController : MonoSingleton<SceneController>
         curSceneID = scene;
         if (!sceneMap.ContainsKey(curSceneID))
         {
-            CreateScene(scene);
+            Debug.LogError("切换场景失败:" + curSceneID.ToString());
+            return;
         }
-
+        foreach (var s in sceneMap)
+        {
+            if (s.Key == curSceneID)
+            {
+                s.Value.SetActive(true);
+            }
+            else
+            {
+                s.Value.SetActive(false);
+            }
+        }
+        Debug.Log("切换场景:" + curSceneID.ToString());
         Texture2D texture = sceneMap[curSceneID]?.transform.Find("bg").transform.GetComponent<SpriteRenderer>().sprite.texture;
         sceneBgWidth = texture.width;
         sceneBgHeight = texture.height;
-        Debug.Log("sceneBgWidth:" + sceneBgWidth);
-        Debug.Log("sceneBgHeight:" + sceneBgHeight);
+        Debug.Log("场景宽度:" + sceneBgWidth);
+        Debug.Log("场景高度:" + sceneBgHeight);
+        // 设置角色位置
+        if (ResourcesController.Instance.sceneRes[scene].bornPosX.Count > 0)
+        {
+            float posX = ResourcesController.Instance.sceneRes[scene].bornPosX[0];
+            RoleController.Instance.SetRolePos(posX);
+        }
+        else
+        {
+            Debug.LogError("没有设置出生点:" + curSceneID.ToString());
+        }
     }
 }

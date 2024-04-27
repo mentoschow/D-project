@@ -108,6 +108,10 @@ public class ConfigController : Singleton<ConfigController>
         if (!chapterConfigList.ContainsKey(chapterID))
         {
             ChapterConfig config = new ChapterConfig();
+            if (!datatableDic.ContainsKey("ChapterConfig")) {
+                Debug.LogError("没有章节配置表");
+                return null;
+            }
             var dt = datatableDic["ChapterConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -138,6 +142,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!episodeConfigList.ContainsKey(episodeID))
         {
             EpisodeConfig config = new EpisodeConfig();
+            if (!datatableDic.ContainsKey("EpisodeConfig"))
+            {
+                Debug.LogError("没有情节配置表");
+                return null;
+            }
             var dt = datatableDic["EpisodeConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -180,6 +189,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!dialogConfigList.ContainsKey(dialogID))
         {
             DialogConfig config = new DialogConfig();
+            if (!datatableDic.ContainsKey("DialogConfig"))
+            {
+                Debug.LogError("没有对话配置表");
+                return null;
+            }
             var dt = datatableDic["DialogConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -219,6 +233,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!choiceConfigList.ContainsKey(choiceID))
         {
             ChoiceConfig config = new ChoiceConfig();
+            if (!datatableDic.ContainsKey("ChoiceConfig"))
+            {
+                Debug.LogError("没有选项配置表");
+                return null;
+            }
             var dt = datatableDic["ChoiceConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -251,6 +270,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!equipmentConfigList.ContainsKey(equipmentID))
         {
             EquipmentConfig config = new EquipmentConfig();
+            if (!datatableDic.ContainsKey("EquipmentConfig"))
+            {
+                Debug.LogError("没有设备配置表");
+                return null;
+            }
             var dt = datatableDic["EquipmentConfig"];
             if (dt.Rows.Count == 0)
             {
@@ -289,6 +313,11 @@ public class ConfigController : Singleton<ConfigController>
         if (!itemConfigList.ContainsKey(itemID))
         {
             ItemConfig config = new ItemConfig();
+            if (!datatableDic.ContainsKey("ItemConfig"))
+            {
+                Debug.LogError("没有道具配置表");
+                return null;
+            }
             var dt = datatableDic["ItemConfig"];
             if (dt.Rows.Count == 0)
             {
