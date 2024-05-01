@@ -14,67 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scenePrefabs:
   - type: 1
-    prefab: {fileID: 3163663043471574251, guid: 44230197463e19a47874341e4b307721, type: 3}
-    bg: {fileID: 21300000, guid: 2fd18d0c91861484e98bc03500208bb4, type: 3}
-    leftPosX: 0
-    rightPosX: 5
+    prefab: {fileID: 0}
+    bornPosX: []
   - type: 2
     prefab: {fileID: 3163663043471574251, guid: 995eccf889062d64abe25b7b36722a6a, type: 3}
-    bg: {fileID: 21300000, guid: 98b6b3ee9649f0347871f20aa0112584, type: 3}
-    leftPosX: -14.5
-    rightPosX: 0
-  - type: 3
-    prefab: {fileID: 3163663043471574251, guid: a8a3a4b4847b7a24494fb3bca6c13cc6, type: 3}
-    bg: {fileID: 0}
-    leftPosX: 0
-    rightPosX: 0
-  - type: 4
-    prefab: {fileID: 3163663043471574251, guid: d67b8bb34c2f51d40b3d8dfaedb338bf, type: 3}
-    bg: {fileID: 0}
-    leftPosX: 0
-    rightPosX: 0
-  - type: 5
-    prefab: {fileID: 3163663043471574251, guid: 2750b96812657a84fb5cb46d2a5bfad7, type: 3}
-    bg: {fileID: 0}
-    leftPosX: 0
-    rightPosX: 0
-  - type: 6
-    prefab: {fileID: 3163663043471574251, guid: 59f8c37b374f09440b3cc5d1465b59b6, type: 3}
-    bg: {fileID: 0}
-    leftPosX: 0
-    rightPosX: 0
+    bornPosX: []
+  - type: 0
+    prefab: {fileID: 0}
+    bornPosX: []
+  - type: 0
+    prefab: {fileID: 0}
+    bornPosX: []
   clueItemImage:
   - ID: T_CUE_IDEA
     sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
   - ID: T_CUE_ITEM_COMMON
     sprite: {fileID: 21300000, guid: 55028288f14d62a49b989c8978d5d5a8, type: 3}
-  dialogImage:
-  - ID: 
-    sprite: {fileID: 0}
+  - ID: CUE_0015_build
+    sprite: {fileID: 21300000, guid: da018674862d381439c3a120a14b71c6, type: 3}
+  dialogImage: []
   roleRes:
   - type: 0
-    name: 
+    name: P001
     icon: {fileID: 21300000, guid: 181a81f6d9347ed408769cdad371a755, type: 3}
     fullBody: {fileID: 21300000, guid: 2a87718bcd021544d81781b6e8ec76da, type: 3}
   - type: 1
-    name: "\u5973\u4E3B\u89D2"
-    icon: {fileID: 21300000, guid: 181a81f6d9347ed408769cdad371a755, type: 3}
-    fullBody: {fileID: 21300000, guid: 2a87718bcd021544d81781b6e8ec76da, type: 3}
-  - type: 2
-    name: "\u7537\u4E3B\u89D2"
-    icon: {fileID: 21300000, guid: 181a81f6d9347ed408769cdad371a755, type: 3}
-    fullBody: {fileID: 21300000, guid: 2a87718bcd021544d81781b6e8ec76da, type: 3}
-  - type: 3
-    name: "\u6E05\u6D45"
+    name: P003
     icon: {fileID: 21300000, guid: 181a81f6d9347ed408769cdad371a755, type: 3}
     fullBody: {fileID: 21300000, guid: 2a87718bcd021544d81781b6e8ec76da, type: 3}
   wechatGroupRes:
-  - group: 0
-    name: 
-    icon: {fileID: 0}
   - group: 1
-    name: "\u7537\u4E3B\u89D2"
-    icon: {fileID: 21300000, guid: 181a81f6d9347ed408769cdad371a755, type: 3}
-  - group: 2
-    name: "\u6E05\u6D45"
+    name: P003
     icon: {fileID: 21300000, guid: 181a81f6d9347ed408769cdad371a755, type: 3}
