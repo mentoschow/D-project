@@ -95,7 +95,7 @@ public class GameController : Singleton<GameController>
     {
         Debug.Log("游戏开始了");
         GameDataProxy.Instance.resetData();
-        SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None);
+        SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false);
     }
 
     private void OnInteractWithEquipment(MessageData data)

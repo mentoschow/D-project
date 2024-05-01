@@ -23,6 +23,23 @@ public class SceneController : MonoSingleton<SceneController>
                 CreateScene(scene.Key, scene.Value.prefab);
             }
         }
+        foreach (var s in sceneMap)
+        {
+            if (s.Key == StageType.LibraryOut)
+            {
+                s.Value.SetActive(true);
+            }
+            else
+            {
+                s.Value.SetActive(false);
+            }
+        }
+        Debug.Log("切换场景:" + StageType.LibraryOut.ToString());
+        Texture2D texture = sceneMap[StageType.LibraryOut]?.transform.Find("bg").transform.GetComponent<SpriteRenderer>().sprite.texture;
+        sceneBgWidth = texture.width;
+        sceneBgHeight = texture.height;
+        Debug.Log("场景宽度:" + sceneBgWidth);
+        Debug.Log("场景高度:" + sceneBgHeight);
     }
 
     private void CreateScene(StageType sceneName, GameObject obj)
@@ -44,9 +61,12 @@ public class SceneController : MonoSingleton<SceneController>
         }
     }
 
-    public void ChangeScene(StageType toScene, StageType fromScene)
+    public void ChangeScene(StageType toScene, StageType fromScene, bool useTransition = true)
     {
-        UIController.Instance.ShowTransition();
+        if (useTransition)
+        {
+            UIController.Instance.ShowTransition();
+        }
         curSceneID = toScene;
         if (!sceneMap.ContainsKey(curSceneID))
         {
