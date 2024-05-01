@@ -86,15 +86,26 @@ public class RoleView : MonoBehaviour
     {
         if (collision.tag == "Equipment" && GameDataProxy.Instance.canOperate)
         {
-            tips.SetActive(true);
             triggerObj = collision.gameObject;
             colliderEquipment = triggerObj.GetComponent<EquipmentView>();
+            if (colliderEquipment != null)
+            {
+                tips.SetActive(colliderEquipment.interactive);
+            }
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        
+        if (collision.tag == "Equipment" && GameDataProxy.Instance.canOperate)
+        {
+            triggerObj = collision.gameObject;
+            colliderEquipment = triggerObj.GetComponent<EquipmentView>();
+            if (colliderEquipment != null)
+            {
+                tips.SetActive(colliderEquipment.interactive);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -139,6 +150,10 @@ public class RoleView : MonoBehaviour
     {
         if (colliderEquipment != null)
         {
+            if (!colliderEquipment.interactive)
+            {
+                return;
+            }
             var doorType = colliderEquipment.doorType;
             if (doorType != DoorType.None)
             {

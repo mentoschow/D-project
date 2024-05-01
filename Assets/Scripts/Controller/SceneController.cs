@@ -61,7 +61,7 @@ public class SceneController : MonoSingleton<SceneController>
         }
     }
 
-    public void ChangeScene(StageType toScene, StageType fromScene, bool useTransition = true)
+    public void ChangeScene(StageType toScene, StageType fromScene, bool useTransition = true, bool setRolePos = true)
     {
         if (useTransition)
         {
@@ -91,23 +91,26 @@ public class SceneController : MonoSingleton<SceneController>
         Debug.Log("场景宽度:" + sceneBgWidth);
         Debug.Log("场景高度:" + sceneBgHeight);
         // 设置角色位置
-        float posX = 0;
-        if (fromScene == StageType.None && toScene == StageType.LibraryOut)
+        if (setRolePos)
         {
-            // 游戏开始
-            posX = ResourcesController.Instance.sceneRes[toScene].leftPosX;
+            float posX = 0;
+            if (fromScene == StageType.None && toScene == StageType.LibraryOut)
+            {
+                // 游戏开始
+                posX = ResourcesController.Instance.sceneRes[toScene].leftPosX;
+            }
+            else if (fromScene == StageType.LibraryOut && toScene == StageType.LibraryIn)
+            {
+                // 从图书馆外到图书馆内
+                posX = ResourcesController.Instance.sceneRes[toScene].leftPosX;
+            }
+            else if (fromScene == StageType.LibraryIn && toScene == StageType.LibraryOut)
+            {
+                // 从图书馆内到图书馆外
+                posX = ResourcesController.Instance.sceneRes[toScene].rightPosX;
+            }
+            RoleController.Instance.SetRolePos(posX);
         }
-        else if (fromScene == StageType.LibraryOut && toScene == StageType.LibraryIn)
-        {
-            // 从图书馆外到图书馆内
-            posX = ResourcesController.Instance.sceneRes[toScene].leftPosX;
-        }
-        else if (fromScene == StageType.LibraryIn && toScene == StageType.LibraryOut)
-        {
-            // 从图书馆内到图书馆外
-            posX = ResourcesController.Instance.sceneRes[toScene].rightPosX;
-        }
-        RoleController.Instance.SetRolePos(posX);
 
         // 判断是否第一次进入
         if (comeInSceneTimes.ContainsKey(toScene))
@@ -128,7 +131,7 @@ public class SceneController : MonoSingleton<SceneController>
     {
         if (equipmentList.ContainsKey(equipmentID))
         {
-            equipmentList[equipmentID].gameObject.SetActive(enable);
+            equipmentList[equipmentID].interactive = enable;
         }
     }
 }
