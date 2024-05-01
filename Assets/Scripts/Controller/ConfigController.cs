@@ -57,7 +57,6 @@ public class ConfigController : Singleton<ConfigController>
         {"ChapterConfig", configPath + "配置文档-章节" + fileTailPath},
         {"EpisodeConfig", configPath + "配置文档-情节" + fileTailPath},
         {"DialogConfig", configPath + "配置文档-对话" + fileTailPath},
-        //{"ChoiceConfig", configPath + "配置文档-对话选项" + fileTailPath},
         //{"EquipmentConfig", configPath + "配置文档-物品" + fileTailPath},
         {"ItemConfig", configPath + "配置文档-道具" + fileTailPath},
     };
@@ -183,9 +182,9 @@ public class ConfigController : Singleton<ConfigController>
                     string disableEquipmentID = row["disableEquipmentID"].ToString();
                     config.disableEquipmentID = new List<string>(disableEquipmentID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string needFinishEpisodeID = row["needFinishEpisodeID"].ToString();
-                    config.disableEquipmentID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.needFinishEpisodeID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string needItemID = row["needItemID"].ToString();
-                    config.disableEquipmentID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.needItemID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
                     config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
 
@@ -383,6 +382,8 @@ public class ConfigController : Singleton<ConfigController>
                 if (row["ID"]?.ToString() == ID.ToString())
                 {
                     config.ID = ID;
+                    string needFinishEpisodeID = row["needFinishEpisodeID"].ToString();
+                    config.needFinishEpisodeID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string prepareClueList = row["prepareClueList"].ToString();
                     config.prepareClueList = new List<string>(prepareClueList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string correctClueList = row["correctClueList"].ToString();
@@ -472,7 +473,7 @@ public class ConfigController : Singleton<ConfigController>
             finishNode.type = (GameNodeType)int.Parse(row["finishType"].ToString());
             finishNode.ID = row["finishID"].ToString();
             triggerNode.type = (GameNodeType)int.Parse(row["triggerType"].ToString());
-            triggerNode.ID = row["triggerID"].ToString();
+            triggerNode.ID = row["triggerID"]?.ToString();
             gameLineConfig.Add(finishNode, triggerNode);
         }
     }
@@ -542,6 +543,8 @@ public enum GameNodeType
     NormalEpisode,  // 普通对话
     PhoneEpisode,  // 手机对话
     Puzzle,  // 谜题
+    GotClueItem,  // 获得线索
+    FreeOperate,  // 自由操作
 }
 
 public enum StageType
@@ -565,10 +568,9 @@ public enum DoorType
 
 public enum TransitionType
 {
-    ToLibraryOut,
-    ToLibraryIn,
     Blackout,  // 停电
-    ChangeScene,
+    ChangeToBoy,
+    ChangeToGirl,
 }
 
 public class GameLineConfig
@@ -644,6 +646,7 @@ public class ItemConfig
 public class MergeClueConfig
 {
     public string ID;
+    public List<string> needFinishEpisodeID;
     public List<string> prepareClueList;
     public List<string> correctClueList;
     public string completeClue;

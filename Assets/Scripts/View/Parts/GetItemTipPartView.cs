@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class GetItemTipPartView : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class GetItemTipPartView : MonoBehaviour
     private Image img;
 
     private RectTransform rect;
+    private string itemID;
 
     void Awake()
     {
@@ -43,7 +45,7 @@ public class GetItemTipPartView : MonoBehaviour
             }
             text.text = config.name;
             rect.DOAnchorPosX(0, aniTime);
-
+            itemID = config.ID;
             CheckSaveBag(config);
         }
         Invoke("Disappear", stayTime);
@@ -54,6 +56,10 @@ public class GetItemTipPartView : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         sequence.Append(rect.DOAnchorPosX(rect.rect.width, aniTime)).AppendCallback(() =>
         {
+            GameLineNode node = new GameLineNode();
+            node.type = GameNodeType.GotClueItem;
+            node.ID = itemID;
+            MessageManager.Instance.Send(MessageDefine.GetItemDone, new MessageData(node));
             Destroy(gameObject);
         });
     }
@@ -62,7 +68,7 @@ public class GetItemTipPartView : MonoBehaviour
     {
         if (config.isSaveBag)
         {
-            GameDataProxy.Instance.bagItem.Add(config);
+            GameDataProxy.Instance.bagItem.Add(config.ID);
         }
     }
 }

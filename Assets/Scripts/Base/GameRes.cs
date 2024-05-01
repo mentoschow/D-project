@@ -45,7 +45,6 @@ public class SceneRes
 {
     public StageType type;
     public GameObject prefab;
-    public Sprite bg;
     public float leftPosX;
     public float rightPosX;
 }
