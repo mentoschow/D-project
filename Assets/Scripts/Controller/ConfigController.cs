@@ -182,9 +182,9 @@ public class ConfigController : Singleton<ConfigController>
                     string disableEquipmentID = row["disableEquipmentID"].ToString();
                     config.disableEquipmentID = new List<string>(disableEquipmentID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string needFinishEpisodeID = row["needFinishEpisodeID"].ToString();
-                    config.disableEquipmentID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.needFinishEpisodeID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string needItemID = row["needItemID"].ToString();
-                    config.disableEquipmentID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.needItemID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
                     config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
 
@@ -382,6 +382,8 @@ public class ConfigController : Singleton<ConfigController>
                 if (row["ID"]?.ToString() == ID.ToString())
                 {
                     config.ID = ID;
+                    string needFinishEpisodeID = row["needFinishEpisodeID"].ToString();
+                    config.needFinishEpisodeID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string prepareClueList = row["prepareClueList"].ToString();
                     config.prepareClueList = new List<string>(prepareClueList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string correctClueList = row["correctClueList"].ToString();
@@ -566,10 +568,9 @@ public enum DoorType
 
 public enum TransitionType
 {
-    ToLibraryOut,
-    ToLibraryIn,
     Blackout,  // Í£µç
-    ChangeScene,
+    ChangeToBoy,
+    ChangeToGirl,
 }
 
 public class GameLineConfig
@@ -645,6 +646,7 @@ public class ItemConfig
 public class MergeClueConfig
 {
     public string ID;
+    public List<string> needFinishEpisodeID;
     public List<string> prepareClueList;
     public List<string> correctClueList;
     public string completeClue;

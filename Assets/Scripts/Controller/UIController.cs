@@ -149,6 +149,12 @@ public class UIController : MonoSingleton<UIController>
         loadingView?.PlayTransition();
     }
 
+    public void ShowTransition(TransitionType type)
+    {
+        loadingView?.gameObject.SetActive(true);
+        loadingView?.PlayTransition(type);
+    }
+
     public void HidePhoneView()
     {
         phoneView?.gameObject.SetActive(false);

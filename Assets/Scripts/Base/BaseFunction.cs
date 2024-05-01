@@ -70,4 +70,9 @@ public class BaseFunction : MonoBehaviour
         }
         return text.text.Substring(0, i);
     }
+
+    public static T ChangeStringToEnum<T>(string str)
+    {
+        return (T)Enum.Parse(typeof(T), str);
+    }
 }
