@@ -33,7 +33,7 @@ public class RoleView : MonoBehaviour
     private GameObject triggerObj;
     private GameObject tips;
     private float originScaleX;  // œÚ”“
-    private string colliderEquipmentID = null;
+    private EquipmentView colliderEquipment = null;
 
     private void Start()
     {
@@ -64,12 +64,12 @@ public class RoleView : MonoBehaviour
             case MoveVector.Left:
                 realMoveSpeed *= -1;
                 rigidBody.sharedMaterial = noFriction;
-                roleSp.transform.localScale = new Vector3(-originScaleX, roleSp.transform.localScale.y, 1);
+                roleSp.transform.localScale = new Vector3(originScaleX, roleSp.transform.localScale.y, 1);
                 break;
             case MoveVector.Right:
                 realMoveSpeed *= 1;
                 rigidBody.sharedMaterial = noFriction;
-                roleSp.transform.localScale = new Vector3(originScaleX, roleSp.transform.localScale.y, 1);
+                roleSp.transform.localScale = new Vector3(-originScaleX, roleSp.transform.localScale.y, 1);
                 break;
         }
         if (isOnSlope)
@@ -84,11 +84,11 @@ public class RoleView : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Equipment")
+        if (collision.tag == "Equipment" && GameDataProxy.Instance.canOperate)
         {
             tips.SetActive(true);
             triggerObj = collision.gameObject;
-            colliderEquipmentID = triggerObj.GetComponent<EquipmentView>().equipmentID;
+            colliderEquipment = triggerObj.GetComponent<EquipmentView>();
         }
     }
 
@@ -100,7 +100,7 @@ public class RoleView : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         tips.SetActive(false);
-        colliderEquipmentID = null;
+        colliderEquipment = null;
     }
 
     private void CheckSlope()
@@ -137,9 +137,25 @@ public class RoleView : MonoBehaviour
 
     public void InteractWithEquipment()
     {
-        if (colliderEquipmentID != null)
+        if (colliderEquipment != null)
         {
-            MessageManager.Instance.Send(MessageDefine.InteractWithEquipment, new MessageData(colliderEquipmentID));
+            var doorType = colliderEquipment.doorType;
+            if (doorType != DoorType.None)
+            {
+                switch (doorType)
+                {
+                    case DoorType.LibraryOut:
+                        SceneController.Instance.ChangeScene(StageType.LibraryIn, StageType.LibraryOut);
+                        break;
+                    case DoorType.LibraryInLeft:
+                        SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.LibraryIn);
+                        break;
+                }
+            }
+            else
+            {
+                MessageManager.Instance.Send(MessageDefine.InteractWithEquipment, new MessageData(colliderEquipment.equipmentID));
+            }
         }
     }
 }

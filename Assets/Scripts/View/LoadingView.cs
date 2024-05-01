@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LoadingView : MonoBehaviour
 {
+    [SerializeField]
+    private float time = 1.5f;
+
     private TransitionType curType;
 
     void Start()
@@ -16,18 +19,13 @@ public class LoadingView : MonoBehaviour
         
     }
 
-    public void PlayTransition(TransitionType type)
+    public void PlayTransition()
     {
-        curType = type;
-        Invoke("PlayTransitionOver", 2);
+        Invoke("PlayTransitionOver", time);
     }
 
     private void PlayTransitionOver()
     {
         gameObject.SetActive(false);
-        GameLineNode node = new GameLineNode();
-        node.type = GameNodeType.Transition;
-        node.ID = curType.ToString();
-        MessageManager.Instance.Send(MessageDefine.PlayTransitionDone, new MessageData(node));
     }
 }

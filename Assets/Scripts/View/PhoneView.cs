@@ -125,6 +125,11 @@ public class PhoneView : MonoBehaviour
         var player = rolePhoneDialogGroupList[group];
         player.gameObject.SetActive(true);
         player.PlayEpisode(ID);
+        if (ResourcesController.Instance.wechatGroupRes.ContainsKey(group))
+        {
+            string name = ResourcesController.Instance.wechatGroupRes[group].name;
+            dialogGroupName.text = name;
+        }
     }
 
     private void OnOpenWechatDialogPage(MessageData data)

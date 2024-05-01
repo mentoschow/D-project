@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,7 @@ public class GameController : Singleton<GameController>
 {
     public GameController() 
     {
-        MessageManager.Instance.Register(MessageDefine.PlayTransitionDone, CheckNextGameNode);
-        MessageManager.Instance.Register(MessageDefine.GameStart, CheckNextGameNode);
+        MessageManager.Instance.Register(MessageDefine.StageStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
         var c = ConfigController.Instance;
@@ -19,43 +19,34 @@ public class GameController : Singleton<GameController>
         GameDataProxy.Instance.canOperate = false;
         if (node.gameLineNode == null)
         {
+            Debug.LogError("节点数据为空");
+            FreeOperate();
             return;
         }
-        switch (node.gameLineNode.type)
+        var nextNode = ConfigController.Instance.GetGameLineNode(node.gameLineNode);
+        if (nextNode == null)
         {
-            case GameNodeType.Stage1Start:
-                UIController.Instance.ShowTransition(TransitionType.GameStart);
-                SceneController.Instance.ChangeScene(SceneType.LibraryIn);
-                break;
+            Debug.Log("没有自动触发:" + node.gameLineNode.ID);
+            FreeOperate();
+            return;
+        }
+
+        switch (nextNode.type)
+        {
             case GameNodeType.Transition:
-                if (node.gameLineNode.ID == TransitionType.GameStart.ToString())
-                {
-                    UIController.Instance.PlayEpisode("TEST01_010_020");
-                }
+                Debug.Log("自动触发转场：" + nextNode.ID);
                 break;
             case GameNodeType.GameEnd:
+                Debug.Log("自动触发游戏结束：" + nextNode.ID);
                 UIController.Instance.GameEnd();
                 break;
-            case GameNodeType.Tutorial:
-                break;
             case GameNodeType.NormalEpisode:
-                switch (node.gameLineNode.ID)
-                {
-                    case "TEST01_010_010":
-                        UIController.Instance.PlayEpisode("TEST01_010_020");
-                        break;
-                    case "TEST01_010_020":
-                        FreeOperate();
-                        break;
-                    case "MS01_010_010":
-                        UIController.Instance.PlayEpisode("MS01_010_020");
-                        break;
-                    case "MS01_010_020":
-                        UIController.Instance.ShowTutorial();
-                        break;
-                }
+                Debug.Log("自动触发普通对话：" + nextNode.ID);
+                UIController.Instance.PlayEpisode(nextNode.ID);
                 break;
             case GameNodeType.PhoneEpisode:
+                Debug.Log("自动触发手机对话：" + nextNode.ID);
+                UIController.Instance.PlayEpisode(nextNode.ID);
                 break;
             case GameNodeType.Puzzle:
                 break;
@@ -64,6 +55,7 @@ public class GameController : Singleton<GameController>
 
     private void FreeOperate()
     {
+        Debug.Log("自动操作");
         UIController.Instance.HideAllView();
         GameDataProxy.Instance.canOperate = true;
     }
@@ -71,10 +63,7 @@ public class GameController : Singleton<GameController>
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        GameLineNode node = new GameLineNode();
-        node.type = GameNodeType.Stage1Start;
-        MessageManager.Instance.Send(MessageDefine.GameStart, new MessageData(node));
-        GameDataProxy.Instance.canOperate = true;
+        SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None);
     }
 
     private void OnInteractWithEquipment(MessageData data)

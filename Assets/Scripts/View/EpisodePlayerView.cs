@@ -21,10 +21,6 @@ public class EpisodePlayerView : MonoBehaviour
     [SerializeField]
     private GameObject choicePartViewPrefab;
     [SerializeField]
-    private Sprite boySp;
-    [SerializeField]
-    private Sprite girlSp;
-    [SerializeField]
     private GameObject leftDialogObj;
     [SerializeField]
     private GameObject rightDialogObj;
@@ -129,6 +125,8 @@ public class EpisodePlayerView : MonoBehaviour
             DialogConfig dialog = config.GetDialogConfig(id);
             if (dialog != null)
             {
+                dialog.isNeedRecord = episode.isNeedRecord;
+                dialog.belongGroup = episode.belongGroup;
                 dialogQueue.Enqueue(dialog);  // 中途插进来的先播
             }
         }
@@ -193,7 +191,7 @@ public class EpisodePlayerView : MonoBehaviour
     {
         var configController = ConfigController.Instance;
         // 选项
-        if (dialog.choices.Count > 0)
+        if (dialog.choices?.Count > 0)
         {
             foreach (var choiceID in dialog.choices)
             {
@@ -242,22 +240,18 @@ public class EpisodePlayerView : MonoBehaviour
             ChangeStatus(EpisodePlayerStatus.Pause);
         }
         // 中间的图片
-        
+
         // 立绘、名字
-        switch (dialog.roleType)
+        var roleRes = ResourcesController.Instance.roleRes[dialog.roleType];
+        if (roleRes != null)
         {
-            case RoleType.MainRoleGirl:
-                nameText.text = "女主角";
-                roleImg.sprite = girlSp;
-                break;
-            case RoleType.MainRoleBoy:
-                nameText.text = "男主角";
-                roleImg.sprite = boySp;
-                break;
-            default:
-                nameText.text = "";
-                roleImg.sprite = null;
-                break;
+            roleImg.sprite = roleRes.fullBody;
+            nameText.text = roleRes.name;
+        }
+        else
+        {
+            nameText.text = "";
+            roleImg.sprite = null;
         }
         if (dialog.isNeedRecord)
         {
@@ -267,21 +261,14 @@ public class EpisodePlayerView : MonoBehaviour
 
     private void UpdatePhoneView(DialogConfig dialog)
     {
-        GameObject obj = null;
+        GameObject obj = dialog.roleType == RoleType.MainRoleGirl ? rightDialogObj : leftDialogObj;
         Sprite icon = null;
         string name = "";
-        switch (dialog.roleType)
+        var roleRes = ResourcesController.Instance.roleRes[dialog.roleType];
+        if (roleRes != null)
         {
-            case RoleType.MainRoleGirl:
-                obj = rightDialogObj;
-                icon = girlSp;
-                name = "女主角";
-                break;
-            case RoleType.MainRoleBoy:
-                obj = leftDialogObj;
-                icon = boySp;
-                name = "男主角";
-                break;
+            icon = roleRes.icon;
+            name = roleRes.name;
         }
         var view = BaseFunction.CreateView<PhoneEpisodePartView>(obj, contentNode);
         if (view != null)
