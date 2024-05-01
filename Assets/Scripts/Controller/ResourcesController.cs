@@ -11,7 +11,7 @@ public class ResourcesController : MonoSingleton<ResourcesController>
     public Dictionary<BelongPhoneGroup, WechatGroupRes> wechatGroupRes = new Dictionary<BelongPhoneGroup, WechatGroupRes>();
     public Dictionary<string, ImageRes> clueItemRes = new Dictionary<string, ImageRes>();
     public Dictionary<string, ImageRes> dialogItemRes = new Dictionary<string, ImageRes>();
-    public Dictionary<SceneType, SceneRes> sceneRes = new Dictionary<SceneType, SceneRes>();
+    public Dictionary<StageType, SceneRes> sceneRes = new Dictionary<StageType, SceneRes>();
 
     void Awake()
     {

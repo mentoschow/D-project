@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public enum JewelryType
@@ -52,6 +53,7 @@ public class ConfigController : Singleton<ConfigController>
     private const string configPath = "Assets/Resources/Configs/";
     private const string fileTailPath = ".csv";
     private Dictionary<string, string> dataFilePathDic = new Dictionary<string, string>() {
+        {"GameLineConfig", configPath + "配置文档-自动触发流程" + fileTailPath},
         {"ChapterConfig", configPath + "配置文档-章节" + fileTailPath},
         {"EpisodeConfig", configPath + "配置文档-情节" + fileTailPath},
         {"DialogConfig", configPath + "配置文档-对话" + fileTailPath},
@@ -61,6 +63,7 @@ public class ConfigController : Singleton<ConfigController>
     };
 
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
+    private Dictionary<GameLineNode, GameLineNode> gameLineConfig = new Dictionary<GameLineNode, GameLineNode>();  // 自动触发流程配置
     private Dictionary<string, ChapterConfig> chapterConfigList = new Dictionary<string, ChapterConfig>();  // 章节属性
     private Dictionary<string, EpisodeConfig> episodeConfigList = new Dictionary<string, EpisodeConfig>();  // 对话情节属性
     private Dictionary<string, DialogConfig> dialogConfigList = new Dictionary<string, DialogConfig>();  // 对话属性
@@ -102,6 +105,18 @@ public class ConfigController : Singleton<ConfigController>
                 }
             }
         }
+    }
+
+    public GameLineNode GetGameLineNode(GameLineNode node)
+    {
+        foreach (var config in gameLineConfig)
+        {
+            if (config.Key.type == node.type && config.Key.ID == node.ID)
+            {
+                return config.Value;
+            }
+        }
+        return null;
     }
 
     public ChapterConfig GetChapterConfig(string chapterID)
@@ -434,6 +449,33 @@ public class ConfigController : Singleton<ConfigController>
                 Debug.LogError(error);
             }
         }
+        GenerateGameLineConfig();
+    }
+
+    private void GenerateGameLineConfig()
+    {
+        if (!datatableDic.ContainsKey("GameLineConfig"))
+        {
+            Debug.LogError("没有自动触发配置表");
+            return;
+        }
+        var dt = datatableDic["GameLineConfig"];
+        if (dt.Rows.Count == 0)
+        {
+            Debug.LogError("自动触发不存在");
+            return;
+        }
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            var row = dt.Rows[i];
+            GameLineNode finishNode = new GameLineNode();
+            GameLineNode triggerNode = new GameLineNode();
+            finishNode.type = (GameNodeType)int.Parse(row["finishType"].ToString());
+            finishNode.ID = row["finishID"].ToString();
+            triggerNode.type = (GameNodeType)int.Parse(row["triggerType"].ToString());
+            triggerNode.ID = row["triggerID"].ToString();
+            gameLineConfig.Add(finishNode, triggerNode);
+        }
     }
 
     /// <summary>
@@ -495,18 +537,32 @@ public class GameLineNode
 
 public enum GameNodeType
 {
-    Stage1Start,  // 第1慕
-    Stage2Start,  // 第2慕
-    Stage3Start,  // 第3慕
-    Stage4Start,  // 第4慕
-    Stage5Start,  // 第5慕
-    Stage6Start,  // 第6慕
+    GameEnd,  // 游戏结束
+    StageStart,  // 幕开始
     Transition,  // 转场
     NormalEpisode,  // 普通对话
     PhoneEpisode,  // 手机对话
-    Tutorial,  // 教程
     Puzzle,  // 谜题
-    GameEnd,  // 游戏结束
+}
+
+public enum StageType
+{
+    LibraryOut = 1,
+    LibraryIn,
+}
+
+public enum TransitionType
+{
+    ToLibraryOut,
+    ToLibraryIn,
+    Blackout,  // 停电
+    ChangeScene,
+}
+
+public class GameLineConfig
+{
+    public GameLineNode finishNode;
+    public GameLineNode triggerNode;
 }
 
 public class ChapterConfig
@@ -599,23 +655,10 @@ public enum RoleType
     MainRoleBoy,
 }
 
-public enum SceneType
-{
-    LibraryOut = 1,
-    LibraryIn,
-}
-
 public enum EpisodeType
 {
     Normal,
     Phone
-}
-
-public enum TransitionType  // 转场类型
-{
-    GameStart,
-    Blackout,  // 停电
-    ChangeScene,
 }
 
 public enum PuzzleType

@@ -43,7 +43,7 @@ public class WechatGroupRes
 [System.Serializable]
 public class SceneRes
 {
-    public SceneType type;
+    public StageType type;
     public GameObject prefab;
     public List<float> bornPosX;
 }

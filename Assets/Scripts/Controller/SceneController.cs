@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class SceneController : MonoSingleton<SceneController>
 {
-    public Dictionary<SceneType, GameObject> sceneMap = new Dictionary<SceneType, GameObject>();
-    private SceneType curSceneID;
+    public Dictionary<StageType, GameObject> sceneMap = new Dictionary<StageType, GameObject>();
+    private StageType curSceneID;
 
     public float sceneBgWidth;
     public float sceneBgHeight;
@@ -23,7 +23,7 @@ public class SceneController : MonoSingleton<SceneController>
         }
     }
 
-    private void CreateScene(SceneType sceneName, GameObject obj)
+    private void CreateScene(StageType sceneName, GameObject obj)
     {
         if (obj == null)
         {
@@ -34,7 +34,7 @@ public class SceneController : MonoSingleton<SceneController>
         sceneMap[sceneName] = scene;
     }
 
-    public void ChangeScene(SceneType scene)
+    public void ChangeScene(StageType scene)
     {
         curSceneID = scene;
         if (!sceneMap.ContainsKey(curSceneID))

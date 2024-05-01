@@ -84,7 +84,7 @@ public class RoleView : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Equipment")
+        if (collision.tag == "Equipment" && GameDataProxy.Instance.canOperate)
         {
             tips.SetActive(true);
             triggerObj = collision.gameObject;
