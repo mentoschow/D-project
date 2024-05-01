@@ -13,6 +13,7 @@ public class RoleController : MonoSingleton<RoleController>
     private void Start()
     {
         ChangeRole(RoleType.MainRoleGirl);
+        curRoleView.transform.position = new Vector2(-13f, -0.466f);
     }
 
     public void ChangeRole(RoleType type)
