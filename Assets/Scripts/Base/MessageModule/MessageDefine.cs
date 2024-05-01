@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class MessageDefine
 {
-    public static readonly string GameStart = "GameStart";
+    public static readonly string StageStart = "GameStart";
     public static readonly string PlayEpisodeDone = "PlayEpisodeDone";
     public static readonly string PlayTransitionDone = "PlayTransitionDone";
 
