@@ -19,6 +19,8 @@ public class RoleView : MonoBehaviour
     private PhysicsMaterial2D noFriction;
     [SerializeField]
     private PhysicsMaterial2D fullFriction;
+    [SerializeField]
+    private TextMesh tips;
 
     private Rigidbody2D rigidBody;
     private CapsuleCollider2D capsuleCollider;
@@ -31,7 +33,6 @@ public class RoleView : MonoBehaviour
     private float slopeSideAngle;
     private float lastSlopeAngle;
     private GameObject triggerObj;
-    private GameObject tips;
     private float originScaleX;  // 向右
     private EquipmentView colliderEquipment = null;
 
@@ -40,8 +41,7 @@ public class RoleView : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         trigger = GetComponent<BoxCollider2D>();
-        tips = transform.Find("tips")?.gameObject;
-        tips.SetActive(false);
+        tips?.gameObject.SetActive(false);
         originScaleX = roleSp.transform.localScale.x;
         colliderSize = capsuleCollider.size;
     }
@@ -90,7 +90,12 @@ public class RoleView : MonoBehaviour
             colliderEquipment = triggerObj.GetComponent<EquipmentView>();
             if (colliderEquipment != null)
             {
-                tips.SetActive(colliderEquipment.interactive);
+                var config = ConfigController.Instance.GetEquipmentConfig(colliderEquipment.equipmentID);
+                if (config != null)
+                {
+                    tips.text = config.name + "\n按[E]交互";
+                }
+                tips?.gameObject.SetActive(colliderEquipment.interactive);
             }
         }
     }
@@ -103,14 +108,19 @@ public class RoleView : MonoBehaviour
             colliderEquipment = triggerObj.GetComponent<EquipmentView>();
             if (colliderEquipment != null)
             {
-                tips.SetActive(colliderEquipment.interactive);
+                var config = ConfigController.Instance.GetEquipmentConfig(colliderEquipment.equipmentID);
+                if (config != null)
+                {
+                    tips.text = config.name + "\n按[E]交互";
+                }
+                tips?.gameObject.SetActive(colliderEquipment.interactive);
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        tips.SetActive(false);
+        tips?.gameObject.SetActive(false);
         colliderEquipment = null;
     }
 

@@ -63,9 +63,10 @@ public class SceneController : MonoSingleton<SceneController>
 
     public void ChangeScene(StageType toScene, StageType fromScene, bool useTransition = true, bool setRolePos = true)
     {
+        var res = ResourcesController.Instance.sceneRes[toScene];
         if (useTransition)
         {
-            UIController.Instance.ShowTransition();
+            UIController.Instance.ShowTransition(res.name);
         }
         curSceneID = toScene;
         if (!sceneMap.ContainsKey(curSceneID))
@@ -97,17 +98,17 @@ public class SceneController : MonoSingleton<SceneController>
             if (fromScene == StageType.None && toScene == StageType.LibraryOut)
             {
                 // 游戏开始
-                posX = ResourcesController.Instance.sceneRes[toScene].leftPosX;
+                posX = res.leftPosX;
             }
             else if (fromScene == StageType.LibraryOut && toScene == StageType.LibraryIn)
             {
                 // 从图书馆外到图书馆内
-                posX = ResourcesController.Instance.sceneRes[toScene].leftPosX;
+                posX = res.leftPosX;
             }
             else if (fromScene == StageType.LibraryIn && toScene == StageType.LibraryOut)
             {
                 // 从图书馆内到图书馆外
-                posX = ResourcesController.Instance.sceneRes[toScene].rightPosX;
+                posX = res.rightPosX;
             }
             RoleController.Instance.SetRolePos(posX);
         }
