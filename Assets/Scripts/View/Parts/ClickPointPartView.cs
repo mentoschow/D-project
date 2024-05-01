@@ -8,7 +8,6 @@ public class ClickPointPartView : MonoBehaviour
     public int pointID;
     public List<ClickPointConfig> configs = new List<ClickPointConfig>();
 
-    private bool isFirstClick = true;
     private Button button;
     
     void Start()
@@ -24,6 +23,6 @@ public class ClickPointPartView : MonoBehaviour
 
     private void OnButtonClick()
     {
-        isFirstClick = false;
+        
     }
 }

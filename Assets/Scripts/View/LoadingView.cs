@@ -24,6 +24,11 @@ public class LoadingView : MonoBehaviour
         Invoke("PlayTransitionOver", time);
     }
 
+    public void PlayTransition(TransitionType type)
+    {
+
+    }
+
     private void PlayTransitionOver()
     {
         gameObject.SetActive(false);

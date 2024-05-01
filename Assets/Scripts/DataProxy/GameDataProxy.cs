@@ -8,9 +8,9 @@ public class GameDataProxy : Singleton<GameDataProxy>
 {
     public List<DialogConfig> normalHistoryDialog = new List<DialogConfig>();
     public Dictionary<BelongPhoneGroup, List<DialogConfig>> phoneHistoryDialog = new Dictionary<BelongPhoneGroup, List<DialogConfig>>();
-    public List<ItemConfig> bagItem = new List<ItemConfig>();
+    public List<string> bagItem = new List<string>();
+    public List<string> finishedEpisode = new List<string>();  // 已经结束的剧情
     public bool canOperate = false;
-    public string doingTutorial = "";
 
     //public Dictionary<JewelryType,bool> jewelryCmpletion = new Dictionary<JewelryType, bool>();
     public Dictionary<JewelryType,int> insertjewelryMap = new Dictionary<JewelryType, int>();
@@ -22,8 +22,15 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public List<PuzzleCombineConfig> puzzleCombineConfigs = new List<PuzzleCombineConfig>();
     public GameDataProxy()
     {
+        resetData();
+    }
+
+    public void resetData()
+    {
         normalHistoryDialog = new List<DialogConfig>();
-        bagItem = new List<ItemConfig>();
+        phoneHistoryDialog = new Dictionary<BelongPhoneGroup, List<DialogConfig>>();
+        bagItem = new List<string>();
+        finishedEpisode = new List<string>();
         canOperate = false;
     }
 

@@ -7,12 +7,10 @@ public class EquipmentView : MonoBehaviour
     public string equipmentID;
     public DoorType doorType;
     [SerializeField]
-    private GameObject star;  // …¡À∏–«–«
+    private SpriteRenderer star;  // …¡À∏–«–«
     [SerializeField]
-    private float flashTime = 2;
+    private float flashTime = 1f;
 
-    private EquipmentConfig equipmentConfig;
-    private bool interactiveable = true;
     private float timer = 0;
 
     void Start()
@@ -33,17 +31,18 @@ public class EquipmentView : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (timer < flashTime)
         {
             timer += Time.deltaTime;
         }
-        else if (timer == flashTime)
+        else 
         {
             timer = -flashTime;
         }
-        
-        star.SetActive(timer > 0);
+        var curColor = star.color;
+        curColor.a = (Mathf.Abs(timer) + 0.3f) / (flashTime + 0.3f);
+        star.color = curColor;
     }
 }

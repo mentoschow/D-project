@@ -10,31 +10,31 @@ public class GameController : Singleton<GameController>
         MessageManager.Instance.Register(MessageDefine.StageStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
+        MessageManager.Instance.Register(MessageDefine.GetItemDone, CheckNextGameNode);
         var c = ConfigController.Instance;
     }
 
     public void CheckNextGameNode(MessageData node)
     {
         Debug.Log("检查是否能自动进行下一步" + node.gameLineNode);
-        GameDataProxy.Instance.canOperate = false;
         if (node.gameLineNode == null)
         {
             Debug.LogError("节点数据为空");
-            FreeOperate();
             return;
         }
         var nextNode = ConfigController.Instance.GetGameLineNode(node.gameLineNode);
         if (nextNode == null)
         {
             Debug.Log("没有自动触发:" + node.gameLineNode.ID);
-            FreeOperate();
             return;
         }
-
+        GameDataProxy.Instance.canOperate = false;
         switch (nextNode.type)
         {
             case GameNodeType.Transition:
                 Debug.Log("自动触发转场：" + nextNode.ID);
+                var transitionType = BaseFunction.ChangeStringToEnum<TransitionType>(nextNode.ID);
+                UIController.Instance.ShowTransition(transitionType);
                 break;
             case GameNodeType.GameEnd:
                 Debug.Log("自动触发游戏结束：" + nextNode.ID);
@@ -49,21 +49,53 @@ public class GameController : Singleton<GameController>
                 UIController.Instance.PlayEpisode(nextNode.ID);
                 break;
             case GameNodeType.Puzzle:
+                Debug.Log("自动触发谜题：" + nextNode.ID);
+                var config = ConfigController.Instance.GetMergeClueConfig(nextNode.ID);
+                if (config != null)
+                {
+                    // 线索合并
+                    bool canTrigger = true;
+                    if (config.needFinishEpisodeID?.Count > 0)
+                    {
+                        foreach (var id in config.needFinishEpisodeID)
+                        {
+                            if (!GameDataProxy.Instance.finishedEpisode.Contains(id))
+                            {
+                                canTrigger = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (canTrigger)
+                    {
+                        UIController.Instance.showPuzzleView();
+                    }
+                }
+                else
+                {
+                    var puzzleType = BaseFunction.ChangeStringToEnum<PuzzleType>(nextNode.ID);
+                    if (puzzleType == PuzzleType.JewelryPuzzleDone)
+                    {
+                        UIController.Instance.showPuzzleView();
+                    }
+                    else if (puzzleType == PuzzleType.MimaPuzzleDone)
+                    {
+                        UIController.Instance.showMimaView();
+                    }
+                }
+                break;
+            case GameNodeType.FreeOperate:
+                Debug.Log("自由操作");
+                GameDataProxy.Instance.canOperate = true;
                 break;
         }
-    }
-
-    private void FreeOperate()
-    {
-        Debug.Log("自动操作");
-        UIController.Instance.HideAllView();
-        GameDataProxy.Instance.canOperate = true;
     }
 
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None);
+        GameDataProxy.Instance.resetData();
+        SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false);
     }
 
     private void OnInteractWithEquipment(MessageData data)
@@ -80,6 +112,7 @@ public class GameController : Singleton<GameController>
             if (equipmentConfig.triggerEpisodeID != null)
             {
                 // 触发剧情
+                UIController.Instance.PlayEpisode(equipmentConfig.triggerEpisodeID);
             }
             else if (equipmentConfig.triggerPuzzleID != null)
             {

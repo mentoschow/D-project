@@ -145,8 +145,28 @@ public class EpisodePlayerView : MonoBehaviour
             nextBtn.gameObject.SetActive(false);
             gameObject.SetActive(false);
             ChangeStatus(EpisodePlayerStatus.Stop);
+            UIController.Instance.HidePhoneView();
+            var episode = ConfigController.Instance.GetEpisodeConfig(curEpisodeID);
+            if (episode != null)
+            {
+                if (episode.disableEquipmentID?.Count > 0)
+                {
+                    foreach (var id in episode.disableEquipmentID)
+                    {
+                        SceneController.Instance.UpdateEquipment(id, false);
+                    }
+                }
+                if (episode.enableEquipmentID?.Count > 0)
+                {
+                    foreach (var id in episode.enableEquipmentID)
+                    {
+                        SceneController.Instance.UpdateEquipment(id, true);
+                    }
+                }
+            }
+
             GameLineNode node = new GameLineNode();
-            node.type = GameNodeType.NormalEpisode;
+            node.type = episode.episodeType == EpisodeType.Normal ? GameNodeType.NormalEpisode : GameNodeType.PhoneEpisode;
             node.ID = curEpisodeID;
             MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
             // 最后再清空
