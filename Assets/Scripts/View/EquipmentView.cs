@@ -10,6 +10,7 @@ public class EquipmentView : MonoBehaviour
     private SpriteRenderer star;  // …¡À∏–«–«
     [SerializeField]
     private float flashTime = 1f;
+    public bool interactive = true;
 
     private float timer = 0;
 
@@ -33,6 +34,7 @@ public class EquipmentView : MonoBehaviour
 
     void FixedUpdate()
     {
+        star.gameObject.SetActive(interactive);
         if (timer < flashTime)
         {
             timer += Time.deltaTime;

@@ -1,7 +1,9 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class GameController : Singleton<GameController>
 {
@@ -95,7 +97,12 @@ public class GameController : Singleton<GameController>
     {
         Debug.Log("游戏开始了");
         GameDataProxy.Instance.resetData();
-        SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false);
+        UIController.Instance.HideAllView();
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.466f), 3)).AppendCallback(() =>
+        {
+            SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false, false);
+        });
     }
 
     private void OnInteractWithEquipment(MessageData data)

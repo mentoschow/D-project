@@ -15,18 +15,22 @@ MonoBehaviour:
   scenePrefabs:
   - type: 1
     prefab: {fileID: 3163663043471574251, guid: 44230197463e19a47874341e4b307721, type: 3}
+    name: "\u56FE\u4E66\u9986\u5916"
     leftPosX: 0
     rightPosX: 5
   - type: 2
     prefab: {fileID: 3163663043471574251, guid: 995eccf889062d64abe25b7b36722a6a, type: 3}
+    name: "\u56FE\u4E66\u9986\u5185"
     leftPosX: -14.5
     rightPosX: 0
   - type: 0
     prefab: {fileID: 0}
+    name: 
     leftPosX: 0
     rightPosX: 0
   - type: 0
     prefab: {fileID: 0}
+    name: 
     leftPosX: 0
     rightPosX: 0
   clueItemImage:
@@ -35,7 +39,27 @@ MonoBehaviour:
   - ID: T_CUE_ITEM_COMMON
     sprite: {fileID: 21300000, guid: 55028288f14d62a49b989c8978d5d5a8, type: 3}
   - ID: CUE_0015_build
-    sprite: {fileID: 21300000, guid: da018674862d381439c3a120a14b71c6, type: 3}
+    sprite: {fileID: 21300000, guid: 25598c7507fa34b4c8e51eff90f44622, type: 3}
+  - ID: CUE_0000_card
+    sprite: {fileID: 21300000, guid: ec7517061077e734ebd0d96ffb06c4d6, type: 3}
+  - ID: CUE_0005_message_library
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0010_message_miss
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_9010_tutorial
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_9020_tutorial
+    sprite: {fileID: 21300000, guid: 4c4783dfe881b214eaccd6a4a44bdc9b, type: 3}
+  - ID: CUE_9030_tutorial
+    sprite: {fileID: 21300000, guid: 4c4783dfe881b214eaccd6a4a44bdc9b, type: 3}
+  - ID: CUE_0020_review_telegraph
+    sprite: {fileID: 21300000, guid: 143723c67069d53458c041cefbfbc573, type: 3}
+  - ID: CUE_0030_review_telegraphoffice
+    sprite: {fileID: 21300000, guid: 143723c67069d53458c041cefbfbc573, type: 3}
+  - ID: CUE_0040_review_college
+    sprite: {fileID: 21300000, guid: 143723c67069d53458c041cefbfbc573, type: 3}
+  - ID: CUE_0050_reason_telegraph
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
   dialogImage: []
   roleRes:
   - type: 1

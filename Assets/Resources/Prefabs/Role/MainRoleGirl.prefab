@@ -111,7 +111,7 @@ RectTransform:
   m_GameObject: {fileID: 1415388992985018314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
-  m_LocalScale: {x: 0.17799, y: 0.17799, z: 0.17799}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5276265107931347322}
@@ -119,7 +119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.45, y: 2.18}
+  m_AnchoredPosition: {x: 0, y: 2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4399131879251797848
@@ -142,7 +142,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 17fbe03139864424b80684c6e5597de4, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,13 +176,13 @@ TextMesh:
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 0
+  m_Anchor: 7
   m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 17fbe03139864424b80684c6e5597de4, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8e8352c5c65ce2419cd3f5f25477200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterType: 0
+  characterType: 1
   roleSp: {fileID: 6475872879733971829}
   moveSpeed: 5
   slopeCheckDis: 0.5
@@ -246,6 +246,7 @@ MonoBehaviour:
     m_Bits: 128
   noFriction: {fileID: 6200000, guid: cc6ca27c0f46bdf4fba4fa87869787ec, type: 2}
   fullFriction: {fileID: 6200000, guid: 93d26471ed16c92449384fad1885f63a, type: 2}
+  tips: {fileID: 1088022160393709864}
   moveVec: 0
 --- !u!50 &7548680700285076699
 Rigidbody2D:
@@ -282,5 +283,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.5, y: 3}
+  m_Size: {x: 1.5, y: 3.5}
   m_Direction: 0

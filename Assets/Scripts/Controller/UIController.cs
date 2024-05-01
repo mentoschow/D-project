@@ -143,10 +143,10 @@ public class UIController : MonoSingleton<UIController>
 
     }
 
-    public void ShowTransition()
+    public void ShowTransition(string str)
     {
         loadingView?.gameObject.SetActive(true);
-        loadingView?.PlayTransition();
+        loadingView?.PlayTransition(str);
     }
 
     public void ShowTransition(TransitionType type)
