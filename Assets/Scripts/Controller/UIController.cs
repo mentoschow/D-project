@@ -1,5 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;  
+using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,8 @@ public class UIController : MonoSingleton<UIController>
 
     private EpisodePlayerView episodePlayerView;
     private PuzzleView puzzleView;
+    private MimaView mimaView;
+
     private TestControlView testControlView;
 
     private HomepageView homepageView;
@@ -48,6 +51,9 @@ public class UIController : MonoSingleton<UIController>
 
     private void Init()
     {
+
+        DOTween.Init();
+
         layer1 = transform.Find("layer1");
         layer2 = transform.Find("layer2");
         layer3 = transform.Find("layer3");
@@ -107,6 +113,18 @@ public class UIController : MonoSingleton<UIController>
         {
             puzzleView?.updateView(config);
         }
+    }
+
+
+    public void showMimaView()
+    {
+        if (mimaView == null)
+        {
+            mimaView = CommonUtils.CreateViewByType<MimaView>(MimaView.getPrefab(), layer4);
+        }
+
+        mimaView.gameObject.SetActive(true);
+        mimaView.updateView();
     }
 
     private void OpenHomepage()

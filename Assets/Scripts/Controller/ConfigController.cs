@@ -99,7 +99,7 @@ public class ConfigController : Singleton<ConfigController>
                 {
                     foreach(PuzzleCombineConfig combineConfig in list)
                     {
-                        GameDataProxy.Instance.jewelryCmpletion.Add(combineConfig.jewelryType, false);
+                        GameDataProxy.Instance.rightInsertMap.Add(combineConfig.jewelryType,combineConfig.code);
                     }
                     GameDataProxy.Instance.puzzleCombineConfigs = list.ToList();
                 }
@@ -663,5 +663,6 @@ public enum EpisodeType
 
 public enum PuzzleType
 {
-
+    JewelryPuzzleDone = 0,//ÃÜÂëËø
+    MimaPuzzleDone = 1//Ê×ÊÎ
 }
