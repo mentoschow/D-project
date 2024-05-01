@@ -4,13 +4,12 @@ using UnityEngine;
 
 public static class MessageDefine
 {
-    public static readonly string StageStart = "GameStart";
+    public static readonly string StageStart = "StageStart";
     public static readonly string PlayEpisodeDone = "PlayEpisodeDone";
-    public static readonly string PlayTransitionDone = "PlayTransitionDone";
 
     public static readonly string PlayPuzzleDone = "PlayTransitionDone";//°ÚÍ·ÊÎ
 
-    public static readonly string GetItemTipDone = "GetItemTipDone";
+    public static readonly string GetItemDone = "GetItem";
     public static readonly string OpenWechatDialogPage = "OpenWechatDialogPage";
     public static readonly string ClueItemClick = "ClueItemClick";
     public static readonly string InteractWithEquipment = "InteractWithEquipment";

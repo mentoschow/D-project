@@ -58,7 +58,8 @@ public class ClueItemView : MonoBehaviour
                 }
                 if (view != null)
                 {
-                    view.UpdateView(items[i]);
+                    var config = ConfigController.Instance.GetClueItemConfig(items[i]);
+                    view.UpdateView(config);
                 }
             }
         }

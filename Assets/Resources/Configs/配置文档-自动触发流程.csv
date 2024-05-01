@@ -1,4 +1,5 @@
 finishType,finishID,triggerType,triggerID
 1,LibraryOut,3,MS01_010_010
 3,MS01_010_010,4,MS01_010_020
+4,MS01_010_020,7,Free
 1,LibraryIn,3,MS01_020_010

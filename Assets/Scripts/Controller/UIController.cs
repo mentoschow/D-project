@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class UIController : MonoSingleton<UIController>
 {
-    // Ԥ����
     public GameObject homepageObj;
     public GameObject loadingObj;
 
@@ -36,11 +35,13 @@ public class UIController : MonoSingleton<UIController>
     private Transform layer2;
     private Transform layer3;
     private Transform layer4;
+    private int getItemTipIndex = 0;
 
     public Button testBtn;
     void Awake()
     {
         MessageManager.Instance.Register(MessageDefine.StageStart, GameStart);
+        MessageManager.Instance.Register(MessageDefine.GetItemDone, OnGetItemDone);
         Init();
     }
 
@@ -148,22 +149,51 @@ public class UIController : MonoSingleton<UIController>
         loadingView?.PlayTransition();
     }
 
-    public void ShowTutorial()
+    public void HidePhoneView()
     {
-
+        phoneView?.gameObject.SetActive(false);
     }
 
     public void PlayEpisode(string ID)
     {
         var config = ConfigController.Instance.GetEpisodeConfig(ID);
-        if (config.episodeType == EpisodeType.Normal)
+        if (config != null)
         {
-            normalEpisodePlayerView.gameObject.SetActive(true);
-            normalEpisodePlayerView.PlayEpisode(ID);
-        }
-        else if (config.episodeType == EpisodeType.Phone)
-        {
-            phoneView.PlayPhoneEpisode(config);
+            bool canPlay = true;
+            if (config.needFinishEpisodeID?.Count > 0)
+            {
+                foreach (var id in config.needFinishEpisodeID)
+                {
+                    if (!GameDataProxy.Instance.finishedEpisode.Contains(id))
+                    {
+                        canPlay = false;
+                        break;
+                    }
+                }
+            }
+            if (config.needItemID?.Count > 0)
+            {
+                foreach (var id in config.needItemID)
+                {
+                    if (!GameDataProxy.Instance.bagItem.Contains(id))
+                    {
+                        canPlay = false;
+                        break;
+                    }
+                }
+            }
+            if (canPlay)
+            {
+                if (config.episodeType == EpisodeType.Normal)
+                {
+                    normalEpisodePlayerView.gameObject.SetActive(true);
+                    normalEpisodePlayerView.PlayEpisode(ID);
+                }
+                else if (config.episodeType == EpisodeType.Phone)
+                {
+                    phoneView.PlayPhoneEpisode(config);
+                }
+            }
         }
     }
 
@@ -191,11 +221,21 @@ public class UIController : MonoSingleton<UIController>
             {
                 obj.transform.SetParent(layer4);
                 var rect = obj.GetComponent<RectTransform>();
-                float y = -((rect.rect.height + 50) * i + 100);
+                float y = -((rect.rect.height + 20) * getItemTipIndex + 100);
                 rect.anchoredPosition = new Vector3(rect.rect.width, y);
                 var view = obj.GetComponent<GetItemTipPartView>();
                 view?.UpdateView(itemList[i]);
+                getItemTipIndex++;
             }
+        }
+    }
+
+    private void OnGetItemDone(MessageData data)
+    {
+        getItemTipIndex--;
+        if (getItemTipIndex < 0)
+        {
+            getItemTipIndex = 0;
         }
     }
 

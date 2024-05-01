@@ -184,7 +184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipmentID: 0
-  star: {fileID: 823858660502364609}
+  doorType: 0
+  star: {fileID: 7211208425236955121}
+  flashTime: 2
 --- !u!61 &6704912784959747550
 BoxCollider2D:
   m_ObjectHideFlags: 0

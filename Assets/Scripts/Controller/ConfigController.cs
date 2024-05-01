@@ -57,7 +57,6 @@ public class ConfigController : Singleton<ConfigController>
         {"ChapterConfig", configPath + "配置文档-章节" + fileTailPath},
         {"EpisodeConfig", configPath + "配置文档-情节" + fileTailPath},
         {"DialogConfig", configPath + "配置文档-对话" + fileTailPath},
-        //{"ChoiceConfig", configPath + "配置文档-对话选项" + fileTailPath},
         //{"EquipmentConfig", configPath + "配置文档-物品" + fileTailPath},
         {"ItemConfig", configPath + "配置文档-道具" + fileTailPath},
     };
@@ -472,7 +471,7 @@ public class ConfigController : Singleton<ConfigController>
             finishNode.type = (GameNodeType)int.Parse(row["finishType"].ToString());
             finishNode.ID = row["finishID"].ToString();
             triggerNode.type = (GameNodeType)int.Parse(row["triggerType"].ToString());
-            triggerNode.ID = row["triggerID"].ToString();
+            triggerNode.ID = row["triggerID"]?.ToString();
             gameLineConfig.Add(finishNode, triggerNode);
         }
     }
@@ -542,6 +541,8 @@ public enum GameNodeType
     NormalEpisode,  // 普通对话
     PhoneEpisode,  // 手机对话
     Puzzle,  // 谜题
+    GotClueItem,  // 获得线索
+    FreeOperate,  // 自由操作
 }
 
 public enum StageType

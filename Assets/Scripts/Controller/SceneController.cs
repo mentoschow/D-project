@@ -9,6 +9,7 @@ public class SceneController : MonoSingleton<SceneController>
     public Dictionary<StageType, GameObject> sceneMap = new Dictionary<StageType, GameObject>();
     private StageType curSceneID;
     private Dictionary<StageType, int> comeInSceneTimes = new Dictionary<StageType, int>();
+    private Dictionary<string, EquipmentView> equipmentList = new Dictionary<string, EquipmentView>();
 
     public float sceneBgWidth;
     public float sceneBgHeight;
@@ -34,6 +35,13 @@ public class SceneController : MonoSingleton<SceneController>
         scene.transform.SetParent(transform);
         sceneMap[sceneName] = scene;
         comeInSceneTimes[sceneName] = 0;
+        foreach (var child in scene.transform.Find("EquipmentLayer").GetComponentsInChildren<EquipmentView>())
+        {
+            if (child != null)
+            {
+                equipmentList[child.equipmentID] = child;
+            }
+        }
     }
 
     public void ChangeScene(StageType toScene, StageType fromScene)
@@ -93,6 +101,14 @@ public class SceneController : MonoSingleton<SceneController>
                 MessageManager.Instance.Send(MessageDefine.StageStart, new MessageData(node));
             }
             comeInSceneTimes[toScene]++;
+        }
+    }
+
+    public void UpdateEquipment(string equipmentID, bool enable)
+    {
+        if (equipmentList.ContainsKey(equipmentID))
+        {
+            equipmentList[equipmentID].gameObject.SetActive(enable);
         }
     }
 }
