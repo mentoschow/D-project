@@ -7,8 +7,7 @@ public class GameController : Singleton<GameController>
 {
     public GameController() 
     {
-        MessageManager.Instance.Register(MessageDefine.PlayTransitionDone, CheckNextGameNode);
-        MessageManager.Instance.Register(MessageDefine.GameStart, CheckNextGameNode);
+        MessageManager.Instance.Register(MessageDefine.StageStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
         var c = ConfigController.Instance;
@@ -36,7 +35,6 @@ public class GameController : Singleton<GameController>
         {
             case GameNodeType.Transition:
                 Debug.Log("自动触发转场：" + nextNode.ID);
-                UIController.Instance.ShowTransition((TransitionType)Enum.Parse(typeof(TransitionType), nextNode.ID));
                 break;
             case GameNodeType.GameEnd:
                 Debug.Log("自动触发游戏结束：" + nextNode.ID);
@@ -65,11 +63,7 @@ public class GameController : Singleton<GameController>
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        SceneController.Instance.ChangeScene(StageType.LibraryIn);
-        GameLineNode node = new GameLineNode();
-        node.type = GameNodeType.StageStart;
-        node.ID = StageType.LibraryOut.ToString();
-        MessageManager.Instance.Send(MessageDefine.GameStart, new MessageData(node));
+        SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None);
     }
 
     private void OnInteractWithEquipment(MessageData data)

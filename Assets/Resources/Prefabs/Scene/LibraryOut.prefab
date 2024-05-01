@@ -201,7 +201,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 24.305933, y: 10.799999}
+    oldSize: {x: 24.3, y: 10.8}
     newSize: {x: 32.64, y: 10.805624}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -227,7 +227,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 24.305933, y: 10.799999}
+    oldSize: {x: 24.3, y: 10.8}
     newSize: {x: 32.64, y: 10.805624}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -253,7 +253,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 24.305933, y: 10.799999}
+    oldSize: {x: 24.3, y: 10.8}
     newSize: {x: 32.64, y: 10.805624}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -269,6 +269,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4594285025847344238}
     m_Modifications:
+    - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: doorType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
       value: EquipmentView (1)

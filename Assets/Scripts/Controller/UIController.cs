@@ -40,7 +40,7 @@ public class UIController : MonoSingleton<UIController>
     public Button testBtn;
     void Awake()
     {
-        MessageManager.Instance.Register(MessageDefine.GameStart, GameStart);
+        MessageManager.Instance.Register(MessageDefine.StageStart, GameStart);
         Init();
     }
 
@@ -59,7 +59,7 @@ public class UIController : MonoSingleton<UIController>
         layer3 = transform.Find("layer3");
         layer4 = transform.Find("layer4");
         homepageView = CreatePanelView<HomepageView>(homepageObj, layer1);
-        loadingView = CreatePanelView<LoadingView>(loadingObj, layer4);
+        loadingView = BaseFunction.CreateView<LoadingView>(loadingObj, layer4);
         normalEpisodePlayerView = CreatePanelView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
         phoneView = CreatePanelView<PhoneView>(phoneObj, layer2);
         mainRoleBoyClueView = CreatePanelView<ClueItemView>(clueItemViewObj, layer2);
@@ -142,10 +142,10 @@ public class UIController : MonoSingleton<UIController>
 
     }
 
-    public void ShowTransition(TransitionType type)
+    public void ShowTransition()
     {
         loadingView?.gameObject.SetActive(true);
-        loadingView?.PlayTransition(type);
+        loadingView?.PlayTransition();
     }
 
     public void ShowTutorial()

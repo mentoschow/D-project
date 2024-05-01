@@ -5,7 +5,7 @@ using UnityEngine;
 public class EquipmentView : MonoBehaviour
 {
     public string equipmentID;
-
+    public DoorType doorType;
     [SerializeField]
     private GameObject star;  // …¡À∏–«–«
     [SerializeField]

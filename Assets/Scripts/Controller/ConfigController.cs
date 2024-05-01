@@ -186,6 +186,7 @@ public class ConfigController : Singleton<ConfigController>
                     config.disableEquipmentID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string needItemID = row["needItemID"].ToString();
                     config.disableEquipmentID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
                     config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
 
                     episodeConfigList[episodeID] = config;
@@ -229,8 +230,6 @@ public class ConfigController : Singleton<ConfigController>
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string choices = row["choices"].ToString();
                     config.choices = new List<string>(choices.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-                    config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
-                    config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
 
                     dialogConfigList[dialogID] = config;
                     break;
@@ -547,8 +546,21 @@ public enum GameNodeType
 
 public enum StageType
 {
-    LibraryOut = 1,
+    None,
+    LibraryOut,
     LibraryIn,
+    Passage,
+    BoxRoom,
+    SecretRoom_Now,
+    SecretRoom_Pass
+}
+
+public enum DoorType
+{
+    None,
+    LibraryOut,
+    LibraryInLeft,
+    LibraryInRight,
 }
 
 public enum TransitionType
@@ -580,6 +592,7 @@ public class EpisodeConfig
     public List<string> needFinishEpisodeID;
     public List<string> needItemID;
     public EpisodeType episodeType;
+    public bool isNeedRecord;
     public BelongPhoneGroup belongGroup;
 }
 
@@ -587,7 +600,7 @@ public enum BelongPhoneGroup
 {
     None,
     MainRoleBoy,
-
+    QingQian,
 }
 
 public class DialogConfig
@@ -651,8 +664,10 @@ public class ClickPointConfig
 
 public enum RoleType
 {
+    None,
     MainRoleGirl,
     MainRoleBoy,
+    QingQian,
 }
 
 public enum EpisodeType

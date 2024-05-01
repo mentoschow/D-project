@@ -1,7 +1,4 @@
 finishType,finishID,triggerType,triggerID
-1,LibraryOut,2,ToLibraryOut
-2,ToLibraryOut,3,TEST01_010_010
-3,TEST01_010_010,4,TEST01_010_020
-2,ToLibraryIn,3,MS01_020_010
-4,MS01_020_020,5,ÏßË÷ÍÆÀí1
-4,MS01_020_030,3,MS01_020_040
+1,LibraryOut,3,MS01_010_010
+3,MS01_010_010,4,MS01_010_020
+1,LibraryIn,3,MS01_020_010

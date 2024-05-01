@@ -21,14 +21,16 @@ public class CameraController : MonoSingleton<CameraController>
             return;
         }
         float newX = role.transform.position.x;
-        float moveMax = (SceneController.Instance.sceneBgWidth - gameCam.pixelWidth) / 2 / 9.6f;
+        float moveMax = (SceneController.Instance.sceneBgWidth - gameCam.pixelWidth) / 2 / 100;
         if (newX > moveMax)
         {
             canMove = false;
+            transform.position = new Vector3(moveMax, 0, -10);
         }
         else if (newX < -moveMax)
         {
             canMove = false;
+            transform.position = new Vector3(-moveMax, 0, -10);
         } else
         {
             canMove = true;
