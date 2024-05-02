@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8e8352c5c65ce2419cd3f5f25477200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterType: 1
+  roleType: 1
   roleSp: {fileID: 6475872879733971829}
   moveSpeed: 5
   slopeCheckDis: 0.5

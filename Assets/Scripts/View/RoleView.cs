@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoleView : MonoBehaviour
 {
-    public RoleType characterType;
+    public RoleType roleType;
     [SerializeField]
     private SpriteRenderer roleSp;
     [SerializeField]
@@ -84,23 +84,15 @@ public class RoleView : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Equipment" && GameDataProxy.Instance.canOperate)
-        {
-            triggerObj = collision.gameObject;
-            colliderEquipment = triggerObj.GetComponent<EquipmentView>();
-            if (colliderEquipment != null)
-            {
-                var config = ConfigController.Instance.GetEquipmentConfig(colliderEquipment.equipmentID);
-                if (config != null)
-                {
-                    tips.text = config.name + "\n按[E]交互";
-                }
-                tips?.gameObject.SetActive(colliderEquipment.interactive);
-            }
-        }
+        UpdateCollision(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
+    {
+        UpdateCollision(collision);
+    }
+
+    private void UpdateCollision(Collider2D collision)
     {
         if (collision.tag == "Equipment" && GameDataProxy.Instance.canOperate)
         {
@@ -108,12 +100,24 @@ public class RoleView : MonoBehaviour
             colliderEquipment = triggerObj.GetComponent<EquipmentView>();
             if (colliderEquipment != null)
             {
+                bool interactive = colliderEquipment.interactive;
                 var config = ConfigController.Instance.GetEquipmentConfig(colliderEquipment.equipmentID);
                 if (config != null)
                 {
+                    if (config.mustDoneEpisodeID?.Count > 0)
+                    {
+                        foreach (var id in config.mustDoneEpisodeID)
+                        {
+                            if (!GameDataProxy.Instance.finishedEpisode.Contains(id))
+                            {
+                                interactive = false;
+                                break;
+                            }
+                        }
+                    }
                     tips.text = config.name + "\n按[E]交互";
                 }
-                tips?.gameObject.SetActive(colliderEquipment.interactive);
+                tips?.gameObject.SetActive(interactive);
             }
         }
     }

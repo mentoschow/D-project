@@ -34,7 +34,7 @@ public class GetItemTipPartView : MonoBehaviour
         var config = ConfigController.Instance.GetClueItemConfig(itemID);
         if (config != null)
         {
-            var curRoleType = RoleController.Instance.curRoleView.characterType;
+            var curRoleType = RoleController.Instance.curRoleView.roleType;
             if (curRoleType == RoleType.MainRoleBoy)
             {
                 img.sprite = bg_boy_normal;
@@ -68,7 +68,15 @@ public class GetItemTipPartView : MonoBehaviour
     {
         if (config.isSaveBag)
         {
-            GameDataProxy.Instance.bagItem.Add(config.ID);
+            var roleType = RoleController.Instance.curRoleView.roleType;
+            if (roleType == RoleType.MainRoleGirl)
+            {
+                GameDataProxy.Instance.mainGrilBagItem.Add(config.ID);
+            }
+            else if (roleType == RoleType.MainRoleBoy)
+            {
+                GameDataProxy.Instance.mainBoyBagItem.Add(config.ID);
+            }
         }
     }
 }
