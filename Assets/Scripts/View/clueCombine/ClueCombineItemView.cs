@@ -1,11 +1,13 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class GetItemTipPartView : MonoBehaviour
+public class ClueCombineItemView : MonoBehaviour
 {
     public Sprite bg_boy_normal;
     //public Sprite bg_boy_click;
@@ -24,10 +26,44 @@ public class GetItemTipPartView : MonoBehaviour
     private RectTransform rect;
     private string itemID;
 
+    DragNodeCompent dragCom;
 
+    static GameObject ViewPrefab;
+    public static GameObject getPrefab()
+    {
+        if (!ClueCombineItemView.ViewPrefab)
+        {
+            string resourceName = "Prefabs/UI/ClueCombine/ClueCombineItemView"; // ×ÊÔ´Ãû³Æ
+            ClueCombineItemView.ViewPrefab = Resources.Load<GameObject>(resourceName);
+        }
+
+        return ClueCombineItemView.ViewPrefab;
+    }
     void Awake()
     {
         rect = GetComponent<RectTransform>();
+    }
+
+    public void refreshContainState(bool isActive)
+    {
+        this.img.gameObject.SetActive(isActive);
+
+        if (this.dragCom)
+        {
+            this.dragCom.enabled = isActive;
+        }
+    }
+
+    public void updateDrag(Action<GameObject, int> dragStartCallback
+        , Action<Vector2> dragMoveCallback
+        , Action<Vector2, int> dragOverCallback)
+    {
+        if (!this.dragCom)
+        {
+            this.dragCom = gameObject.AddComponent<DragNodeCompent>();
+            this.dragCom.enabled = false;
+        }
+        this.dragCom?.init(dragStartCallback, dragMoveCallback, dragOverCallback, 1, this.img);
     }
 
     public void UpdateView(string itemID)
@@ -47,29 +83,8 @@ public class GetItemTipPartView : MonoBehaviour
             text.text = config.name;
             rect.DOAnchorPosX(0, aniTime);
             itemID = config.ID;
-            CheckSaveBag(config);
-        }
-        Invoke("Disappear", stayTime);
-    }
 
-    private void Disappear()
-    {
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(rect.DOAnchorPosX(rect.rect.width, aniTime)).AppendCallback(() =>
-        {
-            GameLineNode node = new GameLineNode();
-            node.type = GameNodeType.GotClueItem;
-            node.ID = itemID;
-            MessageManager.Instance.Send(MessageDefine.GetItemDone, new MessageData(node));
-            Destroy(gameObject);
-        });
-    }
-
-    private void CheckSaveBag(ItemConfig config)
-    {
-        if (config.isSaveBag)
-        {
-            GameDataProxy.Instance.bagItem.Add(config.ID);
+       
         }
     }
 }
