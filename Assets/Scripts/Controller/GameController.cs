@@ -12,13 +12,11 @@ public class GameController : Singleton<GameController>
         MessageManager.Instance.Register(MessageDefine.StageStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
-        MessageManager.Instance.Register(MessageDefine.GetItemDone, CheckNextGameNode);
         var c = ConfigController.Instance;
     }
 
     public void CheckNextGameNode(MessageData node)
     {
-        Debug.Log("检查是否能自动进行下一步" + node.gameLineNode);
         if (node.gameLineNode == null)
         {
             Debug.LogError("节点数据为空");
@@ -96,8 +94,8 @@ public class GameController : Singleton<GameController>
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        GameDataProxy.Instance.resetData();
-        UIController.Instance.HideAllView();
+        UIController.Instance.ShowGamePlayView();
+        RoleController.Instance.curRoleView.transform.position = new Vector2(-13f, -0.216f);
         Sequence sequence = DOTween.Sequence();
         sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.216f), 3)).AppendCallback(() =>
         {

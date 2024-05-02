@@ -42,6 +42,14 @@ public class SceneController : MonoSingleton<SceneController>
         Debug.Log("³¡¾°¸ß¶È:" + sceneBgHeight);
     }
 
+    public void ResetData()
+    {
+        foreach (var scene in ResourcesController.Instance.sceneRes)
+        {
+            comeInSceneTimes[scene.Key] = 0;
+        }
+    }
+
     private void CreateScene(StageType sceneName, GameObject obj)
     {
         if (obj == null)
