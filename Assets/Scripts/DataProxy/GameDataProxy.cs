@@ -23,10 +23,10 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public List<PuzzleCombineConfig> puzzleCombineConfigs = new List<PuzzleCombineConfig>();
     public GameDataProxy()
     {
-        resetData();
+        ResetData();
     }
 
-    public void resetData()
+    public void ResetData()
     {
         normalHistoryDialog = new List<DialogConfig>();
         phoneHistoryDialog = new Dictionary<BelongPhoneGroup, List<DialogConfig>>();

@@ -96,8 +96,8 @@ public class GameController : Singleton<GameController>
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        GameDataProxy.Instance.resetData();
-        UIController.Instance.HideAllView();
+        UIController.Instance.ShowGamePlayView();
+        RoleController.Instance.curRoleView.transform.position = new Vector2(-13f, -0.216f);
         Sequence sequence = DOTween.Sequence();
         sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.216f), 3)).AppendCallback(() =>
         {

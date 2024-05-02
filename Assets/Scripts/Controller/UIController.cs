@@ -13,13 +13,12 @@ public class UIController : MonoSingleton<UIController>
     GameObject puzzleViewPrefab;
     GameObject testControlViewPrefab;
 
-    public GameObject stageViewObj;
     public GameObject normalEpisodePlayerObj;
     public GameObject getItemTipObj;
     public GameObject phoneObj;
     public GameObject clueItemViewObj;
+    public GameObject commonButtonPartObj;
 
-    private EpisodePlayerView episodePlayerView;
     private PuzzleView puzzleView;
     private MimaView mimaView;
 
@@ -30,6 +29,7 @@ public class UIController : MonoSingleton<UIController>
     private EpisodePlayerView normalEpisodePlayerView;
     private PhoneView phoneView;
     private ClueItemView mainRoleBoyClueView;
+    private CommonButtonPartView commonButtonPartView;
 
     private Transform layer1;
     private Transform layer2;
@@ -59,14 +59,14 @@ public class UIController : MonoSingleton<UIController>
         layer2 = transform.Find("layer2");
         layer3 = transform.Find("layer3");
         layer4 = transform.Find("layer4");
+        commonButtonPartView = BaseFunction.CreateView<CommonButtonPartView>(commonButtonPartObj, layer2);
         homepageView = CreatePanelView<HomepageView>(homepageObj, layer1);
         loadingView = BaseFunction.CreateView<LoadingView>(loadingObj, layer4);
         normalEpisodePlayerView = CreatePanelView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
         phoneView = CreatePanelView<PhoneView>(phoneObj, layer2);
         mainRoleBoyClueView = CreatePanelView<ClueItemView>(clueItemViewObj, layer2);
 
-        HideAllView();
-        OpenHomepage();
+        HideGamePlayView();
 
         testBtn.onClick.AddListener(onTestBtnClick);
     }
@@ -86,7 +86,7 @@ public class UIController : MonoSingleton<UIController>
         testControlView?.gameObject.SetActive(true);
     }
 
-    public void HideAllView()
+    public void ShowGamePlayView()
     {
         homepageView?.gameObject.SetActive(false);
         loadingView?.gameObject.SetActive(false);
@@ -94,6 +94,18 @@ public class UIController : MonoSingleton<UIController>
         phoneView?.gameObject.SetActive(false);
         puzzleView?.gameObject.SetActive(false);
         mainRoleBoyClueView?.gameObject.SetActive(false);
+        commonButtonPartView?.gameObject.SetActive(true);
+    }
+
+    public void HideGamePlayView()
+    {
+        homepageView?.gameObject.SetActive(true);
+        loadingView?.gameObject.SetActive(false);
+        normalEpisodePlayerView?.gameObject.SetActive(false);
+        phoneView?.gameObject.SetActive(false);
+        puzzleView?.gameObject.SetActive(false);
+        mainRoleBoyClueView?.gameObject.SetActive(false);
+        commonButtonPartView?.gameObject.SetActive(false);
     }
 
     public void showPuzzleView()
@@ -128,11 +140,6 @@ public class UIController : MonoSingleton<UIController>
         mimaView.updateView();
     }
 
-    private void OpenHomepage()
-    {
-        homepageView?.gameObject.SetActive(true);
-    }
-
     public void GameStart(MessageData data)
     {
         homepageView?.gameObject.SetActive(false);
@@ -140,7 +147,14 @@ public class UIController : MonoSingleton<UIController>
 
     public void GameEnd()
     {
+        BackHomepage();
+    }
 
+    public void BackHomepage()
+    {
+        HideGamePlayView();
+        GameDataProxy.Instance.ResetData();
+        SceneController.Instance.ResetData();
     }
 
     public void ShowTransition(string str)
