@@ -181,7 +181,7 @@ public class UIController : MonoSingleton<UIController>
             {
                 foreach (var id in config.needItemID)
                 {
-                    if (!GameDataProxy.Instance.bagItem.Contains(id))
+                    if (!GameDataProxy.Instance.mainGrilBagItem.Contains(id))
                     {
                         canPlay = false;
                         break;
@@ -190,6 +190,7 @@ public class UIController : MonoSingleton<UIController>
             }
             if (canPlay)
             {
+                GameDataProxy.Instance.canOperate = false;
                 if (config.episodeType == EpisodeType.Normal)
                 {
                     normalEpisodePlayerView.gameObject.SetActive(true);
@@ -199,6 +200,10 @@ public class UIController : MonoSingleton<UIController>
                 {
                     phoneView.PlayPhoneEpisode(config);
                 }
+            }
+            else
+            {
+                GameDataProxy.Instance.canOperate = true;
             }
         }
     }
@@ -222,6 +227,19 @@ public class UIController : MonoSingleton<UIController>
     {
         for (int i = 0; i < itemList.Count; i++)
         {
+            if (GameDataProxy.Instance.CheckHasClueItem(itemList[i], RoleController.Instance.curRoleView.roleType))
+            {
+                // 避免重复获取
+                continue;
+            }
+            var config = ConfigController.Instance.GetClueItemConfig(itemList[i]);
+            if (config != null)
+            {
+                if (!config.isSaveBag)
+                {
+                    continue;
+                }
+            }
             var obj = Instantiate(getItemTipObj);
             if (obj != null)
             {
