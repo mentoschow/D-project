@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -40,8 +41,21 @@ public class ClueItemView : MonoBehaviour
     public void UpdateView()
     {
         detailPage?.SetActive(false);
-        var items = GameDataProxy.Instance.bagItem;
+        var roleType = RoleController.Instance.curRoleView.roleType;
+        List<string> items = new List<string>();
+        if (roleType == RoleType.MainRoleGirl)
+        {
+            items = GameDataProxy.Instance.mainGirlBagItem;
+        }
+        else if (roleType == RoleType.MainRoleBoy)
+        {
+            items = GameDataProxy.Instance.mainBoyBagItem;
+        }
         numText.text = items.Count.ToString() + "Æª±Ê¼Ç";
+        foreach (var view in itemViewList)
+        {
+            view.gameObject.SetActive(false);
+        }
         if (items.Count > 0)
         {
             for (int i = 0; i < items.Count; i++)
@@ -58,6 +72,7 @@ public class ClueItemView : MonoBehaviour
                 }
                 if (view != null)
                 {
+                    view.gameObject.SetActive(true);
                     var config = ConfigController.Instance.GetClueItemConfig(items[i]);
                     view.UpdateView(config);
                 }

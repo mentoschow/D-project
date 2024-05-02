@@ -12,13 +12,11 @@ public class GameController : Singleton<GameController>
         MessageManager.Instance.Register(MessageDefine.StageStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
-        MessageManager.Instance.Register(MessageDefine.GetItemDone, CheckNextGameNode);
         var c = ConfigController.Instance;
     }
 
     public void CheckNextGameNode(MessageData node)
     {
-        Debug.Log("检查是否能自动进行下一步" + node.gameLineNode);
         if (node.gameLineNode == null)
         {
             Debug.LogError("节点数据为空");
@@ -42,12 +40,8 @@ public class GameController : Singleton<GameController>
                 Debug.Log("自动触发游戏结束：" + nextNode.ID);
                 UIController.Instance.GameEnd();
                 break;
-            case GameNodeType.NormalEpisode:
-                Debug.Log("自动触发普通对话：" + nextNode.ID);
-                UIController.Instance.PlayEpisode(nextNode.ID);
-                break;
-            case GameNodeType.PhoneEpisode:
-                Debug.Log("自动触发手机对话：" + nextNode.ID);
+            case GameNodeType.Episode:
+                Debug.Log("自动触发情节：" + nextNode.ID);
                 UIController.Instance.PlayEpisode(nextNode.ID);
                 break;
             case GameNodeType.Puzzle:
@@ -90,18 +84,22 @@ public class GameController : Singleton<GameController>
                 Debug.Log("自由操作");
                 GameDataProxy.Instance.canOperate = true;
                 break;
+            case GameNodeType.CharacterMove:
+                Debug.Log("自动触发角色移动：" + nextNode.ID);
+                RoleController.Instance.PlayAutoMove(nextNode.ID);
+                break;
         }
     }
 
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        GameDataProxy.Instance.resetData();
-        UIController.Instance.HideAllView();
+        UIController.Instance.ShowGamePlayView();
+        RoleController.Instance.curRoleView.transform.position = new Vector2(-13f, -0.216f);
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.466f), 3)).AppendCallback(() =>
+        sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.216f), 3)).AppendCallback(() =>
         {
-            SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false, false);
+            SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false, false); // 特殊处理
         });
     }
 
@@ -109,19 +107,19 @@ public class GameController : Singleton<GameController>
     {
         string equipmentID = data.valueString;
         Debug.Log("与设备交互：" + equipmentID);
-        if (string.IsNullOrEmpty(equipmentID))
+        if (equipmentID == null || equipmentID == "")
         {
             return;
         }
         EquipmentConfig equipmentConfig = ConfigController.Instance.GetEquipmentConfig(equipmentID);
         if (equipmentConfig != null)
         {
-            if (equipmentConfig.triggerEpisodeID != null)
+            if (equipmentConfig.triggerEpisodeID != "")
             {
                 // 触发剧情
                 UIController.Instance.PlayEpisode(equipmentConfig.triggerEpisodeID);
             }
-            else if (equipmentConfig.triggerPuzzleID != null)
+            else if (equipmentConfig.triggerPuzzleID != "")
             {
                 // 触发解谜
             }

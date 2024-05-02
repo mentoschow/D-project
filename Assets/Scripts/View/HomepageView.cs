@@ -5,21 +5,40 @@ using UnityEngine.UI;
 
 public class HomepageView : MonoSingleton<HomepageView>
 {
-    public Button gameStartBtn;
+    [SerializeField]
+    private Button gameStartBtn;
+    [SerializeField]
+    private Button quitBtn;
+    [SerializeField]
+    private Button staffBtn;
+    [SerializeField]
+    private GameObject staffArea;
 
     void Start()
     {
-        gameStartBtn = transform.Find("gameStartBtn")?.GetComponent<Button>();
-        gameStartBtn.onClick.AddListener(onGameStartBtnClick);
+        gameStartBtn?.onClick.AddListener(GameStart);
+        quitBtn?.onClick.AddListener(QuitGame);
+        staffBtn?.onClick.AddListener(ShowStaff);
+        staffArea.SetActive(false);
     }
 
-    void Update()
-    {
-        
-    }
-
-    private void onGameStartBtnClick()
+    private void GameStart()
     {
         GameController.Instance.GameStart();
+    }
+
+    private void QuitGame()
+    {
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+    #else
+        Application.Quit();
+    #endif
+    }
+
+    private void ShowStaff()
+    {
+        var active = staffArea.activeInHierarchy;
+        staffArea.SetActive(!active);
     }
 }

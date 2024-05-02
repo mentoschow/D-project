@@ -35,7 +35,7 @@ public class GetItemTipPartView : MonoBehaviour
         var config = ConfigController.Instance.GetClueItemConfig(itemID);
         if (config != null)
         {
-            var curRoleType = RoleController.Instance.curRoleView.characterType;
+            var curRoleType = RoleController.Instance.curRoleView.roleType;
             if (curRoleType == RoleType.MainRoleBoy)
             {
                 img.sprite = bg_boy_normal;
@@ -57,10 +57,7 @@ public class GetItemTipPartView : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         sequence.Append(rect.DOAnchorPosX(rect.rect.width, aniTime)).AppendCallback(() =>
         {
-            GameLineNode node = new GameLineNode();
-            node.type = GameNodeType.GotClueItem;
-            node.ID = itemID;
-            MessageManager.Instance.Send(MessageDefine.GetItemDone, new MessageData(node));
+            MessageManager.Instance.Send(MessageDefine.GetItemDone);
             Destroy(gameObject);
         });
     }
@@ -69,7 +66,15 @@ public class GetItemTipPartView : MonoBehaviour
     {
         if (config.isSaveBag)
         {
-            GameDataProxy.Instance.bagItem.Add(config.ID);
+            var roleType = RoleController.Instance.curRoleView.roleType;
+            if (roleType == RoleType.MainRoleGirl)
+            {
+                GameDataProxy.Instance.mainGirlBagItem.Add(config.ID);
+            }
+            else if (roleType == RoleType.MainRoleBoy)
+            {
+                GameDataProxy.Instance.mainBoyBagItem.Add(config.ID);
+            }
         }
     }
 }

@@ -164,13 +164,13 @@ public class EpisodePlayerView : MonoBehaviour
                     }
                 }
             }
-
+            GameDataProxy.Instance.finishedEpisode.Add(curEpisodeID);
             GameLineNode node = new GameLineNode();
-            node.type = episode.episodeType == EpisodeType.Normal ? GameNodeType.NormalEpisode : GameNodeType.PhoneEpisode;
+            node.type = GameNodeType.Episode;
             node.ID = curEpisodeID;
-            MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
-            // 最后再清空
+            GameDataProxy.Instance.canOperate = true;
             curEpisodeID = "";
+            MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
             return;
         }
         var dialog = dialogQueue.Dequeue();
@@ -262,7 +262,11 @@ public class EpisodePlayerView : MonoBehaviour
         // 中间的图片
 
         // 立绘、名字
-        var roleRes = ResourcesController.Instance.roleRes[dialog.roleType];
+        RoleRes roleRes = null;
+        if (ResourcesController.Instance.roleRes.ContainsKey(dialog.roleType))
+        {
+            roleRes = ResourcesController.Instance.roleRes[dialog.roleType];
+        }
         if (roleRes != null)
         {
             roleImg.sprite = roleRes.fullBody;
