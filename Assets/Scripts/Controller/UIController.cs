@@ -195,7 +195,7 @@ public class UIController : MonoSingleton<UIController>
             {
                 foreach (var id in config.needItemID)
                 {
-                    if (!GameDataProxy.Instance.mainGrilBagItem.Contains(id))
+                    if (!GameDataProxy.Instance.mainGirlBagItem.Contains(id))
                     {
                         canPlay = false;
                         break;
@@ -268,7 +268,7 @@ public class UIController : MonoSingleton<UIController>
         }
     }
 
-    private void OnGetItemDone(MessageData data)
+    private void OnGetItemDone()
     {
         getItemTipIndex--;
         if (getItemTipIndex < 0)

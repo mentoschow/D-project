@@ -12,13 +12,11 @@ public class GameController : Singleton<GameController>
         MessageManager.Instance.Register(MessageDefine.StageStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
-        MessageManager.Instance.Register(MessageDefine.GetItemDone, CheckNextGameNode);
         var c = ConfigController.Instance;
     }
 
     public void CheckNextGameNode(MessageData node)
     {
-        Debug.Log("检查是否能自动进行下一步" + node.gameLineNode);
         if (node.gameLineNode == null)
         {
             Debug.LogError("节点数据为空");

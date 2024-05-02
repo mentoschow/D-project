@@ -8,7 +8,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
 {
     public List<DialogConfig> normalHistoryDialog = new List<DialogConfig>();
     public Dictionary<BelongPhoneGroup, List<DialogConfig>> phoneHistoryDialog = new Dictionary<BelongPhoneGroup, List<DialogConfig>>();
-    public List<string> mainGrilBagItem = new List<string>();
+    public List<string> mainGirlBagItem = new List<string>();
     public List<string> mainBoyBagItem = new List<string>();
     public List<string> finishedEpisode = new List<string>();  // 已经结束的剧情
     public bool canOperate = false;
@@ -30,7 +30,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
     {
         normalHistoryDialog = new List<DialogConfig>();
         phoneHistoryDialog = new Dictionary<BelongPhoneGroup, List<DialogConfig>>();
-        mainGrilBagItem = new List<string>();
+        mainGirlBagItem = new List<string>();
         mainBoyBagItem = new List<string>();
         finishedEpisode = new List<string>();
         canOperate = false;
@@ -81,7 +81,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
     {
         if (roleType == RoleType.MainRoleGirl)
         {
-            return mainGrilBagItem.Contains(ID);
+            return mainGirlBagItem.Contains(ID);
         }
         else if (roleType == RoleType.MainRoleBoy)
         {

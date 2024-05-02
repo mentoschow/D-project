@@ -56,10 +56,7 @@ public class GetItemTipPartView : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         sequence.Append(rect.DOAnchorPosX(rect.rect.width, aniTime)).AppendCallback(() =>
         {
-            GameLineNode node = new GameLineNode();
-            node.type = GameNodeType.GotClueItem;
-            node.ID = itemID;
-            MessageManager.Instance.Send(MessageDefine.GetItemDone, new MessageData(node));
+            MessageManager.Instance.Send(MessageDefine.GetItemDone);
             Destroy(gameObject);
         });
     }
@@ -71,7 +68,7 @@ public class GetItemTipPartView : MonoBehaviour
             var roleType = RoleController.Instance.curRoleView.roleType;
             if (roleType == RoleType.MainRoleGirl)
             {
-                GameDataProxy.Instance.mainGrilBagItem.Add(config.ID);
+                GameDataProxy.Instance.mainGirlBagItem.Add(config.ID);
             }
             else if (roleType == RoleType.MainRoleBoy)
             {
