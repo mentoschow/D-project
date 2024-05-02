@@ -85,17 +85,23 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
         itemViewMap = new Dictionary<int, ClueCombineContainView>();
     }
 
-    public void updateView(List<string> clueList, List<string> rightCombineList)
+    MergeClueConfig mergeClueConfig;
+    public void updateView(MergeClueConfig merClueConfig)
     {
-        this.rightCout = rightCombineList.Count;
+        merClueConfig.correctClueList = new List<string> { "CUE_0020_review_telegraph","CUE_0030_review_telegraphoffice","CUE_0040_review_college" };
+        merClueConfig.prepareClueList = new List<string> { "CUE_0005_message_library", "CUE_0010_message_miss", "CUE_0020_review_telegraph", "CUE_0030_review_telegraphoffice", "CUE_0040_review_college" };
+
+        this.mergeClueConfig = merClueConfig;
+
+        this.rightCout = this.mergeClueConfig.correctClueList.Count;
         this.resetView();
 
         for (int i = 0; i < rightCout; i++)
         {
-            string rightCode = rightCombineList[i];
+            string rightCode = this.mergeClueConfig.correctClueList[i];
             rightcombineMap.Add(i, rightCode);
         }
-        this.updateClue(clueList);
+        this.updateClue(this.mergeClueConfig.prepareClueList);
     }
 
     public void updateClue(List<string> clueList)
@@ -149,7 +155,6 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
 
     void checkCanInsert(string code, Vector2 pos)
     {
-        Dictionary<int, float> disMap = new Dictionary<int, float>();
         float minDis = -1;
         int minDisContainCode = -1;
         foreach (KeyValuePair<int, ClueCombineContainView> item in itemViewMap)
@@ -206,7 +211,12 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
         }
         if (result)
         {
+            if (this.mergeClueConfig != null)
+            {
+
+            }
             Debug.Log("组合已完成");
+            gameObject.SetActive(false);
         }
     }
 

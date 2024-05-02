@@ -21,6 +21,7 @@ public class UIController : MonoSingleton<UIController>
 
     private PuzzleView puzzleView;
     private MimaView mimaView;
+    private ClueCombineView clueCombineView;
 
     private TestControlView testControlView;
 
@@ -138,6 +139,17 @@ public class UIController : MonoSingleton<UIController>
 
         mimaView.gameObject.SetActive(true);
         mimaView.updateView();
+    }
+
+    public void showClueCombineView(MergeClueConfig mergeClueConfig)
+    {
+        if (clueCombineView == null)
+        {
+            clueCombineView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(), layer4);
+        }
+
+        clueCombineView.gameObject.SetActive(true);
+        clueCombineView.updateView(mergeClueConfig);
     }
 
     public void GameStart(MessageData data)

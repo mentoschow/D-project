@@ -7,6 +7,7 @@ public class TestControlView : MonoSingleton<TestControlView>
 {
     public Button puzzleBtn;
     public Button mimaeBtn;
+    public Button clueMergeBtn;
     public Button closeBtn;
     // Start is called before the first frame update
 
@@ -15,12 +16,18 @@ public class TestControlView : MonoSingleton<TestControlView>
         puzzleBtn.onClick.AddListener(onPuzzleBtnClick);
         mimaeBtn.onClick.AddListener(onMimaBtnClick);
         closeBtn.onClick.AddListener(onCloseBtnClick);
+        clueMergeBtn.onClick.AddListener(onClueMergeBtnClick);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+    void onClueMergeBtnClick()
+    {
+        UIController.Instance.showClueCombineView(null);
+        gameObject.SetActive(false);
     }
 
     void onPuzzleBtnClick() {

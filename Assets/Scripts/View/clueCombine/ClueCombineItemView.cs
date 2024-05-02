@@ -71,7 +71,7 @@ public class ClueCombineItemView : MonoBehaviour
         var config = ConfigController.Instance.GetClueItemConfig(itemID);
         if (config != null)
         {
-            var curRoleType = RoleController.Instance.curRoleView.characterType;
+            var curRoleType = RoleController.Instance.curRoleView.roleType;
             if (curRoleType == RoleType.MainRoleBoy)
             {
                 img.sprite = bg_boy_normal;
