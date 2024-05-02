@@ -333,6 +333,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3e2ab647a83a06c4fab33b446f8719ea, type: 3}
+    - target: {fileID: 6480062450011786472, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.68
@@ -415,6 +419,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: c6e67897f62f8394e92322799f0349b9, type: 3}
+    - target: {fileID: 6480062450011786472, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Size.x
       value: 4.558305
@@ -457,6 +465,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4594285025847344238}
     m_Modifications:
+    - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: equipmentID
+      value: EQ_01_04_030
+      objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
       value: EquipmentView (1)
@@ -517,6 +529,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0019a3b128de9ba49bb5e8a506414d63, type: 3}
+    - target: {fileID: 6480062450011786472, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Size.y
       value: 4.987333
@@ -551,6 +567,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4594285025847344238}
     m_Modifications:
+    - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: equipmentID
+      value: EQ_01_04_040
+      objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
       value: EquipmentView (5)
@@ -611,6 +631,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 767d7e9e872580a4687261dd71570742, type: 3}
+    - target: {fileID: 6480062450011786472, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Size.x
       value: 4.4011793
@@ -713,6 +737,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 24dad5ae1de20054cb2cd9e06f61831b, type: 3}
+    - target: {fileID: 6480062450011786472, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Size.x
       value: 1.072938
