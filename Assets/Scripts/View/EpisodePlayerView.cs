@@ -164,13 +164,13 @@ public class EpisodePlayerView : MonoBehaviour
                     }
                 }
             }
-
+            GameDataProxy.Instance.finishedEpisode.Add(curEpisodeID);
             GameLineNode node = new GameLineNode();
-            node.type = episode.episodeType == EpisodeType.Normal ? GameNodeType.NormalEpisode : GameNodeType.PhoneEpisode;
+            node.type = GameNodeType.Episode;
             node.ID = curEpisodeID;
-            MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
-            // 最后再清空
+            GameDataProxy.Instance.canOperate = true;
             curEpisodeID = "";
+            MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
             return;
         }
         var dialog = dialogQueue.Dequeue();

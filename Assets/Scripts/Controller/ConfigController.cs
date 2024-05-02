@@ -597,8 +597,7 @@ public enum GameNodeType
     GameEnd,  // 游戏结束
     StageStart,  // 幕开始
     Transition,  // 转场
-    NormalEpisode,  // 普通对话
-    PhoneEpisode,  // 手机对话
+    Episode,  // 情节
     Puzzle,  // 谜题
     GotClueItem,  // 获得线索
     FreeOperate,  // 自由操作

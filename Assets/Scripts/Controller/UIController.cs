@@ -190,6 +190,7 @@ public class UIController : MonoSingleton<UIController>
             }
             if (canPlay)
             {
+                GameDataProxy.Instance.canOperate = false;
                 if (config.episodeType == EpisodeType.Normal)
                 {
                     normalEpisodePlayerView.gameObject.SetActive(true);
@@ -199,6 +200,10 @@ public class UIController : MonoSingleton<UIController>
                 {
                     phoneView.PlayPhoneEpisode(config);
                 }
+            }
+            else
+            {
+                GameDataProxy.Instance.canOperate = true;
             }
         }
     }

@@ -42,12 +42,8 @@ public class GameController : Singleton<GameController>
                 Debug.Log("自动触发游戏结束：" + nextNode.ID);
                 UIController.Instance.GameEnd();
                 break;
-            case GameNodeType.NormalEpisode:
-                Debug.Log("自动触发普通对话：" + nextNode.ID);
-                UIController.Instance.PlayEpisode(nextNode.ID);
-                break;
-            case GameNodeType.PhoneEpisode:
-                Debug.Log("自动触发手机对话：" + nextNode.ID);
+            case GameNodeType.Episode:
+                Debug.Log("自动触发情节：" + nextNode.ID);
                 UIController.Instance.PlayEpisode(nextNode.ID);
                 break;
             case GameNodeType.Puzzle:
