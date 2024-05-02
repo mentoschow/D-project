@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ClueCombineView : MonoSingleton<ClueCombineView>
 {
@@ -15,11 +16,14 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
     public GameObject layout_contain;
     public Button closeBtn;
     public GameObject curDragAttachNode;
+    public GameObject right_node;
+    public Text rightTxt;
+    public Text questionTxt;
 
     Dictionary<int, ClueCombineContainView> itemViewMap = new Dictionary<int, ClueCombineContainView>();
 
     Dictionary<int, string> combineMap = new Dictionary<int, string>();
-    Dictionary<int, string> rightcombineMap = new Dictionary<int, string>();
+    List<string> rightcombineList = new List<string>();
 
     int rightCout = 0;
 
@@ -28,28 +32,34 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
     string  moveItemCode = "";
     GameObject curDragNode = null;
 
-    static GameObject ViewPrefab;
-    public static GameObject getPrefab()
+    static Dictionary<RoleType, GameObject> ViewPrefabMap = new Dictionary<RoleType, GameObject>();
+    public static GameObject getPrefab(RoleType curRoleType)
     {
-        if (!ClueCombineView.ViewPrefab)
+        bool isBoy = curRoleType == RoleType.MainRoleBoy;
+        GameObject viewPrefab;
+        ViewPrefabMap.TryGetValue(curRoleType, out viewPrefab);
+        if (!viewPrefab)
         {
-            string resourceName = "Prefabs/UI/ClueCombine/ClueCombineView"; // 资源名称
-            ClueCombineView.ViewPrefab = Resources.Load<GameObject>(resourceName);
+            string resourceName = isBoy?"Prefabs/UI/ClueCombine/ClueCombineView": "Prefabs/UI/ClueCombine/ClueCombinePhoneView"; // 资源名称
+            viewPrefab = Resources.Load<GameObject>(resourceName);
+            ViewPrefabMap.Add(curRoleType, viewPrefab);
         }
 
-        return ClueCombineView.ViewPrefab;
+        return viewPrefab;
     }
 
     private void Awake()
     {
         layout_right = CommonUtils.findChildByName(transform, "layout_right").gameObject;
         layout_left = CommonUtils.findChildByName(transform, "layout_left").gameObject;
-        layout_contain = CommonUtils.findChildByName(transform, "layout_left").gameObject;
+        layout_contain = CommonUtils.findChildByName(transform, "layout_contain").gameObject;
         curDragAttachNode = CommonUtils.findChildByName(transform, "curDragAttachNode").gameObject;
+        rightTxt = CommonUtils.findChildByName(transform, "rightTxt").gameObject.GetComponent<Text>();
+        right_node = CommonUtils.findChildByName(transform, "right_node").gameObject;
+        questionTxt = CommonUtils.findChildByName(transform, "questionTxt").gameObject.GetComponent<Text>();
 
         closeBtn = CommonUtils.findChildByName(transform, "closeBtn").gameObject.GetComponent<UnityEngine.UI.Button>();
         closeBtn?.onClick.AddListener(onCloseBtnClick);
-        this.initAttachNodeMap();
     }
 
     void onCloseBtnClick()
@@ -60,7 +70,7 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
     void initAttachNodeMap()
     {
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < this.rightCout; i++)
             {
                 ClueCombineContainView itemView = CommonUtils.CreateViewByType<ClueCombineContainView>(ClueCombineContainView.getPrefab(), layout_contain.transform);
                 itemViewMap.Add(i, itemView);
@@ -70,8 +80,11 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
 
     void resetView()
     {
-        rightcombineMap = new Dictionary<int, string>();
+        rightcombineList = new List<string>();
         combineMap = new Dictionary<int, string>();
+
+        this.right_node.SetActive(false);
+        this.layout_contain.gameObject.SetActive(true);
 
         foreach (KeyValuePair<string, ClueCombineItemView> item in clueItemViewMap)
         {
@@ -88,19 +101,17 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
     MergeClueConfig mergeClueConfig;
     public void updateView(MergeClueConfig merClueConfig)
     {
-        merClueConfig.correctClueList = new List<string> { "CUE_0020_review_telegraph","CUE_0030_review_telegraphoffice","CUE_0040_review_college" };
-        merClueConfig.prepareClueList = new List<string> { "CUE_0005_message_library", "CUE_0010_message_miss", "CUE_0020_review_telegraph", "CUE_0030_review_telegraphoffice", "CUE_0040_review_college" };
-
-        this.mergeClueConfig = merClueConfig;
-
-        this.rightCout = this.mergeClueConfig.correctClueList.Count;
         this.resetView();
 
-        for (int i = 0; i < rightCout; i++)
-        {
-            string rightCode = this.mergeClueConfig.correctClueList[i];
-            rightcombineMap.Add(i, rightCode);
-        }
+        this.mergeClueConfig = merClueConfig;
+        this.rightCout = this.mergeClueConfig.correctClueList.Count;
+
+        CommonUtils.updateText(this.mergeClueConfig?.ID ?? "", this.questionTxt);
+
+        this.initAttachNodeMap();
+
+        rightcombineList = new List<string>(merClueConfig.correctClueList);
+
         this.updateClue(this.mergeClueConfig.prepareClueList);
     }
 
@@ -139,11 +150,10 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
                 }
 
                 this.checkCanInsert(clueID, inputPos);
-
                 this.refreshClueItemState();
                 this.refreshContainItemState();
-
                 this.checkInsertOver();
+
             };
 
             itemView.UpdateView(clueID);
@@ -151,6 +161,7 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
         }
         this.refreshClueItemState();
         this.refreshContainItemState();
+        this.checkInsertOver();
     }
 
     void checkCanInsert(string code, Vector2 pos)
@@ -168,7 +179,7 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
                 {
                     Vector3 worldPosition3D = containView.gameObject.transform.position;
                     Vector2 target = new Vector2(worldPosition3D.x, worldPosition3D.y);
-                    float distanceThreshold = 60f;
+                    float distanceThreshold = 100f;
                     float dis = Vector2.Distance(target, pos);
                     bool isClose = dis < distanceThreshold;
                     if (isClose)
@@ -192,7 +203,7 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
             }
         }
 
-        if (minDisContainCode > 0)
+        if (minDisContainCode >= 0)
         {
             combineMap.Add(minDisContainCode, code);
         }
@@ -201,22 +212,32 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
     void checkInsertOver()
     {
         bool result = false;
-        if (combineMap.Count == rightcombineMap.Count)
+        if (combineMap.Count == rightcombineList.Count)
         {
-            result = combineMap.Equals(rightcombineMap);
+            HashSet<string> rightSet = new HashSet<string>(rightcombineList);
+            HashSet<string> combineSet = new HashSet<string>(combineMap.Values.ToList());
+
+            result = rightSet.SetEquals(combineSet);
             if (!result)
             {
                 combineMap.Clear();
+                this.refreshClueItemState();
+                this.refreshContainItemState();
             }
         }
+
+
         if (result)
         {
+            this.right_node.SetActive(result);
+            this.layout_contain.gameObject.SetActive(!result);
             if (this.mergeClueConfig != null)
             {
-
+                var config = ConfigController.Instance.GetClueItemConfig(this.mergeClueConfig?.completeClue);
+                CommonUtils.updateText(config?.description ?? "", this.rightTxt);
             }
             Debug.Log("组合已完成");
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 

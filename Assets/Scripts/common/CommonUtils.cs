@@ -66,4 +66,12 @@ public class CommonUtils : MonoSingleton<CommonUtils>
         }
         return null; // 如果没有找到具有指定名称的子节点
     }
+
+    static public void updateText(string txt,Text textCom)
+    {
+        if (!string.IsNullOrEmpty(txt) && textCom!=null)
+        {
+            textCom.text = txt;
+        }
+    }
 }

@@ -26,7 +26,13 @@ public class TestControlView : MonoSingleton<TestControlView>
     }
     void onClueMergeBtnClick()
     {
-        UIController.Instance.showClueCombineView(null);
+        MergeClueConfig clueConfig = new MergeClueConfig();
+        clueConfig.ID = "MS01_020_telegraph";
+        clueConfig.correctClueList = new List<string> { "CUE_0020_review_telegraph", "CUE_0030_review_telegraphoffice", "CUE_0040_review_college" };
+        clueConfig.prepareClueList = new List<string> { "CUE_0005_message_library", "CUE_0010_message_miss", "CUE_0020_review_telegraph", "CUE_0030_review_telegraphoffice", "CUE_0040_review_college" };
+        clueConfig.completeClue = "CUE_0050_reason_telegraph";
+
+        UIController.Instance.showClueCombineView(clueConfig, RoleController.Instance.curRoleView.roleType);
         gameObject.SetActive(false);
     }
 

@@ -10,6 +10,10 @@ public class ClueCombineContainView : MonoSingleton<ClueCombineView>
 {
     static GameObject ViewPrefab;
     ClueCombineItemView itemView;
+
+    GameObject girl;
+    GameObject boy;
+
     public static GameObject getPrefab()
     {
         if (!ClueCombineContainView.ViewPrefab)
@@ -22,7 +26,8 @@ public class ClueCombineContainView : MonoSingleton<ClueCombineView>
     }
     private void Awake()
     {
-
+        girl = CommonUtils.findChildByName(transform, "girl").gameObject;
+        boy = CommonUtils.findChildByName(transform, "boy").gameObject;
     }
     // Update is called once per frame
     void Update()
@@ -40,5 +45,11 @@ public class ClueCombineContainView : MonoSingleton<ClueCombineView>
             itemView = CommonUtils.CreateViewByType<ClueCombineItemView>(ClueCombineItemView.getPrefab(),transform);
             itemView.UpdateView(containCode);
         }
+
+        var curRoleType = RoleController.Instance.curRoleView.roleType;
+        bool isBoy = curRoleType == RoleType.MainRoleBoy;
+        boy.SetActive(isBoy);
+        girl.SetActive(!isBoy);
+
     }
 }

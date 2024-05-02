@@ -12,6 +12,8 @@ public class ClueCombineItemView : MonoBehaviour
     public Sprite bg_boy_normal;
     //public Sprite bg_boy_click;
     public Sprite bg_girl_normal;
+
+    public GameObject dragNode;
     //public Sprite bg_girl_click;
 
     [SerializeField]
@@ -60,8 +62,7 @@ public class ClueCombineItemView : MonoBehaviour
     {
         if (!this.dragCom)
         {
-            this.dragCom = gameObject.AddComponent<DragNodeCompent>();
-            this.dragCom.enabled = false;
+            this.dragCom = dragNode.AddComponent<DragNodeCompent>();
         }
         this.dragCom?.init(dragStartCallback, dragMoveCallback, dragOverCallback, 1, this.img);
     }
@@ -81,10 +82,6 @@ public class ClueCombineItemView : MonoBehaviour
                 img.sprite = bg_girl_normal;
             }
             text.text = config.name;
-            rect.DOAnchorPosX(0, aniTime);
-            itemID = config.ID;
-
-       
         }
     }
 }
