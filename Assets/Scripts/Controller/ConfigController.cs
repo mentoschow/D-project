@@ -57,8 +57,9 @@ public class ConfigController : Singleton<ConfigController>
         {"ChapterConfig", configPath + "配置文档-章节" + fileTailPath},
         {"EpisodeConfig", configPath + "配置文档-情节" + fileTailPath},
         {"DialogConfig", configPath + "配置文档-对话" + fileTailPath},
-        //{"EquipmentConfig", configPath + "配置文档-物品" + fileTailPath},
+        {"EquipmentConfig", configPath + "配置文档-设备" + fileTailPath},
         {"ItemConfig", configPath + "配置文档-道具" + fileTailPath},
+        //{"CharacterAutoMoveConfig", configPath + "配置文档-角色移动" + fileTailPath},
     };
 
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
@@ -70,6 +71,7 @@ public class ConfigController : Singleton<ConfigController>
     private Dictionary<string, EquipmentConfig> equipmentConfigList = new Dictionary<string, EquipmentConfig>();  // 场景设备（物品）属性
     private Dictionary<string, ItemConfig> itemConfigList = new Dictionary<string, ItemConfig>();  // 道具（线索）属性
     private Dictionary<string, MergeClueConfig> mergeClueConfigList = new Dictionary<string, MergeClueConfig>();
+    private Dictionary<string, CharacterAutoMoveConfig> characterAutoMoveConfigList = new Dictionary<string, CharacterAutoMoveConfig>();
 
     private string testJsonPath = configPath + "puzzle.json";
     public TextAsset jsonTextAsset; 
@@ -223,8 +225,14 @@ public class ConfigController : Singleton<ConfigController>
                 {
                     config.ID = dialogID;
                     config.content = row["content"].ToString();
-                    config.nextDialogID = row["nextDialogID"].ToString();
-                    config.roleType = (RoleType)int.Parse(row["character"].ToString());
+                    if (row["character"].ToString() != "")
+                    {
+                        config.roleType = (RoleType)int.Parse(row["character"].ToString());
+                    }
+                    else
+                    {
+                        config.roleType = RoleType.None;
+                    }
                     string getItemID = row["getItemID"].ToString();
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string choices = row["choices"].ToString();
@@ -402,6 +410,44 @@ public class ConfigController : Singleton<ConfigController>
         }
     }
 
+    public CharacterAutoMoveConfig GetCharacterAutoMoveConfig(string ID)
+    {
+        if (!characterAutoMoveConfigList.ContainsKey(ID))
+        {
+            CharacterAutoMoveConfig config = new CharacterAutoMoveConfig();
+            if (!datatableDic.ContainsKey("CharacterAutoMoveConfig"))
+            {
+                Debug.LogError("没有角色移动配置表");
+                return null;
+            }
+            var dt = datatableDic["CharacterAutoMoveConfig"];
+            if (dt.Rows.Count == 0)
+            {
+                Debug.LogError("角色移动配置不存在，id：" + ID);
+                return null;
+            }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var row = dt.Rows[i];
+                if (row["ID"]?.ToString() == ID.ToString())
+                {
+                    config.ID = ID;
+                    config.posX = float.Parse(row["posX"].ToString());
+                    config.posY = float.Parse(row["posY"].ToString());
+                    config.duration = float.Parse(row["duration"].ToString());
+
+                    characterAutoMoveConfigList[ID] = config;
+                    break;
+                }
+            }
+            return config;
+        }
+        else
+        {
+            return characterAutoMoveConfigList[ID];
+        }
+    }
+
     private void GenerateConfig()
     {
         foreach (var item in dataFilePathDic)
@@ -501,7 +547,7 @@ public class ConfigController : Singleton<ConfigController>
                         endIndex++;
                     }
                     result.Add(csv.Substring(startIndex, endIndex - startIndex));
-                    startIndex = endIndex + 2;
+                    startIndex = endIndex + 1;
                     endIndex = startIndex;
                 }
                 else if (csv[endIndex] == ',')
@@ -514,6 +560,17 @@ public class ConfigController : Singleton<ConfigController>
                     result.Add(csv.Substring(startIndex, endIndex - startIndex + 1));
                     startIndex = endIndex + 1;
                 }
+            }
+        }
+        for (int i = 0; i < result.Count; i++)
+        {
+            if (result[i].Length == 0)
+            {
+                continue;
+            }
+            if (result[i][0] == ',')
+            {
+                result[i] = result[i].Substring(1, result[i].Length - 1);
             }
         }
         return result.ToArray();
@@ -545,6 +602,7 @@ public enum GameNodeType
     Puzzle,  // 谜题
     GotClueItem,  // 获得线索
     FreeOperate,  // 自由操作
+    CharacterMove,  // 角色移动
 }
 
 public enum StageType
@@ -609,7 +667,6 @@ public class DialogConfig
 {
     public string ID;
     public string content;
-    public string nextDialogID;
     public List<string> getItemID;
     public RoleType roleType;
     public List<string> choices;
@@ -683,4 +740,12 @@ public enum PuzzleType
 {
     JewelryPuzzleDone = 0,//密码锁
     MimaPuzzleDone = 1//首饰
+}
+
+public class CharacterAutoMoveConfig
+{
+    public string ID;
+    public float posX;
+    public float posY;
+    public float duration;
 }

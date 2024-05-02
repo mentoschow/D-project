@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -92,6 +93,22 @@ public class RoleController : MonoSingleton<RoleController>
     public void SetRolePos(float posX)
     {
         curRoleView.transform.position = new Vector2(posX, 0);
+    }
+
+    public void PlayAutoMove(string ID)
+    {
+        var config = ConfigController.Instance.GetCharacterAutoMoveConfig(ID);
+        if (config != null)
+        {
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(curRoleView.transform.DOMove(new Vector2(config.posX, config.posY), config.duration)).AppendCallback(() =>
+            {
+                GameLineNode node = new GameLineNode();
+                node.type = GameNodeType.CharacterMove;
+                node.ID = ID;
+                MessageManager.Instance.Send(MessageDefine.StageStart, new MessageData(node));
+            });
+        }
     }
 }
 public enum MoveVector

@@ -262,7 +262,11 @@ public class EpisodePlayerView : MonoBehaviour
         // 中间的图片
 
         // 立绘、名字
-        var roleRes = ResourcesController.Instance.roleRes[dialog.roleType];
+        RoleRes roleRes = null;
+        if (ResourcesController.Instance.roleRes.ContainsKey(dialog.roleType))
+        {
+            roleRes = ResourcesController.Instance.roleRes[dialog.roleType];
+        }
         if (roleRes != null)
         {
             roleImg.sprite = roleRes.fullBody;

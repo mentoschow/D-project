@@ -90,6 +90,10 @@ public class GameController : Singleton<GameController>
                 Debug.Log("自由操作");
                 GameDataProxy.Instance.canOperate = true;
                 break;
+            case GameNodeType.CharacterMove:
+                Debug.Log("自动触发角色移动：" + nextNode.ID);
+                RoleController.Instance.PlayAutoMove(nextNode.ID);
+                break;
         }
     }
 
@@ -99,9 +103,9 @@ public class GameController : Singleton<GameController>
         GameDataProxy.Instance.resetData();
         UIController.Instance.HideAllView();
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.466f), 3)).AppendCallback(() =>
+        sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.216f), 3)).AppendCallback(() =>
         {
-            SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false, false);
+            SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false, false); // 特殊处理
         });
     }
 
@@ -109,19 +113,19 @@ public class GameController : Singleton<GameController>
     {
         string equipmentID = data.valueString;
         Debug.Log("与设备交互：" + equipmentID);
-        if (string.IsNullOrEmpty(equipmentID))
+        if (equipmentID == null || equipmentID == "")
         {
             return;
         }
         EquipmentConfig equipmentConfig = ConfigController.Instance.GetEquipmentConfig(equipmentID);
         if (equipmentConfig != null)
         {
-            if (equipmentConfig.triggerEpisodeID != null)
+            if (equipmentConfig.triggerEpisodeID != "")
             {
                 // 触发剧情
                 UIController.Instance.PlayEpisode(equipmentConfig.triggerEpisodeID);
             }
-            else if (equipmentConfig.triggerPuzzleID != null)
+            else if (equipmentConfig.triggerPuzzleID != "")
             {
                 // 触发解谜
             }
