@@ -14,7 +14,7 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
     public GameObject layout_right;
     public GameObject layout_left;
     public GameObject layout_contain;
-    public Button closeBtn;
+    //public Button closeBtn;
     public GameObject curDragAttachNode;
     public GameObject right_node;
     public Text rightTxt;
@@ -58,8 +58,8 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
         right_node = CommonUtils.findChildByName(transform, "right_node").gameObject;
         questionTxt = CommonUtils.findChildByName(transform, "questionTxt").gameObject.GetComponent<Text>();
 
-        closeBtn = CommonUtils.findChildByName(transform, "closeBtn").gameObject.GetComponent<UnityEngine.UI.Button>();
-        closeBtn?.onClick.AddListener(onCloseBtnClick);
+        //closeBtn = CommonUtils.findChildByName(transform, "closeBtn").gameObject.GetComponent<UnityEngine.UI.Button>();
+        //closeBtn?.onClick.AddListener(onCloseBtnClick);
     }
 
     void onCloseBtnClick()
@@ -237,7 +237,13 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
                 CommonUtils.updateText(config?.description ?? "", this.rightTxt);
             }
             Debug.Log("组合已完成");
-            //gameObject.SetActive(false);
+            UIController.Instance.GetItemTip(new List<string>(){ mergeClueConfig.completeClue });
+            GameDataProxy.Instance.finishedClueCombine.Add(mergeClueConfig.ID);
+            gameObject.SetActive(false);
+            GameLineNode node = new GameLineNode();
+            node.type = GameNodeType.Puzzle;
+            node.ID = mergeClueConfig.ID;
+            MessageManager.Instance.Send(MessageDefine.GameLineNodeDone, new MessageData(node));
         }
     }
 

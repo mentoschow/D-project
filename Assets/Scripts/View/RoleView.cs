@@ -179,6 +179,24 @@ public class RoleView : MonoBehaviour
                     case DoorType.LibraryInLeft:
                         SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.LibraryIn);
                         break;
+                    case DoorType.LibraryInRight:
+                        SceneController.Instance.ChangeScene(StageType.Passage, StageType.LibraryIn);
+                        break;
+                    case DoorType.PassageInLeft:
+                        SceneController.Instance.ChangeScene(StageType.LibraryIn, StageType.Passage);
+                        break;
+                    case DoorType.PassageInRight:
+                        SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.Passage);
+                        break;
+                    case DoorType.BoxRoomInLeft:
+                        SceneController.Instance.ChangeScene(StageType.Passage, StageType.BoxRoom);
+                        break;
+                    case DoorType.BoxRoomInRight:
+                        SceneController.Instance.ChangeScene(StageType.SecretRoom_Now, StageType.BoxRoom);
+                        break;
+                    case DoorType.SecretRoomNowInRight:
+                        SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Now);
+                        break;
                 }
             }
             else

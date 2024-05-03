@@ -11,6 +11,7 @@ public class GameController : Singleton<GameController>
     {
         MessageManager.Instance.Register(MessageDefine.StageStart, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.PlayEpisodeDone, CheckNextGameNode);
+        MessageManager.Instance.Register(MessageDefine.GameLineNodeDone, CheckNextGameNode);
         MessageManager.Instance.Register(MessageDefine.InteractWithEquipment, OnInteractWithEquipment);
         var c = ConfigController.Instance;
     }
@@ -46,39 +47,7 @@ public class GameController : Singleton<GameController>
                 break;
             case GameNodeType.Puzzle:
                 Debug.Log("自动触发谜题：" + nextNode.ID);
-                var config = ConfigController.Instance.GetMergeClueConfig(nextNode.ID);
-                if (config != null)
-                {
-                    // 线索合并
-                    bool canTrigger = true;
-                    if (config.needFinishEpisodeID?.Count > 0)
-                    {
-                        foreach (var id in config.needFinishEpisodeID)
-                        {
-                            if (!GameDataProxy.Instance.finishedEpisode.Contains(id))
-                            {
-                                canTrigger = false;
-                                break;
-                            }
-                        }
-                    }
-                    if (canTrigger)
-                    {
-                        UIController.Instance.showPuzzleView();
-                    }
-                }
-                else
-                {
-                    var puzzleType = BaseFunction.ChangeStringToEnum<PuzzleType>(nextNode.ID);
-                    if (puzzleType == PuzzleType.JewelryPuzzleDone)
-                    {
-                        UIController.Instance.showPuzzleView();
-                    }
-                    else if (puzzleType == PuzzleType.MimaPuzzleDone)
-                    {
-                        UIController.Instance.showMimaView();
-                    }
-                }
+                TryOpenPuzzle(nextNode.ID);
                 break;
             case GameNodeType.FreeOperate:
                 Debug.Log("自由操作");
@@ -130,6 +99,56 @@ public class GameController : Singleton<GameController>
             else if (equipmentConfig.triggerPuzzleID != "")
             {
                 // 触发解谜
+                TryOpenPuzzle(equipmentConfig.triggerPuzzleID);
+            }
+        }
+    }
+
+    private void TryOpenPuzzle(string ID)
+    {
+        var config = ConfigController.Instance.GetMergeClueConfig(ID);
+        if (config != null)
+        {
+            // 线索合并
+            bool canTrigger = true;
+            if (config.needFinishEpisodeID?.Count > 0)
+            {
+                foreach (var id in config.needFinishEpisodeID)
+                {
+                    if (!GameDataProxy.Instance.finishedEpisode.Contains(id))
+                    {
+                        canTrigger = false;
+                        break;
+                    }
+                }
+            }
+            if (GameDataProxy.Instance.finishedClueCombine.Contains(ID))
+            {
+                canTrigger = false;
+            }
+            if (canTrigger)
+            {
+                UIController.Instance.showClueCombineView(config);
+            }
+            else
+            {
+                GameDataProxy.Instance.canOperate = true;
+            }
+        }
+        else
+        {
+            var puzzleType = BaseFunction.ChangeStringToEnum<PuzzleType>(ID);
+            if (puzzleType == PuzzleType.JewelryPuzzleDone)
+            {
+                UIController.Instance.showPuzzleView();
+            }
+            else if (puzzleType == PuzzleType.MimaPuzzleDone)
+            {
+                UIController.Instance.showMimaView();
+            }
+            else
+            {
+                GameDataProxy.Instance.canOperate = true;
             }
         }
     }

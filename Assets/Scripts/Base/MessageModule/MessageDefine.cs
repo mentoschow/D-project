@@ -6,7 +6,7 @@ public static class MessageDefine
 {
     public static readonly string StageStart = "StageStart";
     public static readonly string PlayEpisodeDone = "PlayEpisodeDone";
-
+    public static readonly string GameLineNodeDone = "GameLineNodeDone";
     public static readonly string PlayPuzzleDone = "PlayTransitionDone";//╟зм╥йн
 
     public static readonly string GetItemDone = "GetItem";

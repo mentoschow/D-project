@@ -59,6 +59,7 @@ public class ConfigController : Singleton<ConfigController>
         {"DialogConfig", configPath + "配置文档-对话" + fileTailPath},
         {"EquipmentConfig", configPath + "配置文档-设备" + fileTailPath},
         {"ItemConfig", configPath + "配置文档-道具" + fileTailPath},
+        {"MergeClueConfig", configPath + "配置文档-线索合并" + fileTailPath},
         //{"CharacterAutoMoveConfig", configPath + "配置文档-角色移动" + fileTailPath},
     };
 
@@ -620,6 +621,12 @@ public enum DoorType
     LibraryOut,
     LibraryInLeft,
     LibraryInRight,
+    PassageInLeft,
+    PassageInRight,
+    BoxRoomInLeft,
+    BoxRoomInRight,
+    SecretRoomNowInRight,
+    SecretRoomPassInRight,
 }
 
 public enum TransitionType

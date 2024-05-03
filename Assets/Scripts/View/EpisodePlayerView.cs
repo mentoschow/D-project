@@ -269,13 +269,14 @@ public class EpisodePlayerView : MonoBehaviour
         }
         if (roleRes != null)
         {
+            roleImg.gameObject.SetActive(true);
             roleImg.sprite = roleRes.fullBody;
             nameText.text = roleRes.name;
         }
         else
         {
             nameText.text = "";
-            roleImg.sprite = null;
+            roleImg.gameObject.SetActive(false);
         }
         if (dialog.isNeedRecord)
         {
