@@ -61,7 +61,7 @@ public class UIController : MonoSingleton<UIController>
         layer2 = transform.Find("layer2");
         layer3 = transform.Find("layer3");
         layer4 = transform.Find("layer4");
-        commonButtonPartView = BaseFunction.CreateView<CommonButtonPartView>(commonButtonPartObj, layer2);
+        commonButtonPartView = BaseFunction.CreateView<CommonButtonPartView>(commonButtonPartObj, layer1);
         homepageView = CreatePanelView<HomepageView>(homepageObj, layer1);
         loadingView = BaseFunction.CreateView<LoadingView>(loadingObj, layer4);
         normalEpisodePlayerView = CreatePanelView<EpisodePlayerView>(normalEpisodePlayerObj, layer3);
@@ -119,7 +119,7 @@ public class UIController : MonoSingleton<UIController>
         }
         if (puzzleView == null)
         {
-            puzzleView = CreatePanelView<PuzzleView>(puzzleViewPrefab, layer4);
+            puzzleView = CreatePanelView<PuzzleView>(puzzleViewPrefab, layer2);
         }
 
         puzzleView?.gameObject.SetActive(true);
@@ -135,21 +135,22 @@ public class UIController : MonoSingleton<UIController>
     {
         if (mimaView == null)
         {
-            mimaView = CommonUtils.CreateViewByType<MimaView>(MimaView.getPrefab(), layer4);
+            mimaView = CommonUtils.CreateViewByType<MimaView>(MimaView.getPrefab(), layer2);
         }
 
         mimaView.gameObject.SetActive(true);
         mimaView.updateView();
     }
 
-    public void showClueCombineView(MergeClueConfig mergeClueConfig,RoleType curRoleType)
+    public void showClueCombineView(MergeClueConfig mergeClueConfig)
     {
+        var curRoleType = RoleController.Instance.curRoleView.roleType;
         bool isBoy = curRoleType == RoleType.MainRoleBoy;
         if (isBoy)
         {
             if (clueCombineView == null)
             {
-                clueCombineView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer4);
+                clueCombineView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer2);
             }
 
             clueCombineView.gameObject.SetActive(true);
@@ -159,7 +160,7 @@ public class UIController : MonoSingleton<UIController>
         {
             if (clueCombinePhoneView == null)
             {
-                clueCombinePhoneView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer4);
+                clueCombinePhoneView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer2);
             }
 
             clueCombinePhoneView.gameObject.SetActive(true);
