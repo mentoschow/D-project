@@ -17,11 +17,6 @@ public class LoadingView : MonoBehaviour
         
     }
 
-    void Update()
-    {
-        
-    }
-
     public void PlayTransition(string str)
     {
         content.text = str;
@@ -30,9 +25,14 @@ public class LoadingView : MonoBehaviour
 
     public void PlayTransition(TransitionType type)
     {
+        curType = type;
+        bool needTrigger = false;
         switch (type)
         {
             case TransitionType.Blackout:
+                needTrigger = true;
+                content.text = "";
+                break;
             case TransitionType.None:
                 content.text = "";
                 break;
@@ -65,11 +65,27 @@ public class LoadingView : MonoBehaviour
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Now, StageType.LibraryOut, false);
                 break;
         }
-        Invoke("PlayTransitionOver", time);
+        if (needTrigger)
+        {
+            Invoke("TriggerNextNode", time);
+        }
+        else
+        {
+            Invoke("PlayTransitionOver", time);
+        }
     }
 
     private void PlayTransitionOver()
     {
         gameObject.SetActive(false);
+    }
+
+    private void TriggerNextNode()
+    {
+        gameObject.SetActive(false);
+        GameLineNode node = new GameLineNode();
+        node.type = GameNodeType.Transition;
+        node.ID = curType.ToString();
+        MessageManager.Instance.Send(MessageDefine.GameLineNodeDone, new MessageData(node));
     }
 }
