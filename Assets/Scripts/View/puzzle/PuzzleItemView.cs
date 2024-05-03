@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PuzzleItemView : MonoSingleton<PuzzleItemView>
+public class PuzzleItemView : MonoBehaviour
 {
     //public Image pic;
     //DragNodeCompent dragNodeCom;

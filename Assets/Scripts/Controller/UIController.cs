@@ -299,22 +299,27 @@ public class UIController : MonoSingleton<UIController>
 
     private void CheckInput()
     {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            ShowPhoneOrClue();
+        }
+    }
+
+    public void ShowPhoneOrClue()
+    {
         if (!GameDataProxy.Instance.canOperate)
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.G))
+        var roleType = RoleController.Instance.curRoleView.roleType;
+        if (roleType == RoleType.MainRoleGirl)
         {
-            var roleType = RoleController.Instance.curRoleView.roleType;
-            if (roleType == RoleType.MainRoleGirl)
-            {
-                phoneView.ShowPhone();
-            }
-            else if (roleType == RoleType.MainRoleBoy)
-            {
-                mainRoleBoyClueView.gameObject.SetActive(true);
-                mainRoleBoyClueView.UpdateView();
-            }
+            phoneView.ShowPhone();
+        }
+        else if (roleType == RoleType.MainRoleBoy)
+        {
+            mainRoleBoyClueView.gameObject.SetActive(true);
+            mainRoleBoyClueView.UpdateView();
         }
     }
 }
