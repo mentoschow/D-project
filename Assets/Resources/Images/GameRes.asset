@@ -23,14 +23,24 @@ MonoBehaviour:
     name: "\u56FE\u4E66\u9986\u5185"
     leftPosX: -14.5
     rightPosX: 0
-  - type: 0
-    prefab: {fileID: 0}
-    name: 
+  - type: 3
+    prefab: {fileID: 3163663043471574251, guid: a8a3a4b4847b7a24494fb3bca6c13cc6, type: 3}
+    name: "\u8D70\u5ECA"
     leftPosX: 0
     rightPosX: 0
-  - type: 0
-    prefab: {fileID: 0}
-    name: 
+  - type: 4
+    prefab: {fileID: 3163663043471574251, guid: d67b8bb34c2f51d40b3d8dfaedb338bf, type: 3}
+    name: "\u85CF\u95F4"
+    leftPosX: 0
+    rightPosX: 0
+  - type: 5
+    prefab: {fileID: 3163663043471574251, guid: 2750b96812657a84fb5cb46d2a5bfad7, type: 3}
+    name: "\u5BC6\u5BA4\uFF08\u73B0\u5728\uFF09"
+    leftPosX: 0
+    rightPosX: 0
+  - type: 6
+    prefab: {fileID: 3163663043471574251, guid: 59f8c37b374f09440b3cc5d1465b59b6, type: 3}
+    name: "\u5BC6\u5BA4\uFF08\u8FC7\u53BB\uFF09"
     leftPosX: 0
     rightPosX: 0
   clueItemImage:
