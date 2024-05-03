@@ -60,7 +60,7 @@ public class ConfigController : Singleton<ConfigController>
         {"EquipmentConfig", configPath + "配置文档-设备" + fileTailPath},
         {"ItemConfig", configPath + "配置文档-道具" + fileTailPath},
         {"MergeClueConfig", configPath + "配置文档-线索合并" + fileTailPath},
-        //{"CharacterAutoMoveConfig", configPath + "配置文档-角色移动" + fileTailPath},
+        {"CharacterAutoMoveConfig", configPath + "配置文档-角色移动" + fileTailPath},
     };
 
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
@@ -177,7 +177,14 @@ public class ConfigController : Singleton<ConfigController>
                 if (row["ID"].ToString() == episodeID.ToString())
                 {
                     config.ID = episodeID;
-                    config.episodeType = (EpisodeType)int.Parse(row["episodeType"].ToString());
+                    if (row["episodeType"].ToString() == "")
+                    {
+                        config.episodeType = EpisodeType.Normal;
+                    }
+                    else
+                    {
+                        config.episodeType = (EpisodeType)int.Parse(row["episodeType"].ToString());
+                    }
                     string dialogList = row["dialogList"].ToString();
                     config.dialogList = new List<string>(dialogList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string enableEquipmentID = row["enableEquipmentID"].ToString();
@@ -355,7 +362,14 @@ public class ConfigController : Singleton<ConfigController>
                     config.ID = itemID;
                     config.name = row["name"]?.ToString();
                     config.description = row["description"]?.ToString();
-                    config.isSaveBag = int.Parse(row["isSaveBag"]?.ToString()) == 1 ? true : false;
+                    if (row["isSaveBag"]?.ToString() == "")
+                    {
+                        config.isSaveBag = false;
+                    }
+                    else
+                    {
+                        config.isSaveBag = int.Parse(row["isSaveBag"]?.ToString()) == 1 ? true : false;
+                    }
 
                     itemConfigList[itemID] = config;
                     break;
@@ -434,7 +448,6 @@ public class ConfigController : Singleton<ConfigController>
                 {
                     config.ID = ID;
                     config.posX = float.Parse(row["posX"].ToString());
-                    config.posY = float.Parse(row["posY"].ToString());
                     config.duration = float.Parse(row["duration"].ToString());
 
                     characterAutoMoveConfigList[ID] = config;
@@ -756,6 +769,5 @@ public class CharacterAutoMoveConfig
 {
     public string ID;
     public float posX;
-    public float posY;
     public float duration;
 }

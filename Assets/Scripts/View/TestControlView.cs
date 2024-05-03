@@ -37,7 +37,7 @@ public class TestControlView : MonoSingleton<TestControlView>
     }
 
     void onPuzzleBtnClick() {
-        UIController.Instance.showPuzzleView();
+        UIController.Instance.showJiguanguiView();
         gameObject.SetActive(false);
     }
     void onMimaBtnClick()

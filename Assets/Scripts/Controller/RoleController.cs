@@ -101,7 +101,7 @@ public class RoleController : MonoSingleton<RoleController>
         if (config != null)
         {
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(curRoleView.transform.DOMove(new Vector2(config.posX, config.posY), config.duration)).AppendCallback(() =>
+            sequence.Append(curRoleView.transform.DOMoveX(config.posX, config.duration)).AppendCallback(() =>
             {
                 GameLineNode node = new GameLineNode();
                 node.type = GameNodeType.CharacterMove;

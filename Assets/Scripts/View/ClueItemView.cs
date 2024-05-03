@@ -98,11 +98,13 @@ public class ClueItemView : MonoBehaviour
 
     private void CloseDetail()
     {
+        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
         detailPage?.SetActive(false);
     }
 
     private void Close()
     {
+        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
         gameObject.SetActive(false);
     }
 }

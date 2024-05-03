@@ -55,6 +55,7 @@ public class GameController : Singleton<GameController>
                 break;
             case GameNodeType.CharacterMove:
                 Debug.Log("自动触发角色移动：" + nextNode.ID);
+                UIController.Instance.HideGamePlayView();
                 RoleController.Instance.PlayAutoMove(nextNode.ID);
                 break;
         }
@@ -63,7 +64,7 @@ public class GameController : Singleton<GameController>
     public void GameStart()
     {
         Debug.Log("游戏开始了");
-        UIController.Instance.ShowGamePlayView();
+        UIController.Instance.HideGamePlayView();
         RoleController.Instance.curRoleView.transform.position = new Vector2(-13f, -0.216f);
         Sequence sequence = DOTween.Sequence();
         sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.216f), 3)).AppendCallback(() =>
@@ -91,15 +92,15 @@ public class GameController : Singleton<GameController>
             {
                 GameDataProxy.Instance.equipmentInteractTimes.Add(equipmentID, 1);
             }
+            if (equipmentConfig.triggerPuzzleID != "")
+            {
+                // 触发解谜
+                TryOpenPuzzle(equipmentConfig.triggerPuzzleID);
+            }
             if (equipmentConfig.triggerEpisodeID != "")
             {
                 // 触发剧情
                 UIController.Instance.PlayEpisode(equipmentConfig.triggerEpisodeID);
-            }
-            else if (equipmentConfig.triggerPuzzleID != "")
-            {
-                // 触发解谜
-                TryOpenPuzzle(equipmentConfig.triggerPuzzleID);
             }
         }
     }
@@ -107,7 +108,7 @@ public class GameController : Singleton<GameController>
     private void TryOpenPuzzle(string ID)
     {
         var config = ConfigController.Instance.GetMergeClueConfig(ID);
-        if (config != null)
+        if (config.ID != null)
         {
             // 线索合并
             bool canTrigger = true;
@@ -140,7 +141,7 @@ public class GameController : Singleton<GameController>
             var puzzleType = BaseFunction.ChangeStringToEnum<PuzzleType>(ID);
             if (puzzleType == PuzzleType.JewelryPuzzleDone)
             {
-                UIController.Instance.showPuzzleView();
+                UIController.Instance.showJiguanguiView();
             }
             else if (puzzleType == PuzzleType.MimaPuzzleDone)
             {
