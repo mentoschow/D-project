@@ -173,7 +173,7 @@ MonoBehaviour:
   detailDescription: {fileID: 8055631659379975494}
   detailImage: {fileID: 3428599391908602271}
   closeDetailBtn: {fileID: 3830968923346676396}
-  closeBtn: {fileID: 0}
+  closeBtn: {fileID: 6576140137661762443}
   numText: {fileID: 3123864287374082730}
   clueList: {fileID: 1566550844169935601}
   clueItemObj: {fileID: 1597262084335798988, guid: 3306632f1bc98da4596a51b4c5772280, type: 3}

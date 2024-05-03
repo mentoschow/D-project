@@ -33,6 +33,8 @@ public class EpisodePlayerView : MonoBehaviour
     [SerializeField]
     private Image roleImg;
     [SerializeField]
+    private Image middleImg;
+    [SerializeField]
     private Text content;
     [SerializeField]
     private HorizontalLayoutGroup horizontalChoiceLayout;
@@ -75,6 +77,7 @@ public class EpisodePlayerView : MonoBehaviour
             if (content.text == targetText)
             {
                 ChangeStatus(EpisodePlayerStatus.Pause);
+                AudioController.Instance.Stop();
                 nextArrow?.SetActive(true);
                 if (choices?.Count > 0)
                 {
@@ -90,6 +93,7 @@ public class EpisodePlayerView : MonoBehaviour
 
     public void OnNextBtnClick()
     {
+        AudioController.Instance.PlayAudioEffect(curType == EpisodeType.Normal ? AudioEffectType.NormalDialogPlayButton : AudioEffectType.PhoneDialogPlayButton);
         switch (curStatus)
         {
             case EpisodePlayerStatus.Stop:
@@ -253,6 +257,7 @@ public class EpisodePlayerView : MonoBehaviour
             typeSpeed = normalTypingSpeed;
             typeTimer = 0;
             ChangeStatus(EpisodePlayerStatus.Typing);
+            AudioController.Instance.PlayAudioEffect(AudioEffectType.TypeEffect, true);
         }
         else
         {
@@ -260,7 +265,20 @@ public class EpisodePlayerView : MonoBehaviour
             ChangeStatus(EpisodePlayerStatus.Pause);
         }
         // 中间的图片
-
+        ImageRes middleImgRes = null;
+        if (ResourcesController.Instance.dialogItemRes.ContainsKey(dialog.ID))
+        {
+            middleImgRes = ResourcesController.Instance.dialogItemRes[dialog.ID];
+        }
+        if (middleImgRes != null)
+        {
+            middleImg.gameObject.SetActive(true);
+            middleImg.sprite = middleImgRes.sprite;
+        }
+        else
+        {
+            middleImg.gameObject.SetActive(false);
+        }
         // 立绘、名字
         RoleRes roleRes = null;
         if (ResourcesController.Instance.roleRes.ContainsKey(dialog.roleType))

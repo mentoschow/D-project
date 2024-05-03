@@ -10,7 +10,9 @@ public class UIController : MonoSingleton<UIController>
     public GameObject homepageObj;
     public GameObject loadingObj;
 
-    GameObject puzzleViewPrefab;
+
+    [SerializeField]
+    private GameObject jiguanguiObj;
     GameObject testControlViewPrefab;
 
     public GameObject normalEpisodePlayerObj;
@@ -19,7 +21,7 @@ public class UIController : MonoSingleton<UIController>
     public GameObject clueItemViewObj;
     public GameObject commonButtonPartObj;
 
-    private PuzzleView puzzleView;
+    private GameJiguanguiView jiguanguiView;
     private MimaView mimaView;
     private ClueCombineView clueCombineView;
     private ClueCombineView clueCombinePhoneView;
@@ -68,7 +70,7 @@ public class UIController : MonoSingleton<UIController>
         phoneView = CreatePanelView<PhoneView>(phoneObj, layer2);
         mainRoleBoyClueView = CreatePanelView<ClueItemView>(clueItemViewObj, layer2);
 
-        HideGamePlayView();
+        ShowHomepage();
 
         testBtn.onClick.AddListener(onTestBtnClick);
     }
@@ -88,46 +90,36 @@ public class UIController : MonoSingleton<UIController>
         testControlView?.gameObject.SetActive(true);
     }
 
-    public void ShowGamePlayView()
+    public void HideGamePlayView()
     {
         homepageView?.gameObject.SetActive(false);
         loadingView?.gameObject.SetActive(false);
         normalEpisodePlayerView?.gameObject.SetActive(false);
         phoneView?.gameObject.SetActive(false);
-        puzzleView?.gameObject.SetActive(false);
+        jiguanguiView?.gameObject.SetActive(false);
         mainRoleBoyClueView?.gameObject.SetActive(false);
         commonButtonPartView?.gameObject.SetActive(true);
     }
 
-    public void HideGamePlayView()
+    public void ShowHomepage()
     {
         homepageView?.gameObject.SetActive(true);
         loadingView?.gameObject.SetActive(false);
         normalEpisodePlayerView?.gameObject.SetActive(false);
         phoneView?.gameObject.SetActive(false);
-        puzzleView?.gameObject.SetActive(false);
+        jiguanguiView?.gameObject.SetActive(false);
         mainRoleBoyClueView?.gameObject.SetActive(false);
         commonButtonPartView?.gameObject.SetActive(false);
     }
 
-    public void showPuzzleView()
+    public void showJiguanguiView()
     {
-        if (puzzleViewPrefab == null)
+        if (jiguanguiView == null)
         {
-            string resourceName = "Prefabs/UI/puzzle/GamePuzzleView"; // 资源名称
-            puzzleViewPrefab = Resources.Load<GameObject>(resourceName);
-        }
-        if (puzzleView == null)
-        {
-            puzzleView = CreatePanelView<PuzzleView>(puzzleViewPrefab, layer2);
+            jiguanguiView = CreatePanelView<GameJiguanguiView>(jiguanguiObj, layer2);
         }
 
-        puzzleView?.gameObject.SetActive(true);
-        var config = ConfigController.Instance.puzzleConfig;
-        if (config != null)
-        {
-            puzzleView?.updateView(config);
-        }
+        jiguanguiView?.gameObject.SetActive(true);
     }
 
 
@@ -150,7 +142,7 @@ public class UIController : MonoSingleton<UIController>
         {
             if (clueCombineView == null)
             {
-                clueCombineView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer2);
+                clueCombineView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer3);
             }
 
             clueCombineView.gameObject.SetActive(true);
@@ -160,7 +152,7 @@ public class UIController : MonoSingleton<UIController>
         {
             if (clueCombinePhoneView == null)
             {
-                clueCombinePhoneView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer2);
+                clueCombinePhoneView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer3);
             }
 
             clueCombinePhoneView.gameObject.SetActive(true);
@@ -180,7 +172,7 @@ public class UIController : MonoSingleton<UIController>
 
     public void BackHomepage()
     {
-        HideGamePlayView();
+        ShowHomepage();
         GameDataProxy.Instance.ResetData();
         SceneController.Instance.ResetData();
     }
@@ -313,7 +305,16 @@ public class UIController : MonoSingleton<UIController>
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            phoneView.ShowPhone();
+            var roleType = RoleController.Instance.curRoleView.roleType;
+            if (roleType == RoleType.MainRoleGirl)
+            {
+                phoneView.ShowPhone();
+            }
+            else if (roleType == RoleType.MainRoleBoy)
+            {
+                mainRoleBoyClueView.gameObject.SetActive(true);
+                mainRoleBoyClueView.UpdateView();
+            }
         }
     }
 }

@@ -202,14 +202,15 @@ public class SceneController : MonoSingleton<SceneController>
         // ÒÆ¿ª¹ñ×Ó
         if (equipmentList.ContainsKey("EQ_01_04_040"))
         {
+            UIController.Instance.HideGamePlayView();
             var obj = equipmentList["EQ_01_04_040"].transform;
             Sequence sequence = DOTween.Sequence();
             sequence.Append(obj.DOMoveX(7, 2)).AppendCallback(() =>
             {
                 GameLineNode lineNode = new GameLineNode();
                 lineNode.type = GameNodeType.Puzzle;
-                lineNode.ID = Enum.GetName(typeof(PuzzleType), PuzzleType.JewelryPuzzleDone);
-                MessageManager.Instance.Send(MessageDefine.PlayPuzzleDone, new MessageData(lineNode));
+                lineNode.ID = PuzzleType.JewelryPuzzleDone.ToString();
+                MessageManager.Instance.Send(MessageDefine.GameLineNodeDone, new MessageData(lineNode));
             });
         }
         else
