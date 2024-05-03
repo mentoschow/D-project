@@ -21,6 +21,8 @@ public class UIController : MonoSingleton<UIController>
 
     private PuzzleView puzzleView;
     private MimaView mimaView;
+    private ClueCombineView clueCombineView;
+    private ClueCombineView clueCombinePhoneView;
 
     private TestControlView testControlView;
 
@@ -138,6 +140,31 @@ public class UIController : MonoSingleton<UIController>
 
         mimaView.gameObject.SetActive(true);
         mimaView.updateView();
+    }
+
+    public void showClueCombineView(MergeClueConfig mergeClueConfig,RoleType curRoleType)
+    {
+        bool isBoy = curRoleType == RoleType.MainRoleBoy;
+        if (isBoy)
+        {
+            if (clueCombineView == null)
+            {
+                clueCombineView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer4);
+            }
+
+            clueCombineView.gameObject.SetActive(true);
+            clueCombineView.updateView(mergeClueConfig);
+        }
+        else
+        {
+            if (clueCombinePhoneView == null)
+            {
+                clueCombinePhoneView = CommonUtils.CreateViewByType<ClueCombineView>(ClueCombineView.getPrefab(curRoleType), layer4);
+            }
+
+            clueCombinePhoneView.gameObject.SetActive(true);
+            clueCombinePhoneView.updateView(mergeClueConfig);
+        }
     }
 
     public void GameStart(MessageData data)

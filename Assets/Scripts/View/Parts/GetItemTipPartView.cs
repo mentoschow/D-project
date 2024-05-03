@@ -24,6 +24,7 @@ public class GetItemTipPartView : MonoBehaviour
     private RectTransform rect;
     private string itemID;
 
+
     void Awake()
     {
         rect = GetComponent<RectTransform>();

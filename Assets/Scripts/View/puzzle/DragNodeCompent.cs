@@ -43,6 +43,7 @@ public class DragNodeCompent : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        //this.originPos = pic.gameObject.transform.localPosition;
         if (this.dragStartFun != null)
         {
             this.dragStartFun(transform.gameObject,this.selfCode);
