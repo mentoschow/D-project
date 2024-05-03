@@ -15,6 +15,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public bool canOperate = false;
     public List<string> finishedClueCombine = new List<string>();
     public bool canPlayJiguangui = false;
+    public bool canPlayMima = false;
 
     //public Dictionary<JewelryType,bool> jewelryCmpletion = new Dictionary<JewelryType, bool>();
     public Dictionary<JewelryType,int> insertjewelryMap = new Dictionary<JewelryType, int>();
@@ -40,6 +41,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
         finishedClueCombine = new List<string>();
         canOperate = false;
         canPlayJiguangui = false;
+        canPlayMima = false;
     }
 
     public bool checkJewelryComplete(JewelryType type)

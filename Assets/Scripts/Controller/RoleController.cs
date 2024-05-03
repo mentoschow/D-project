@@ -88,6 +88,10 @@ public class RoleController : MonoSingleton<RoleController>
                 curRoleView.InteractWithEquipment();
             }
         }
+        else
+        {
+            curRoleView.moveVec = MoveVector.None;
+        }
     }
 
     public void SetRolePos(float posX)
