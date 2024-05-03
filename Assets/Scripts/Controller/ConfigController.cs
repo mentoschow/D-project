@@ -624,9 +624,14 @@ public enum DoorType
 
 public enum TransitionType
 {
+    None,
     Blackout,  // Í£µç
     ChangeToBoy,
     ChangeToGirl,
+    ChangeToBoy2,
+    ChangeToGirl2,
+    ChangeToLibraryOut,
+    ChangeToSecretRoom_Now
 }
 
 public class GameLineConfig

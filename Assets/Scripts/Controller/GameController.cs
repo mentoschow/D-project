@@ -114,6 +114,14 @@ public class GameController : Singleton<GameController>
         EquipmentConfig equipmentConfig = ConfigController.Instance.GetEquipmentConfig(equipmentID);
         if (equipmentConfig != null)
         {
+            if (GameDataProxy.Instance.equipmentInteractTimes.ContainsKey(equipmentID))
+            {
+                GameDataProxy.Instance.equipmentInteractTimes[equipmentID]++;
+            }
+            else
+            {
+                GameDataProxy.Instance.equipmentInteractTimes.Add(equipmentID, 1);
+            }
             if (equipmentConfig.triggerEpisodeID != "")
             {
                 // ´¥·¢¾çÇé

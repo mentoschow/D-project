@@ -11,6 +11,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public List<string> mainGirlBagItem = new List<string>();
     public List<string> mainBoyBagItem = new List<string>();
     public List<string> finishedEpisode = new List<string>();  // 已经结束的剧情
+    public Dictionary<string, int> equipmentInteractTimes = new Dictionary<string, int>();
     public bool canOperate = false;
 
     //public Dictionary<JewelryType,bool> jewelryCmpletion = new Dictionary<JewelryType, bool>();
@@ -33,6 +34,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
         mainGirlBagItem = new List<string>();
         mainBoyBagItem = new List<string>();
         finishedEpisode = new List<string>();
+        equipmentInteractTimes = new Dictionary<string, int>();
         canOperate = false;
     }
 
