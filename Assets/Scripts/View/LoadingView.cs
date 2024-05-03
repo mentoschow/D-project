@@ -35,6 +35,7 @@ public class LoadingView : MonoBehaviour
                 content.text = "";
                 break;
             case TransitionType.ChangeToBoy:
+            case TransitionType.ChangeToBoy2:
                 content.text = "密室（过去）";
                 RoleController.Instance.ChangeRole(RoleType.MainRoleBoy);
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Pass, StageType.BoxRoom, false);
@@ -45,12 +46,18 @@ public class LoadingView : MonoBehaviour
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
                 SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
-            case TransitionType.ChangeToBoy2:
+            case TransitionType.ChangeToGirl2:
+                content.text = "藏间（现在）";
+                RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
+                SceneController.Instance.UpdateDoor(DoorType.BoxRoomInRight, true);
+                SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
+                break;
+            case TransitionType.ChangeToBoy3:
                 content.text = "密室（过去）";
                 RoleController.Instance.ChangeRole(RoleType.MainRoleBoy);
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Pass, StageType.SecretRoom_Now, false);
                 break;
-            case TransitionType.ChangeToGirl2:
+            case TransitionType.ChangeToGirl3:
                 content.text = "密室（现在）";
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Now, StageType.SecretRoom_Pass, false);

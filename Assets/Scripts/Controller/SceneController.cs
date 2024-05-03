@@ -11,6 +11,7 @@ public class SceneController : MonoSingleton<SceneController>
     private StageType curSceneID;
     private Dictionary<StageType, int> comeInSceneTimes = new Dictionary<StageType, int>();
     private Dictionary<string, EquipmentView> equipmentList = new Dictionary<string, EquipmentView>();
+    private Dictionary<DoorType, EquipmentView> doorList = new Dictionary<DoorType, EquipmentView>();
 
     public float sceneBgWidth;
     public float sceneBgHeight;
@@ -61,11 +62,17 @@ public class SceneController : MonoSingleton<SceneController>
         scene.transform.SetParent(transform);
         sceneMap[sceneName] = scene;
         comeInSceneTimes[sceneName] = 0;
-        foreach (var child in scene.transform.Find("EquipmentLayer").GetComponentsInChildren<EquipmentView>())
+        var childList = scene.transform.Find("EquipmentLayer").GetComponentsInChildren<EquipmentView>();
+        foreach (var child in childList)
         {
             if (child != null)
             {
                 equipmentList[child.equipmentID] = child;
+                if (child.doorType != DoorType.None)
+                {
+                    doorList[child.doorType] = child;
+                }
+                child.gameObject.SetActive(child.defaultVisiable);
             }
         }
     }
@@ -194,6 +201,15 @@ public class SceneController : MonoSingleton<SceneController>
         if (equipmentList.ContainsKey(equipmentID))
         {
             equipmentList[equipmentID].interactive = enable;
+        }
+    }
+
+    public void UpdateDoor(DoorType type, bool enable)
+    {
+        if (doorList.ContainsKey(type))
+        {
+            doorList[type].gameObject.SetActive(enable);
+            doorList[type].interactive = enable;
         }
     }
 

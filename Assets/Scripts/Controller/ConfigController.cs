@@ -650,6 +650,8 @@ public enum TransitionType
     ChangeToGirl,
     ChangeToBoy2,
     ChangeToGirl2,
+    ChangeToBoy3,
+    ChangeToGirl3,
     ChangeToLibraryOut,
     ChangeToSecretRoom_Now
 }
