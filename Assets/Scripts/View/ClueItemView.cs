@@ -45,7 +45,7 @@ public class ClueItemView : MonoBehaviour
         List<string> items = new List<string>();
         if (roleType == RoleType.MainRoleGirl)
         {
-            items = GameDataProxy.Instance.mainGrilBagItem;
+            items = GameDataProxy.Instance.mainGirlBagItem;
         }
         else if (roleType == RoleType.MainRoleBoy)
         {

@@ -91,6 +91,8 @@ public class MimaView : MonoSingleton<MimaView>
             lineNode.type = GameNodeType.Puzzle;
             lineNode.ID = Enum.GetName(typeof(PuzzleType), PuzzleType.MimaPuzzleDone);
             MessageManager.Instance.Send(MessageDefine.PlayPuzzleDone, new MessageData(lineNode));
+
+            gameObject.SetActive(false);
         }
     }
     // Update is called once per frame

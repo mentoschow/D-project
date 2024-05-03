@@ -42,6 +42,14 @@ public class SceneController : MonoSingleton<SceneController>
         Debug.Log("场景高度:" + sceneBgHeight);
     }
 
+    public void ResetData()
+    {
+        foreach (var scene in ResourcesController.Instance.sceneRes)
+        {
+            comeInSceneTimes[scene.Key] = 0;
+        }
+    }
+
     private void CreateScene(StageType sceneName, GameObject obj)
     {
         if (obj == null)
@@ -61,7 +69,7 @@ public class SceneController : MonoSingleton<SceneController>
         }
     }
 
-    public void ChangeScene(StageType toScene, StageType fromScene, bool useTransition = true, bool setRolePos = true)
+    public void ChangeScene(StageType toScene, StageType fromScene = StageType.None, bool useTransition = true, bool setRolePos = true)
     {
         var res = ResourcesController.Instance.sceneRes[toScene];
         if (useTransition)
@@ -95,6 +103,7 @@ public class SceneController : MonoSingleton<SceneController>
         if (setRolePos)
         {
             float posX = 0;
+            // 正常地图移动
             if (fromScene == StageType.None && toScene == StageType.LibraryOut)
             {
                 // 游戏开始
@@ -108,6 +117,57 @@ public class SceneController : MonoSingleton<SceneController>
             else if (fromScene == StageType.LibraryIn && toScene == StageType.LibraryOut)
             {
                 // 从图书馆内到图书馆外
+                posX = res.rightPosX;
+            }
+            else if (fromScene == StageType.LibraryIn && toScene == StageType.Passage)
+            {
+                // 从图书馆内到走廊
+                posX = res.leftPosX;
+            }
+            else if (fromScene == StageType.Passage && toScene == StageType.LibraryIn)
+            {
+                // 从走廊到图书馆内
+                posX = res.rightPosX;
+            }
+            else if (fromScene == StageType.Passage && toScene == StageType.BoxRoom)
+            {
+                // 从走廊到藏间
+                posX = res.leftPosX;
+            }
+            else if (fromScene == StageType.BoxRoom && toScene == StageType.Passage)
+            {
+                // 从藏间到走廊
+                posX = res.rightPosX;
+            }
+            else if (fromScene == StageType.BoxRoom && toScene == StageType.SecretRoom_Now)
+            {
+                // 从藏间到密室现在
+                posX = res.rightPosX;
+            }
+            else if (fromScene == StageType.SecretRoom_Now && toScene == StageType.BoxRoom)
+            {
+                // 从密室现在到藏间
+                posX = res.rightPosX;
+            }
+            // 穿越
+            else if (fromScene == StageType.BoxRoom && toScene == StageType.SecretRoom_Pass)
+            {
+                // 从藏间到密室过去
+                posX = res.rightPosX;
+            }
+            else if (fromScene == StageType.SecretRoom_Pass && toScene == StageType.BoxRoom)
+            {
+                // 从密室密室到藏间
+                posX = res.leftPosX;
+            }
+            else if (fromScene == StageType.SecretRoom_Now && toScene == StageType.SecretRoom_Pass)
+            {
+                // 从密室现在到密室过去
+                posX = res.rightPosX;
+            }
+            else if (fromScene == StageType.SecretRoom_Pass && toScene == StageType.SecretRoom_Now)
+            {
+                // 从密室过去到密室现在
                 posX = res.rightPosX;
             }
             RoleController.Instance.SetRolePos(posX);

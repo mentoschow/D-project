@@ -32,8 +32,12 @@ public class CommonUtils : MonoSingleton<CommonUtils>
         GameObject obj = Instantiate(prefab, parent);
         if (obj != null)
         {
-            // 尝试添加组件T
-            T view = obj.AddComponent<T>();
+            T view = obj.GetComponent<T>();
+            if (!view)
+            {
+                // 尝试添加组件T
+                view = obj.AddComponent<T>();
+            }
             return view;
         }
         // 如果prefab是null或者没有成功实例化，返回默认值
@@ -61,5 +65,13 @@ public class CommonUtils : MonoSingleton<CommonUtils>
             }
         }
         return null; // 如果没有找到具有指定名称的子节点
+    }
+
+    static public void updateText(string txt,Text textCom)
+    {
+        if (!string.IsNullOrEmpty(txt) && textCom!=null)
+        {
+            textCom.text = txt;
+        }
     }
 }

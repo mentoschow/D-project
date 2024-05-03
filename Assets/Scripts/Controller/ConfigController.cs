@@ -599,9 +599,8 @@ public enum GameNodeType
     Transition,  // 转场
     Episode,  // 情节
     Puzzle,  // 谜题
-    GotClueItem,  // 获得线索
-    FreeOperate,  // 自由操作
     CharacterMove,  // 角色移动
+    FreeOperate,  // 自由操作
 }
 
 public enum StageType
@@ -625,9 +624,14 @@ public enum DoorType
 
 public enum TransitionType
 {
+    None,
     Blackout,  // 停电
     ChangeToBoy,
     ChangeToGirl,
+    ChangeToBoy2,
+    ChangeToGirl2,
+    ChangeToLibraryOut,
+    ChangeToSecretRoom_Now
 }
 
 public class GameLineConfig

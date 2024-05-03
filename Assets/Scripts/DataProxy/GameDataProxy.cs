@@ -8,9 +8,10 @@ public class GameDataProxy : Singleton<GameDataProxy>
 {
     public List<DialogConfig> normalHistoryDialog = new List<DialogConfig>();
     public Dictionary<BelongPhoneGroup, List<DialogConfig>> phoneHistoryDialog = new Dictionary<BelongPhoneGroup, List<DialogConfig>>();
-    public List<string> mainGrilBagItem = new List<string>();
+    public List<string> mainGirlBagItem = new List<string>();
     public List<string> mainBoyBagItem = new List<string>();
     public List<string> finishedEpisode = new List<string>();  // 已经结束的剧情
+    public Dictionary<string, int> equipmentInteractTimes = new Dictionary<string, int>();
     public bool canOperate = false;
 
     //public Dictionary<JewelryType,bool> jewelryCmpletion = new Dictionary<JewelryType, bool>();
@@ -23,16 +24,17 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public List<PuzzleCombineConfig> puzzleCombineConfigs = new List<PuzzleCombineConfig>();
     public GameDataProxy()
     {
-        resetData();
+        ResetData();
     }
 
-    public void resetData()
+    public void ResetData()
     {
         normalHistoryDialog = new List<DialogConfig>();
         phoneHistoryDialog = new Dictionary<BelongPhoneGroup, List<DialogConfig>>();
-        mainGrilBagItem = new List<string>();
+        mainGirlBagItem = new List<string>();
         mainBoyBagItem = new List<string>();
         finishedEpisode = new List<string>();
+        equipmentInteractTimes = new Dictionary<string, int>();
         canOperate = false;
     }
 
@@ -81,7 +83,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
     {
         if (roleType == RoleType.MainRoleGirl)
         {
-            return mainGrilBagItem.Contains(ID);
+            return mainGirlBagItem.Contains(ID);
         }
         else if (roleType == RoleType.MainRoleBoy)
         {
