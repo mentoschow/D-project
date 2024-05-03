@@ -145,7 +145,14 @@ public class GameController : Singleton<GameController>
             }
             else if (puzzleType == PuzzleType.MimaPuzzleDone)
             {
-                UIController.Instance.showMimaView();
+                if (GameDataProxy.Instance.canPlayMima)
+                {
+                    UIController.Instance.showMimaView();
+                }
+                else
+                {
+                    GameDataProxy.Instance.canOperate = true;
+                }
             }
             else
             {
