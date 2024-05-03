@@ -10,7 +10,8 @@ public class PuzzleView : MonoSingleton<PuzzleView>
 {
     // Start is called before the first frame update
     public GameObject mainObject;
-
+    [SerializeField]
+    private Button finishBtn;
     PuzzleConfig useConfig;
 
     public GameObject mainObjectNode;
@@ -31,6 +32,7 @@ public class PuzzleView : MonoSingleton<PuzzleView>
     private void Awake()
     {
         closeBtn.onClick.AddListener(onCloseBtnClick);
+        finishBtn?.onClick.AddListener(OnFinishClick);
         this.initAttachNodeMap();
     }
 
@@ -210,18 +212,23 @@ public class PuzzleView : MonoSingleton<PuzzleView>
         }
     }
 
-    void checkInsertOver()
+    void checkInsertOver(bool over = false)
     {
         bool isOver = GameDataProxy.Instance.checkInsertOver();
+        if (over)
+        {
+            isOver = true;
+        }
         if (isOver)
         {
             Debug.Log("装饰已完成");
-            GameLineNode lineNode = new GameLineNode();
-            lineNode.type = GameNodeType.Puzzle;
-            lineNode.ID = Enum.GetName(typeof(PuzzleType), PuzzleType.JewelryPuzzleDone);
-            MessageManager.Instance.Send(MessageDefine.PlayPuzzleDone, new MessageData(lineNode));
-
             gameObject.SetActive(false);
+            SceneController.Instance.OnJewelryPuzzleDone();
         }
+    }
+
+    private void OnFinishClick()
+    {
+        checkInsertOver(true);
     }
 }

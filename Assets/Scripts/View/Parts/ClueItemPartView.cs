@@ -34,6 +34,7 @@ public class ClueItemPartView : MonoBehaviour
 
     private void OnButtonClick()
     {
+        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
         MessageManager.Instance.Send(MessageDefine.ClueItemClick, new MessageData(item.ID));
     }
 }

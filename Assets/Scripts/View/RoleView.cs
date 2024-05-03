@@ -24,7 +24,6 @@ public class RoleView : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     private CapsuleCollider2D capsuleCollider;
-    private BoxCollider2D trigger;
     public MoveVector moveVec = MoveVector.None;
     private Vector2 colliderSize;
     private Vector2 slopeNormalPerp;
@@ -32,7 +31,6 @@ public class RoleView : MonoBehaviour
     private float slopeDownAngle;
     private float slopeSideAngle;
     private float lastSlopeAngle;
-    private GameObject triggerObj;
     private float originScaleX;  // œÚ”“
     private EquipmentView colliderEquipment = null;
 
@@ -40,7 +38,6 @@ public class RoleView : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
-        trigger = GetComponent<BoxCollider2D>();
         tips?.gameObject.SetActive(false);
         originScaleX = roleSp.transform.localScale.x;
         colliderSize = capsuleCollider.size;
@@ -96,8 +93,11 @@ public class RoleView : MonoBehaviour
     {
         if (collision.tag == "Equipment" && GameDataProxy.Instance.canOperate)
         {
-            triggerObj = collision.gameObject;
-            colliderEquipment = triggerObj.GetComponent<EquipmentView>();
+            var temp = collision.gameObject.GetComponent<EquipmentView>();
+            if (temp != null)
+            {
+                colliderEquipment = temp;
+            }
             if (colliderEquipment != null)
             {
                 bool interactive = colliderEquipment.interactive;

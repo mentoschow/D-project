@@ -26,11 +26,9 @@ public class LoadingView : MonoBehaviour
     public void PlayTransition(TransitionType type)
     {
         curType = type;
-        bool needTrigger = false;
         switch (type)
         {
             case TransitionType.Blackout:
-                needTrigger = true;
                 content.text = "";
                 break;
             case TransitionType.None:
@@ -43,6 +41,7 @@ public class LoadingView : MonoBehaviour
                 break;
             case TransitionType.ChangeToGirl:
                 content.text = "≤ÿº‰£®œ÷‘⁄£©";
+                GameDataProxy.Instance.canPlayJiguangui = true;
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
                 SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
@@ -65,14 +64,7 @@ public class LoadingView : MonoBehaviour
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Now, StageType.LibraryOut, false);
                 break;
         }
-        if (needTrigger)
-        {
-            Invoke("TriggerNextNode", time);
-        }
-        else
-        {
-            Invoke("PlayTransitionOver", time);
-        }
+        Invoke("TriggerNextNode", time);
     }
 
     private void PlayTransitionOver()

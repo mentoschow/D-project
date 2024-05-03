@@ -19,6 +19,7 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
     public GameObject right_node;
     public Text rightTxt;
     public Text questionTxt;
+    private Button finishBtn;
 
     Dictionary<int, ClueCombineContainView> itemViewMap = new Dictionary<int, ClueCombineContainView>();
 
@@ -57,7 +58,8 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
         rightTxt = CommonUtils.findChildByName(transform, "rightTxt").gameObject.GetComponent<Text>();
         right_node = CommonUtils.findChildByName(transform, "right_node").gameObject;
         questionTxt = CommonUtils.findChildByName(transform, "questionTxt").gameObject.GetComponent<Text>();
-
+        finishBtn = transform.Find("finishBtn")?.GetComponent<Button>();
+        finishBtn?.onClick.AddListener(OnFinishClick);
         //closeBtn = CommonUtils.findChildByName(transform, "closeBtn").gameObject.GetComponent<UnityEngine.UI.Button>();
         //closeBtn?.onClick.AddListener(onCloseBtnClick);
     }
@@ -209,7 +211,12 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
         }
     }
 
-    void checkInsertOver()
+    private void OnFinishClick()
+    {
+        checkInsertOver(true);
+    }
+
+    void checkInsertOver(bool over = false)
     {
         bool result = false;
         if (combineMap.Count == rightcombineList.Count)
@@ -226,7 +233,10 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
             }
         }
 
-
+        if (over)
+        {
+            result = over;
+        }
         if (result)
         {
             this.right_node.SetActive(result);
