@@ -216,12 +216,8 @@ public class PuzzleView : MonoSingleton<PuzzleView>
         if (isOver)
         {
             Debug.Log("装饰已完成");
-            GameLineNode lineNode = new GameLineNode();
-            lineNode.type = GameNodeType.Puzzle;
-            lineNode.ID = Enum.GetName(typeof(PuzzleType), PuzzleType.JewelryPuzzleDone);
-            MessageManager.Instance.Send(MessageDefine.PlayPuzzleDone, new MessageData(lineNode));
-
             gameObject.SetActive(false);
+            SceneController.Instance.OnJewelryPuzzleDone();
         }
     }
 }

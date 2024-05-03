@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -193,6 +194,27 @@ public class SceneController : MonoSingleton<SceneController>
         if (equipmentList.ContainsKey(equipmentID))
         {
             equipmentList[equipmentID].interactive = enable;
+        }
+    }
+
+    public void OnJewelryPuzzleDone()
+    {
+        // 移开柜子
+        if (equipmentList.ContainsKey("EQ_01_04_040"))
+        {
+            var obj = equipmentList["EQ_01_04_040"].transform;
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(obj.DOMoveX(7, 2)).AppendCallback(() =>
+            {
+                GameLineNode lineNode = new GameLineNode();
+                lineNode.type = GameNodeType.Puzzle;
+                lineNode.ID = Enum.GetName(typeof(PuzzleType), PuzzleType.JewelryPuzzleDone);
+                MessageManager.Instance.Send(MessageDefine.PlayPuzzleDone, new MessageData(lineNode));
+            });
+        }
+        else
+        {
+            Debug.LogError("柜子不存在！");
         }
     }
 }
