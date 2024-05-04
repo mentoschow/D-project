@@ -70,6 +70,112 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 143723c67069d53458c041cefbfbc573, type: 3}
   - ID: CUE_0050_reason_telegraph
     sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0060_telegram_1
+    sprite: {fileID: 21300000, guid: f84163953827a514284e91d9d5da4cd5, type: 3}
+  - ID: CUE_0065_telegraph
+    sprite: {fileID: 21300000, guid: 209159f8504431b4fa25dee9e5d461c9, type: 3}
+  - ID: CUE_0070_telegram_boy
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0080__message
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0081__message
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0082__message
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0085_reason
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0090_cabinet
+    sprite: {fileID: 21300000, guid: 43022ced0924cf84aababca35198bf40, type: 3}
+  - ID: CUE_0095_key
+    sprite: {fileID: 21300000, guid: 94224170e6ba49f48b5f60e41b24c2d1, type: 3}
+  - ID: CUE_0100_holder
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0110_jewelry
+    sprite: {fileID: 21300000, guid: 55028288f14d62a49b989c8978d5d5a8, type: 3}
+  - ID: CUE_0120_review
+    sprite: {fileID: 21300000, guid: 143723c67069d53458c041cefbfbc573, type: 3}
+  - ID: CUE_0121_review
+    sprite: {fileID: 21300000, guid: 143723c67069d53458c041cefbfbc573, type: 3}
+  - ID: CUE_0122_review
+    sprite: {fileID: 21300000, guid: 143723c67069d53458c041cefbfbc573, type: 3}
+  - ID: CUE_0130_poetry
+    sprite: {fileID: 21300000, guid: a47ce4ee14385f84fbfd680a1b9363ce, type: 3}
+  - ID: CUE_0140_puzzle
+    sprite: {fileID: 21300000, guid: 43022ced0924cf84aababca35198bf40, type: 3}
+  - ID: CUE_0150_reason_miss
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0155_telegraph_girl
+    sprite: {fileID: 21300000, guid: f84163953827a514284e91d9d5da4cd5, type: 3}
+  - ID: CUE_0160
+    sprite: {fileID: 21300000, guid: 55028288f14d62a49b989c8978d5d5a8, type: 3}
+  - ID: CUE_0170
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0175_review
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0180
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0190_review
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0195
+    sprite: {fileID: 21300000, guid: f84163953827a514284e91d9d5da4cd5, type: 3}
+  - ID: CUE_0200
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0205
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0210
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0215_telegraph_girl
+    sprite: {fileID: 21300000, guid: f84163953827a514284e91d9d5da4cd5, type: 3}
+  - ID: CUE_0215_telegraph_girl
+    sprite: {fileID: 21300000, guid: f84163953827a514284e91d9d5da4cd5, type: 3}
+  - ID: CUE_0220
+    sprite: {fileID: 21300000, guid: 94224170e6ba49f48b5f60e41b24c2d1, type: 3}
+  - ID: CUE_0225
+    sprite: {fileID: 21300000, guid: f84163953827a514284e91d9d5da4cd5, type: 3}
+  - ID: CUE_0230_bone
+    sprite: {fileID: 21300000, guid: c09ffdc6b8894c24f8e53b97231d9509, type: 3}
+  - ID: CUE_0231_picture
+    sprite: {fileID: 21300000, guid: 55028288f14d62a49b989c8978d5d5a8, type: 3}
+  - ID: CUE_0232_note
+    sprite: {fileID: 21300000, guid: 6e142c8c20216674aa1f5d58f9ce130e, type: 3}
+  - ID: CUE_0233_oldtelegraph
+    sprite: {fileID: 21300000, guid: 209159f8504431b4fa25dee9e5d461c9, type: 3}
+  - ID: CUE_0240_misslock
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0250_wall
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0260_oldnotebook
+    sprite: {fileID: 21300000, guid: 6e142c8c20216674aa1f5d58f9ce130e, type: 3}
+  - ID: CUE_0270_oldkey
+    sprite: {fileID: 21300000, guid: 55028288f14d62a49b989c8978d5d5a8, type: 3}
+  - ID: CUE_0280_reason_poem
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0281_reason_bone
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0282_reason_cross
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0283_reason_story
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0300_reason_losekey
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0305_message_001
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0310_notebook
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0320_truth
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0330_realkey
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0340_key
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
+  - ID: CUE_0345_message_002
+    sprite: {fileID: 21300000, guid: f84163953827a514284e91d9d5da4cd5, type: 3}
+  - ID: CUE_0360_lockbox
+    sprite: {fileID: 21300000, guid: 6cebfe511abfeae4ca82c4ec74747c7a, type: 3}
+  - ID: CUE_0380
+    sprite: {fileID: 21300000, guid: c09ffdc6b8894c24f8e53b97231d9509, type: 3}
+  - ID: CUE_0390
+    sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
   dialogImage: []
   roleRes:
   - type: 1
