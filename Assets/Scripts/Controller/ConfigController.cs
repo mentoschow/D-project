@@ -196,7 +196,14 @@ public class ConfigController : Singleton<ConfigController>
                     string needItemID = row["needItemID"].ToString();
                     config.needItemID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
-                    config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
+                    if (row["belongGroup"].ToString() == "")
+                    {
+                        config.belongGroup = BelongPhoneGroup.None;
+                    }
+                    else
+                    {
+                        config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
+                    }
 
                     episodeConfigList[episodeID] = config;
                     break;
@@ -327,10 +334,6 @@ public class ConfigController : Singleton<ConfigController>
                     config.description = row["description"].ToString();
                     config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
                     config.triggerPuzzleID = row["triggerPuzzleID"].ToString();
-                    string getItemID = row["getItemID"].ToString();
-                    config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-                    string mustDoneEpisodeID = row["mustDoneEpisodeID"].ToString();
-                    config.mustDoneEpisodeID = new List<string>(mustDoneEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
                     equipmentConfigList[equipmentID] = config;
                     break;
@@ -782,8 +785,8 @@ public enum EpisodeType
 
 public enum PuzzleType
 {
-    JewelryPuzzleDone = 0,//ÃÜÂëËø
-    MimaPuzzleDone = 1//Ê×ÊÎ
+    JewelryPuzzle = 0,//ÃÜÂëËø
+    PasswordPuzzle = 1//Ê×ÊÎ
 }
 
 public class CharacterAutoMoveConfig

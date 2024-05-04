@@ -104,17 +104,6 @@ public class RoleView : MonoBehaviour
                 var config = ConfigController.Instance.GetEquipmentConfig(colliderEquipment.equipmentID);
                 if (config != null)
                 {
-                    if (config.mustDoneEpisodeID?.Count > 0)
-                    {
-                        foreach (var id in config.mustDoneEpisodeID)
-                        {
-                            if (!GameDataProxy.Instance.finishedEpisode.Contains(id))
-                            {
-                                interactive = false;
-                                break;
-                            }
-                        }
-                    }
                     tips.text = config.name + "\n°´[E]½»»¥";
                 }
                 tips?.gameObject.SetActive(interactive);

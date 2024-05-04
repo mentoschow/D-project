@@ -12,10 +12,13 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public List<string> mainBoyBagItem = new List<string>();
     public List<string> finishedEpisode = new List<string>();  // 已经结束的剧情
     public Dictionary<string, int> equipmentInteractTimes = new Dictionary<string, int>();
+    public List<GameLineNode> doneGameLineNode = new List<GameLineNode>();
     public bool canOperate = false;
     public List<string> finishedClueCombine = new List<string>();
     public bool canPlayJiguangui = false;
-    public bool canPlayMima = false;
+    public bool canPlayMima = true;
+    public bool isJewelryPuzzleDone = false;
+    public bool isPasswordPuzzleDone = false;
 
     //public Dictionary<JewelryType,bool> jewelryCmpletion = new Dictionary<JewelryType, bool>();
     public Dictionary<JewelryType,int> insertjewelryMap = new Dictionary<JewelryType, int>();
@@ -39,9 +42,12 @@ public class GameDataProxy : Singleton<GameDataProxy>
         finishedEpisode = new List<string>();
         equipmentInteractTimes = new Dictionary<string, int>();
         finishedClueCombine = new List<string>();
+        doneGameLineNode = new List<GameLineNode>();
         canOperate = false;
         canPlayJiguangui = false;
-        canPlayMima = false;
+        canPlayMima = true;
+        isJewelryPuzzleDone = false;
+        isPasswordPuzzleDone = false;
     }
 
     public bool checkJewelryComplete(JewelryType type)
@@ -99,5 +105,17 @@ public class GameDataProxy : Singleton<GameDataProxy>
         {
             return true;
         }
+    }
+
+    public bool CheckIsGameLineNodeDone(GameLineNode node)
+    {
+        foreach (var doneNode in doneGameLineNode)
+        {
+            if (doneNode.type == node.type && doneNode.ID == node.ID)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

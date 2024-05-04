@@ -13,12 +13,18 @@ public class HomepageView : MonoSingleton<HomepageView>
     private Button staffBtn;
     [SerializeField]
     private GameObject staffArea;
+    [SerializeField]
+    private GameObject gameOverPage;
+    [SerializeField]
+    private Button gameOverQuitBtn;
 
     void Start()
     {
         gameStartBtn?.onClick.AddListener(GameStart);
         quitBtn?.onClick.AddListener(QuitGame);
         staffBtn?.onClick.AddListener(ShowStaff);
+        gameOverQuitBtn?.onClick.AddListener(QuitGame);
+        gameOverPage?.SetActive(false);
         staffArea.SetActive(false);
     }
 
@@ -43,5 +49,10 @@ public class HomepageView : MonoSingleton<HomepageView>
         AudioController.Instance.PlayAudioEffect(AudioEffectType.NormalButton);
         var active = staffArea.activeInHierarchy;
         staffArea.SetActive(!active);
+    }
+
+    public void ShowGameOver()
+    {
+        gameOverPage.SetActive(true);
     }
 }

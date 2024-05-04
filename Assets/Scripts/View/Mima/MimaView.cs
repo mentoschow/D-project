@@ -5,13 +5,13 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class MimaView : MonoSingleton<MimaView>
 {
     GameObject open_pic;
     GameObject close_pic;
-    UnityEngine.UI.Button closeBtn;
+    private Button closeBtn;
+    private Button finishBtn;
 
     int count = 5;
     int originNumber = 2;
@@ -43,6 +43,8 @@ public class MimaView : MonoSingleton<MimaView>
     {
         closeBtn = CommonUtils.findChildByName(transform, "closeBtn").gameObject.GetComponent<UnityEngine.UI.Button>();
         closeBtn?.onClick.AddListener(onCloseBtnClick);
+        finishBtn = transform.Find("finishBtn")?.GetComponent<Button>();
+        finishBtn?.onClick.AddListener(OnFinishClick);
 
         for (int i = 0;i< count; i++)
         {
@@ -74,7 +76,7 @@ public class MimaView : MonoSingleton<MimaView>
         }
     }
 
-    public void checkRight() {
+    public void checkRight(bool over = false) {
         List<int> list = new List<int>();
 
         foreach (KeyValuePair<int, MimaItemContainerView> item in itemViewMap)
@@ -83,21 +85,26 @@ public class MimaView : MonoSingleton<MimaView>
         }
         GameDataProxy.Instance.useMimaList = list;
         bool isOver  = GameDataProxy.Instance.checkMimaOver();
+        if (over)
+        {
+            isOver = true;
+        }
         if (isOver)
         {
             this.updateView();
             Debug.Log("√‹¬ÎÀ¯“—ÕÍ≥…");
+            //UIController.Instance.GetItemTip(new List<string>() { "CUE_0350" });
             GameLineNode lineNode = new GameLineNode();
             lineNode.type = GameNodeType.Puzzle;
-            lineNode.ID = Enum.GetName(typeof(PuzzleType), PuzzleType.MimaPuzzleDone);
-            MessageManager.Instance.Send(MessageDefine.PlayPuzzleDone, new MessageData(lineNode));
+            lineNode.ID = PuzzleType.PasswordPuzzle.ToString();
+            MessageManager.Instance.Send(MessageDefine.GameLineNodeDone, new MessageData(lineNode));
 
             gameObject.SetActive(false);
         }
     }
-    // Update is called once per frame
-    void Update()
+
+    private void OnFinishClick()
     {
-        
+        checkRight(true);
     }
 }

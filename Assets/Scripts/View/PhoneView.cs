@@ -114,6 +114,7 @@ public class PhoneView : MonoBehaviour
     private void ShowEpisodeView(BelongPhoneGroup group, string ID)
     {
         dialogRoot.gameObject.SetActive(true);
+        cluePage?.gameObject.SetActive(false);
         backBtn.gameObject.SetActive(false);
         fastItemBtn.gameObject.SetActive(false);
         fastWechatBtn.gameObject.SetActive(false);

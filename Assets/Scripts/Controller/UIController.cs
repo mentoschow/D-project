@@ -101,7 +101,7 @@ public class UIController : MonoSingleton<UIController>
         commonButtonPartView?.gameObject.SetActive(true);
     }
 
-    public void ShowHomepage()
+    public void ShowHomepage(bool isGameOver = false)
     {
         homepageView?.gameObject.SetActive(true);
         loadingView?.gameObject.SetActive(false);
@@ -110,6 +110,10 @@ public class UIController : MonoSingleton<UIController>
         jiguanguiView?.gameObject.SetActive(false);
         mainRoleBoyClueView?.gameObject.SetActive(false);
         commonButtonPartView?.gameObject.SetActive(false);
+        if (isGameOver)
+        {
+            homepageView.ShowGameOver();
+        }
     }
 
     public void showJiguanguiView()
@@ -167,12 +171,12 @@ public class UIController : MonoSingleton<UIController>
 
     public void GameEnd()
     {
-        BackHomepage();
+        BackHomepage(true);
     }
 
-    public void BackHomepage()
+    public void BackHomepage(bool isGameOver = false)
     {
-        ShowHomepage();
+        ShowHomepage(isGameOver);
         GameDataProxy.Instance.ResetData();
         SceneController.Instance.ResetData();
     }
