@@ -108,7 +108,7 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
         this.mergeClueConfig = merClueConfig;
         this.rightCout = this.mergeClueConfig.correctClueList.Count;
 
-        CommonUtils.updateText(this.mergeClueConfig?.ID ?? "", this.questionTxt);
+        CommonUtils.updateText(this.mergeClueConfig?.title ?? "", this.questionTxt);
 
         this.initAttachNodeMap();
 
