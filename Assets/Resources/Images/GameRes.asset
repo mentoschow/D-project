@@ -32,16 +32,16 @@ MonoBehaviour:
     prefab: {fileID: 3163663043471574251, guid: d67b8bb34c2f51d40b3d8dfaedb338bf, type: 3}
     name: "\u85CF\u95F4"
     leftPosX: -8
-    rightPosX: 0
+    rightPosX: -0.55
   - type: 5
     prefab: {fileID: 3163663043471574251, guid: 2750b96812657a84fb5cb46d2a5bfad7, type: 3}
     name: "\u5BC6\u5BA4\uFF08\u73B0\u5728\uFF09"
-    leftPosX: 0
+    leftPosX: -6
     rightPosX: 12
   - type: 6
     prefab: {fileID: 3163663043471574251, guid: 59f8c37b374f09440b3cc5d1465b59b6, type: 3}
     name: "\u5BC6\u5BA4\uFF08\u8FC7\u53BB\uFF09"
-    leftPosX: 0
+    leftPosX: -6
     rightPosX: 12
   clueItemImage:
   - ID: T_CUE_IDEA
@@ -181,15 +181,37 @@ MonoBehaviour:
   - type: 1
     name: "\u5973\u4E3B\u89D2"
     icon: {fileID: 21300000, guid: 181a81f6d9347ed408769cdad371a755, type: 3}
-    fullBody: {fileID: 21300000, guid: 4046fdfa3d7e53a47927533486804398, type: 3}
+    imageTypeRes:
+    - type: 0
+      sprite: {fileID: 21300000, guid: 29cb31e53cd230e4fa3c4b3894c432af, type: 3}
+    - type: 1
+      sprite: {fileID: 21300000, guid: aa4707aaaf965da42871cc60614c4ad8, type: 3}
+    - type: 2
+      sprite: {fileID: 21300000, guid: fa9a31b2897c31b4dada9fca8409aa42, type: 3}
+    - type: 3
+      sprite: {fileID: 21300000, guid: 8d19a70ccd6dd4045bbd80a095c65c71, type: 3}
+    - type: 4
+      sprite: {fileID: 21300000, guid: e5517079a2790e84890f4da7cc68e90f, type: 3}
+    - type: 5
+      sprite: {fileID: 21300000, guid: 4f6dfa27f22723f499f6baf577857281, type: 3}
   - type: 2
     name: "\u7537\u4E3B\u89D2"
     icon: {fileID: 21300000, guid: dc96426423306e34a95ecea381d67f0c, type: 3}
-    fullBody: {fileID: 21300000, guid: dc96426423306e34a95ecea381d67f0c, type: 3}
+    imageTypeRes:
+    - type: 0
+      sprite: {fileID: 21300000, guid: 0f0fa7a0d8bd0d7449820b7855e0fa75, type: 3}
+    - type: 1
+      sprite: {fileID: 21300000, guid: 828a11ce783701548ace14ba5682079a, type: 3}
+    - type: 2
+      sprite: {fileID: 21300000, guid: 585323c04b3ee4f45ab7811a35ece86a, type: 3}
+    - type: 3
+      sprite: {fileID: 21300000, guid: e8dffd95a3c347448933d0f2e601e445, type: 3}
+    - type: 4
+      sprite: {fileID: 21300000, guid: 0d8f028a90b4bf941af831495a99edb6, type: 3}
   - type: 3
     name: "\u6E05\u6D45"
     icon: {fileID: 21300000, guid: 181a81f6d9347ed408769cdad371a755, type: 3}
-    fullBody: {fileID: 21300000, guid: 4046fdfa3d7e53a47927533486804398, type: 3}
+    imageTypeRes: []
   wechatGroupRes:
   - group: 2
     name: "\u6E05\u6D45"

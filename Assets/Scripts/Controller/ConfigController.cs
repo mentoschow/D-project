@@ -196,7 +196,14 @@ public class ConfigController : Singleton<ConfigController>
                     string needItemID = row["needItemID"].ToString();
                     config.needItemID = new List<string>(needItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     config.isNeedRecord = int.Parse(row["isNeedRecord"].ToString()) == 1 ? true : false;
-                    config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
+                    if (row["belongGroup"].ToString() == "")
+                    {
+                        config.belongGroup = BelongPhoneGroup.None;
+                    }
+                    else
+                    {
+                        config.belongGroup = (BelongPhoneGroup)int.Parse(row["belongGroup"].ToString());
+                    }
 
                     episodeConfigList[episodeID] = config;
                     break;
@@ -243,8 +250,14 @@ public class ConfigController : Singleton<ConfigController>
                     }
                     string getItemID = row["getItemID"].ToString();
                     config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-                    string choices = row["choices"].ToString();
-                    config.choices = new List<string>(choices.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    if (row["imageType"].ToString() != "")
+                    {
+                        config.imageType = (DialogImageType)int.Parse(row["imageType"].ToString());
+                    }
+                    else
+                    {
+                        config.imageType = DialogImageType.Idle;
+                    }
 
                     dialogConfigList[dialogID] = config;
                     break;
@@ -321,10 +334,6 @@ public class ConfigController : Singleton<ConfigController>
                     config.description = row["description"].ToString();
                     config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
                     config.triggerPuzzleID = row["triggerPuzzleID"].ToString();
-                    string getItemID = row["getItemID"].ToString();
-                    config.getItemID = new List<string>(getItemID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-                    string mustDoneEpisodeID = row["mustDoneEpisodeID"].ToString();
-                    config.mustDoneEpisodeID = new List<string>(mustDoneEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
                     equipmentConfigList[equipmentID] = config;
                     break;
@@ -405,6 +414,7 @@ public class ConfigController : Singleton<ConfigController>
                 if (row["ID"]?.ToString() == ID.ToString())
                 {
                     config.ID = ID;
+                    config.title = row["title"]?.ToString();
                     string needFinishEpisodeID = row["needFinishEpisodeID"].ToString();
                     config.needFinishEpisodeID = new List<string>(needFinishEpisodeID.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
                     string prepareClueList = row["prepareClueList"].ToString();
@@ -467,6 +477,7 @@ public class ConfigController : Singleton<ConfigController>
         foreach (var item in dataFilePathDic)
         {
             string filePath = item.Value;
+            //Debug.Log("º”‘ÿ≈‰÷√:" + filePath);
             DataTable dt = new DataTable();
             try
             {
@@ -694,9 +705,19 @@ public class DialogConfig
     public string content;
     public List<string> getItemID;
     public RoleType roleType;
-    public List<string> choices;
+    public DialogImageType imageType;
     public bool isNeedRecord;
     public BelongPhoneGroup belongGroup;
+}
+
+public enum DialogImageType
+{
+    Idle,
+    Think,
+    Happy,
+    Angry,
+    Seriously,
+    TakePhone,
 }
 
 public class ChoiceConfig
@@ -728,6 +749,7 @@ public class ItemConfig
 public class MergeClueConfig
 {
     public string ID;
+    public string title;
     public List<string> needFinishEpisodeID;
     public List<string> prepareClueList;
     public List<string> correctClueList;
@@ -763,8 +785,8 @@ public enum EpisodeType
 
 public enum PuzzleType
 {
-    JewelryPuzzleDone = 0,//√‹¬ÎÀ¯
-    MimaPuzzleDone = 1// ◊ Œ
+    JewelryPuzzle = 0,//√‹¬ÎÀ¯
+    PasswordPuzzle = 1// ◊ Œ
 }
 
 public class CharacterAutoMoveConfig

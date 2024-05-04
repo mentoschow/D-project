@@ -23,6 +23,12 @@ public class GameController : Singleton<GameController>
             Debug.LogError("节点数据为空");
             return;
         }
+        if (GameDataProxy.Instance.CheckIsGameLineNodeDone(node.gameLineNode))
+        {
+            Debug.LogError("自动流程已经触发过");
+            return;
+        }
+        GameDataProxy.Instance.doneGameLineNode.Add(node.gameLineNode);
         var nextNode = ConfigController.Instance.GetGameLineNode(node.gameLineNode);
         if (nextNode == null)
         {
@@ -139,11 +145,11 @@ public class GameController : Singleton<GameController>
         else
         {
             var puzzleType = BaseFunction.ChangeStringToEnum<PuzzleType>(ID);
-            if (puzzleType == PuzzleType.JewelryPuzzleDone)
+            if (puzzleType == PuzzleType.JewelryPuzzle)
             {
                 UIController.Instance.showJiguanguiView();
             }
-            else if (puzzleType == PuzzleType.MimaPuzzleDone)
+            else if (puzzleType == PuzzleType.PasswordPuzzle)
             {
                 if (GameDataProxy.Instance.canPlayMima)
                 {

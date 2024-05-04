@@ -18,11 +18,18 @@ public class CommonButtonPartView : MonoBehaviour
 
     private void BackToHomepage()
     {
-        UIController.Instance.BackHomepage();
+        //UIController.Instance.BackHomepage();
+        AudioController.Instance.PlayAudioEffect(AudioEffectType.NormalButton);
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     private void ShowClueOrPhone()
     {
-
+        AudioController.Instance.PlayAudioEffect(AudioEffectType.NormalButton);
+        UIController.Instance.ShowPhoneOrClue();
     }
 }

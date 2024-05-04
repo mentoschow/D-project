@@ -277,11 +277,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: equipmentID
-      value: EQ_01_04_030
+      value: BoxRoomTelegraph
       objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
-      value: EquipmentView (9)
+      value: "\u7535\u62A5\u673A"
       objectReference: {fileID: 0}
     - target: {fileID: 5573907228389387129, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_RootOrder
@@ -365,13 +365,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4594285025847344238}
     m_Modifications:
+    - target: {fileID: 823858660502364609, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: interactive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
-      value: EquipmentView (4)
+      value: "\u7535\u62A5\u673A\u67DC\u5B50"
       objectReference: {fileID: 0}
     - target: {fileID: 5573907228389387129, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_RootOrder
@@ -465,7 +473,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+    - {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 770008760bffbfc4f81705fed950364b, type: 3}
 --- !u!4 &6368876930483930032 stripped
 Transform:
@@ -485,7 +495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: equipmentID
-      value: 0
+      value: BoxRoomRightDoorOpen
       objectReference: {fileID: 0}
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: interactive
@@ -497,7 +507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
-      value: EquipmentView (5)_tiemen (1)
+      value: "\u6697\u95E8_\u5F00"
       objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_IsActive
@@ -622,6 +632,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: equipmentID
       value: 0
       objectReference: {fileID: 0}
@@ -631,7 +645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
-      value: EquipmentView (1)
+      value: "\u5237\u5361\u5668"
       objectReference: {fileID: 0}
     - target: {fileID: 5573907228389387129, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_RootOrder
@@ -698,6 +712,10 @@ PrefabInstance:
       value: 4.987333
       objectReference: {fileID: 0}
     - target: {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Offset.y
       value: -1.9936669
       objectReference: {fileID: 0}
@@ -713,7 +731,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+    - {fileID: 6704912784959747550, guid: 770008760bffbfc4f81705fed950364b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 770008760bffbfc4f81705fed950364b, type: 3}
 --- !u!4 &639533661123907051 stripped
 Transform:
@@ -733,7 +753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: equipmentID
-      value: EQ_01_04_050
+      value: BoxRoomRightDoorClose
       objectReference: {fileID: 0}
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: interactive
@@ -741,7 +761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
-      value: EquipmentView (5)_tiemen
+      value: "\u6697\u95E8_\u5173"
       objectReference: {fileID: 0}
     - target: {fileID: 5573907228389387129, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_RootOrder
@@ -859,11 +879,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: equipmentID
-      value: EQ_01_04_040
+      value: OrganClosetInBoxRoom
       objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
-      value: EquipmentView (6)
+      value: "\u673A\u5173\u67DC"
       objectReference: {fileID: 0}
     - target: {fileID: 5573907228389387129, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_RootOrder
@@ -887,7 +907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5573907228389387129, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5573907228389387129, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -965,11 +985,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: doorType
-      value: 6
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1058245609235912807, guid: 770008760bffbfc4f81705fed950364b, type: 3}
+      propertyPath: equipmentID
+      value: BoxRoomLeftDoorClose
       objectReference: {fileID: 0}
     - target: {fileID: 3544470121375525331, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_Name
-      value: EquipmentView (2)
+      value: "\u95F8\u95E8"
       objectReference: {fileID: 0}
     - target: {fileID: 5573907228389387129, guid: 770008760bffbfc4f81705fed950364b, type: 3}
       propertyPath: m_RootOrder
