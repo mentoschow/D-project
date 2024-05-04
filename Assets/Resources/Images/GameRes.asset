@@ -176,7 +176,11 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: c09ffdc6b8894c24f8e53b97231d9509, type: 3}
   - ID: CUE_0390
     sprite: {fileID: 21300000, guid: 0a735b3810a8dc9449354da627bd028b, type: 3}
-  dialogImage: []
+  dialogImage:
+  - ID: LibraryPoster1
+    sprite: {fileID: 21300000, guid: 9da27133796b9394dbf77e5edeb58056, type: 3}
+  - ID: LibraryPoster2
+    sprite: {fileID: 21300000, guid: e1108da9715f71242a339e56acf30644, type: 3}
   roleRes:
   - type: 1
     name: "\u5973\u4E3B\u89D2"
