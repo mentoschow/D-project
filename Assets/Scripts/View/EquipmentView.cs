@@ -11,7 +11,6 @@ public class EquipmentView : MonoBehaviour
     [SerializeField]
     private float flashTime = 1f;
     public bool interactive = true;
-    public bool defaultVisiable = true;
 
     private float timer = 0;
 

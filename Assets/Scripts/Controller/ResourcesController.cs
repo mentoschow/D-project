@@ -17,6 +17,11 @@ public class ResourcesController : MonoSingleton<ResourcesController>
     {
         foreach (var role in gameRes.roleRes)
         {
+            role.imageTypeResMap = new Dictionary<DialogImageType, Sprite>();
+            foreach (var res in role.imageTypeRes)
+            {
+                role.imageTypeResMap.Add(res.type, res.sprite);
+            }
             roleRes[role.type] = role;
         }
         foreach (var group in gameRes.wechatGroupRes)

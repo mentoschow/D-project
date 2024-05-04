@@ -72,7 +72,7 @@ public class SceneController : MonoSingleton<SceneController>
                 {
                     doorList[child.doorType] = child;
                 }
-                child.gameObject.SetActive(child.defaultVisiable);
+                child.gameObject.SetActive(child.interactive);
             }
         }
     }
@@ -161,22 +161,22 @@ public class SceneController : MonoSingleton<SceneController>
             else if (fromScene == StageType.BoxRoom && toScene == StageType.SecretRoom_Pass)
             {
                 // 从藏间到密室过去
-                posX = res.rightPosX;
+                posX = res.leftPosX;
             }
             else if (fromScene == StageType.SecretRoom_Pass && toScene == StageType.BoxRoom)
             {
                 // 从密室密室到藏间
-                posX = res.leftPosX;
+                posX = res.rightPosX;
             }
             else if (fromScene == StageType.SecretRoom_Now && toScene == StageType.SecretRoom_Pass)
             {
                 // 从密室现在到密室过去
-                posX = res.rightPosX;
+                posX = res.leftPosX;
             }
             else if (fromScene == StageType.SecretRoom_Pass && toScene == StageType.SecretRoom_Now)
             {
                 // 从密室过去到密室现在
-                posX = res.rightPosX;
+                posX = res.leftPosX;
             }
             RoleController.Instance.SetRolePos(posX);
         }
@@ -201,6 +201,7 @@ public class SceneController : MonoSingleton<SceneController>
         if (equipmentList.ContainsKey(equipmentID))
         {
             equipmentList[equipmentID].interactive = enable;
+            equipmentList[equipmentID].gameObject.SetActive(enable);
         }
     }
 
@@ -208,24 +209,25 @@ public class SceneController : MonoSingleton<SceneController>
     {
         if (doorList.ContainsKey(type))
         {
-            doorList[type].gameObject.SetActive(enable);
             doorList[type].interactive = enable;
+            
         }
     }
 
     public void OnJewelryPuzzleDone()
     {
         // 移开柜子
-        if (equipmentList.ContainsKey("EQ_01_04_040"))
+        if (equipmentList.ContainsKey("OrganClosetInBoxRoom"))
         {
+            UpdateEquipment("BoxRoomRightDoorClose", true);
             UIController.Instance.HideGamePlayView();
-            var obj = equipmentList["EQ_01_04_040"].transform;
+            var obj = equipmentList["OrganClosetInBoxRoom"].transform;
             Sequence sequence = DOTween.Sequence();
             sequence.Append(obj.DOMoveX(7, 2)).AppendCallback(() =>
             {
                 GameLineNode lineNode = new GameLineNode();
                 lineNode.type = GameNodeType.Puzzle;
-                lineNode.ID = PuzzleType.JewelryPuzzleDone.ToString();
+                lineNode.ID = PuzzleType.JewelryPuzzle.ToString();
                 MessageManager.Instance.Send(MessageDefine.GameLineNodeDone, new MessageData(lineNode));
             });
         }

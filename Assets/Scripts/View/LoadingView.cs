@@ -49,7 +49,7 @@ public class LoadingView : MonoBehaviour
             case TransitionType.ChangeToGirl2:
                 content.text = "藏间（现在）";
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
-                SceneController.Instance.UpdateDoor(DoorType.BoxRoomInRight, true);
+                //SceneController.Instance.UpdateDoor(DoorType.BoxRoomInRight, true);
                 SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
             case TransitionType.ChangeToBoy3:
@@ -60,7 +60,7 @@ public class LoadingView : MonoBehaviour
             case TransitionType.ChangeToGirl3:
                 content.text = "密室（现在）";
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
-                SceneController.Instance.ChangeScene(StageType.SecretRoom_Now, StageType.SecretRoom_Pass, false);
+                SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
             case TransitionType.ChangeToLibraryOut:
                 content.text = "图书馆外";

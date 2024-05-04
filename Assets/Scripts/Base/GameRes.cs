@@ -29,7 +29,14 @@ public class RoleRes
     public RoleType type;
     public string name;
     public Sprite icon;
-    public Sprite fullBody;
+    public List<ImageTypeRes> imageTypeRes;
+    public Dictionary<DialogImageType, Sprite> imageTypeResMap;
+}
+[System.Serializable]
+public class ImageTypeRes
+{
+    public DialogImageType type;
+    public Sprite sprite;
 }
 
 [System.Serializable]

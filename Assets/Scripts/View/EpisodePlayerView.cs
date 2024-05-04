@@ -213,23 +213,23 @@ public class EpisodePlayerView : MonoBehaviour
 
     private void UpdateView(DialogConfig dialog)
     {
-        var configController = ConfigController.Instance;
+        //var configController = ConfigController.Instance;
         // 选项
-        if (dialog.choices?.Count > 0)
-        {
-            foreach (var choiceID in dialog.choices)
-            {
-                ChoiceConfig choice = configController.GetChoiceConfig(choiceID);
-                if (choice != null)
-                {
-                    choices.Add(choice);
-                }
-            }
-        }
-        else
-        {
-            choices = null;
-        }
+        //if (dialog.choices?.Count > 0)
+        //{
+        //    foreach (var choiceID in dialog.choices)
+        //    {
+        //        ChoiceConfig choice = configController.GetChoiceConfig(choiceID);
+        //        if (choice != null)
+        //        {
+        //            choices.Add(choice);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    choices = null;
+        //}
         // 获得道具
         if (dialog.getItemID.Count > 0)
         {
@@ -288,7 +288,7 @@ public class EpisodePlayerView : MonoBehaviour
         if (roleRes != null)
         {
             roleImg.gameObject.SetActive(true);
-            roleImg.sprite = roleRes.fullBody;
+            roleImg.sprite = roleRes.imageTypeResMap[dialog.imageType];
             nameText.text = roleRes.name;
         }
         else

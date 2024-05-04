@@ -88,7 +88,8 @@ public class ClueItemView : MonoBehaviour
         {
             detailPage?.SetActive(true);
             detailTitle.text = item.name;
-            detailDescription.text = item.description;
+            var text = BaseFunction.FixStringChangeLine(item.description);
+            detailDescription.text = text;
             if (ResourcesController.Instance.clueItemRes.ContainsKey(item.ID))
             {
                 detailImage.sprite = ResourcesController.Instance.clueItemRes[item.ID].sprite;
