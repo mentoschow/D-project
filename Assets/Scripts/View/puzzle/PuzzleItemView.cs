@@ -48,7 +48,7 @@ public class PuzzleItemView : MonoBehaviour
     {
         for(int i = 1; i < 5; i++)
         {
-            GameObject imageObject = CommonUtils.findChildByName(transform, "image_"+i.ToString()).gameObject;
+            GameObject imageObject = CommonUtils.findChildByName(transform, "image_"+i.ToString())?.gameObject;
             imageMap.Add(i, imageObject);
 
             DragNodeCompent dragCom= imageObject.AddComponent<DragNodeCompent>();
