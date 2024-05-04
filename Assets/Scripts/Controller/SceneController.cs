@@ -161,22 +161,22 @@ public class SceneController : MonoSingleton<SceneController>
             else if (fromScene == StageType.BoxRoom && toScene == StageType.SecretRoom_Pass)
             {
                 // 从藏间到密室过去
-                posX = res.rightPosX;
+                posX = res.leftPosX;
             }
             else if (fromScene == StageType.SecretRoom_Pass && toScene == StageType.BoxRoom)
             {
                 // 从密室密室到藏间
-                posX = res.leftPosX;
+                posX = res.rightPosX;
             }
             else if (fromScene == StageType.SecretRoom_Now && toScene == StageType.SecretRoom_Pass)
             {
                 // 从密室现在到密室过去
-                posX = res.rightPosX;
+                posX = res.leftPosX;
             }
             else if (fromScene == StageType.SecretRoom_Pass && toScene == StageType.SecretRoom_Now)
             {
                 // 从密室过去到密室现在
-                posX = res.rightPosX;
+                posX = res.leftPosX;
             }
             RoleController.Instance.SetRolePos(posX);
         }

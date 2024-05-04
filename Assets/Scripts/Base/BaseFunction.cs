@@ -75,4 +75,21 @@ public class BaseFunction : MonoBehaviour
     {
         return (T)Enum.Parse(typeof(T), str);
     }
+
+    public static string FixStringChangeLine(string str)
+    {
+        string result = "";
+        int startIndex = 0;
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (str[i] == '\\' && str[i + 1] == 'n')
+            {
+                result += str.Substring(startIndex, i - startIndex);
+                result += "\n";
+                startIndex = i + 2;
+            }
+        }
+        result += str.Substring(startIndex, str.Length - startIndex);
+        return result;
+    }
 }
