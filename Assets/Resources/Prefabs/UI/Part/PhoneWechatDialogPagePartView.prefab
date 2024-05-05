@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 50
   m_Viewport: {fileID: 5691093623958862343}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 7348038074448775713}
@@ -101,6 +101,7 @@ MonoBehaviour:
   nextArrow: {fileID: 0}
   nameText: {fileID: 0}
   roleImg: {fileID: 0}
+  middleImg: {fileID: 0}
   content: {fileID: 0}
   horizontalChoiceLayout: {fileID: 0}
   verticalChoiceLayout: {fileID: 0}
@@ -218,7 +219,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 515.3678}
+  m_AnchoredPosition: {x: 0, y: 515}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &4798809054125023175
@@ -420,7 +421,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6414690611830005100}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9781486
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

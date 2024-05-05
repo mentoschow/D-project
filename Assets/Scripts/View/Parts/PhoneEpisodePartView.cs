@@ -17,7 +17,7 @@ public class PhoneEpisodePartView : MonoBehaviour
     public void UpdateView(Sprite icon, string name, string content)
     {
         iconImg.sprite = icon;
-        contentText.text = content;
+        contentText.text = content.Replace(" ", "\u00A0");
         nameText.text = name;
         if (contentText.preferredWidth > maxTextWidth)
         {
