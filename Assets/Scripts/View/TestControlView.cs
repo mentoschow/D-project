@@ -38,6 +38,7 @@ public class TestControlView : MonoSingleton<TestControlView>
     }
 
     void onPuzzleBtnClick() {
+        GameDataProxy.Instance.canPlayJiguangui = true;
         UIController.Instance.showJiguanguiView();
         gameObject.SetActive(false);
     }
