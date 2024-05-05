@@ -13,6 +13,8 @@ public class UIController : MonoSingleton<UIController>
 
     [SerializeField]
     private GameObject jiguanguiObj;
+    [SerializeField]
+    private Button testBtn;
     GameObject testControlViewPrefab;
 
     public GameObject normalEpisodePlayerObj;
@@ -41,12 +43,16 @@ public class UIController : MonoSingleton<UIController>
     private Transform layer4;
     private Dictionary<int, bool> isItemIndexUsing = new Dictionary<int, bool>();
 
-    public Button testBtn;
     void Awake()
     {
         MessageManager.Instance.Register(MessageDefine.StageStart, GameStart);
         MessageManager.Instance.Register(MessageDefine.GetItemDone, OnGetItemDone);
         Init();
+#if UNITY_EDITOR
+        testBtn.gameObject.SetActive(true);
+#else
+        testBtn.gameObject.SetActive(false);
+#endif
     }
 
     private void Update()
