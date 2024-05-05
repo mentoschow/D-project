@@ -150,7 +150,7 @@ public class SceneController : MonoSingleton<SceneController>
             else if (fromScene == StageType.BoxRoom && toScene == StageType.SecretRoom_Now)
             {
                 // 从藏间到密室现在
-                posX = res.rightPosX;
+                posX = res.leftPosX;
             }
             else if (fromScene == StageType.SecretRoom_Now && toScene == StageType.BoxRoom)
             {

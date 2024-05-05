@@ -281,6 +281,7 @@ public class EpisodePlayerView : MonoBehaviour
         {
             middleImg.gameObject.SetActive(true);
             middleImg.sprite = middleImgRes.sprite;
+            middleImg.SetNativeSize();
         }
         else
         {

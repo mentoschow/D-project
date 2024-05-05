@@ -79,8 +79,8 @@ finishType,finishID,triggerType,triggerID
 2,ChangeToGirl3,3,MS01_050_040
 3,MS01_050_041,2,ChangeToLibraryOut
 2,ChangeToLibraryOut,3,MS01_060_010
-3,MS01_060_010,3,MS01_060_015
+3,MS01_060_010,2,ChangeToSecretRoom_Now
+2,ChangeToSecretRoom_Now,3,MS01_060_015
 3,MS01_060_015,4,PLAY_060_010_jiyunshu
-4,PLAY_060_010_jiyunshu,2,ChangeToSecretRoom_Now
-2,ChangeToSecretRoom_Now,3,MS01_060_020
+4,PLAY_060_010_jiyunshu,3,MS01_060_020
 3,MS01_060_020,0,End
