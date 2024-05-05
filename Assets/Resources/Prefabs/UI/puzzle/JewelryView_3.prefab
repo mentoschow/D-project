@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 4433742656985320460}
   - component: {fileID: 5430904118241154776}
   m_Layer: 5
-  m_Name: image_2
+  m_Name: image_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 512289846133431367}
   - component: {fileID: 8999661960784516295}
   m_Layer: 5
-  m_Name: image_1
+  m_Name: image_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

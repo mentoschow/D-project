@@ -558,7 +558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1279332609
 RectTransform:
   m_ObjectHideFlags: 0
@@ -577,7 +577,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -25}
+  m_AnchoredPosition: {x: 121, y: -413}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1279332610
@@ -936,12 +936,12 @@ MonoBehaviour:
   homepageObj: {fileID: 6010286809094170743, guid: 9f606fa92e7072b41a5f60bf4a87f9ec, type: 3}
   loadingObj: {fileID: 6497115259499853773, guid: 115c985a7c82f4442bac183d5af3ce32, type: 3}
   jiguanguiObj: {fileID: 8829262375891948465, guid: 384c4fc1aaf4fa04db8dbb3ede1398ff, type: 3}
+  testBtn: {fileID: 1279332610}
   normalEpisodePlayerObj: {fileID: 2873157605445166545, guid: 0c679b46e8c975243a136f1783530915, type: 3}
   getItemTipObj: {fileID: 6497115259499853773, guid: 0bc171a1e09c7d143a6b1e55f39b6743, type: 3}
   phoneObj: {fileID: 6497115259499853773, guid: ab070feacd192c4409fe9a901173ebfb, type: 3}
   clueItemViewObj: {fileID: 2224314662894617154, guid: ea726c3c493bec24984237a75fb823c6, type: 3}
   commonButtonPartObj: {fileID: 1597262084335798988, guid: 401fe0727b3629e42a0a0e44a1b17d54, type: 3}
-  testBtn: {fileID: 1279332610}
 --- !u!81 &2202462677185376993
 AudioListener:
   m_ObjectHideFlags: 0

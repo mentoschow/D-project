@@ -50,12 +50,15 @@ public class PuzzleItemView : MonoBehaviour
         for(int i = 1; i < 5; i++)
         {
             GameObject imageObject = CommonUtils.findChildByName(transform, "image_"+i.ToString())?.gameObject;
-            imageMap.Add(i, imageObject);
+            if (imageObject != null)
+            {
+                imageMap.Add(i, imageObject);
 
-            DragNodeCompent dragCom= imageObject.AddComponent<DragNodeCompent>();
-            dragCom.enabled = false;
+                DragNodeCompent dragCom = imageObject.AddComponent<DragNodeCompent>();
+                dragCom.enabled = false;
 
-            dragNodeComMap.Add(i, dragCom);
+                dragNodeComMap.Add(i, dragCom);
+            }
         }
     }
 

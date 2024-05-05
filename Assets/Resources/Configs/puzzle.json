@@ -32,32 +32,32 @@
             "jewelryType": 6,
             "combineList": [
                 {
-                    "xPos": -76,
-                    "yPos": 129,
+                    "xPos": -59,
+                    "yPos": 152,
                     "code": 1,
                     "jewelryType": 1
                 },
                           {
-                    "xPos": -10,
-                    "yPos": -35,
+                    "xPos": 0,
+                    "yPos": -23,
                     "code": 1,
                     "jewelryType": 2
                 },
                           {
-                    "xPos": -89,
-                    "yPos": -230,
+                    "xPos": 14,
+                    "yPos": 215,
                     "code": 4,
                     "jewelryType": 3
                 },
                           {
-                    "xPos": 177.8,
-                    "yPos": -257.6,
+                    "xPos": 102,
+                    "yPos": -164,
                     "code": 4,
                     "jewelryType": 4
                 },
                           {
-                    "xPos": 7.9,
-                    "yPos": 227,
+                    "xPos": -7,
+                    "yPos": -148,
                     "code": 4,
                     "jewelryType": 5
                 }

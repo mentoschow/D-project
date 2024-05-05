@@ -12,7 +12,7 @@ public class CommonUtils : MonoSingleton<CommonUtils>
         }
         Sprite image;
         imageMap.TryGetValue(imageResourcePath, out image);
-        if(image != null) { 
+        if(image == null) { 
             image = Resources.Load<Sprite>(imageResourcePath); ;
             CommonUtils.imageMap.Add(imageResourcePath , image);
         }
