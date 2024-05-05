@@ -106,11 +106,6 @@ public class GameController : Singleton<GameController>
             if (equipmentConfig.triggerEpisodeID != "")
             {
                 // 触发剧情
-                if (equipmentConfig.isTriggerEpisodeOnlyOnce && GameDataProxy.Instance.finishedEpisode.Contains(equipmentConfig.triggerEpisodeID))
-                {
-                    Debug.LogWarning("该设备情节只触发一次，已触发过");
-                    return;
-                }
                 UIController.Instance.PlayEpisode(equipmentConfig.triggerEpisodeID);
             }
         }

@@ -334,14 +334,6 @@ public class ConfigController : Singleton<ConfigController>
                     config.description = row["description"].ToString();
                     config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
                     config.triggerPuzzleID = row["triggerPuzzleID"].ToString();
-                    if (row["isTriggerEpisodeOnlyOnce"].ToString() == "")
-                    {
-                        config.isTriggerEpisodeOnlyOnce = false;
-                    }
-                    else
-                    {
-                        config.isTriggerEpisodeOnlyOnce = int.Parse(row["isTriggerEpisodeOnlyOnce"].ToString()) == 1 ? true : false;
-                    }
 
                     equipmentConfigList[equipmentID] = config;
                     break;
@@ -744,7 +736,6 @@ public class EquipmentConfig
     public string triggerEpisodeID;
     public string triggerPuzzleID;
     public List<string> mustDoneEpisodeID;
-    public bool isTriggerEpisodeOnlyOnce;
 }
 
 public class ItemConfig
