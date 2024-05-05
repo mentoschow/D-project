@@ -147,9 +147,7 @@ public class EpisodePlayerView : MonoBehaviour
         if (dialogQueue.Count == 0)  // Ω· ¯¡À
         {
             nextBtn.gameObject.SetActive(false);
-            gameObject.SetActive(false);
             ChangeStatus(EpisodePlayerStatus.Stop);
-            UIController.Instance.HidePhoneView();
             var episode = ConfigController.Instance.GetEpisodeConfig(curEpisodeID);
             if (episode != null)
             {
@@ -173,6 +171,15 @@ public class EpisodePlayerView : MonoBehaviour
             node.type = GameNodeType.Episode;
             node.ID = curEpisodeID;
             GameDataProxy.Instance.canOperate = true;
+            if (episode.episodeType == EpisodeType.Normal)
+            {
+                gameObject.SetActive(false);
+            }
+            else if (episode.episodeType == EpisodeType.Phone)
+            {
+                UIController.Instance.HidePhoneView();
+            }
+            
             curEpisodeID = "";
             MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));
             return;

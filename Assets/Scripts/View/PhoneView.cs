@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
@@ -22,6 +23,9 @@ public class PhoneView : MonoBehaviour
     private GameObject signal;
     [SerializeField] 
     private GameObject nosignal;
+
+    [SerializeField]
+    private RectTransform phone;
 
     // ±ß±ß°´Å¥
     [SerializeField]
@@ -64,11 +68,13 @@ public class PhoneView : MonoBehaviour
     private Dictionary<BelongPhoneGroup, EpisodePlayerView> rolePhoneDialogGroupList = new Dictionary<BelongPhoneGroup, EpisodePlayerView>();
     private PhonePageType curPage;
 
+    private const int showYPos = 528;
+
     void Awake()
     {
         itemBtn?.onClick.AddListener(ShowItemView);
         wechatBtn?.onClick.AddListener(ShowWechat);
-        closeBtn?.onClick.AddListener(Close);
+        //closeBtn?.onClick.AddListener(CloseView);
         fastItemBtn?.onClick.AddListener(ShowItemView);
         fastWechatBtn?.onClick.AddListener(ShowWechat);
         backBtn?.onClick.AddListener(BackPage);
@@ -78,6 +84,7 @@ public class PhoneView : MonoBehaviour
     public void ShowPhone()
     {
         gameObject.SetActive(true);
+        phone.anchoredPosition = new Vector2(phone.anchoredPosition.x, -showYPos);
         phoneHomepage?.SetActive(true);
         cluePage?.gameObject.SetActive(false);
         wechatPage?.gameObject.SetActive(false);
@@ -86,12 +93,15 @@ public class PhoneView : MonoBehaviour
         fastItemBtn.gameObject.SetActive(false);
         fastWechatBtn.gameObject.SetActive(false);
         curPage = PhonePageType.Homepage;
+        phone.DOAnchorPosY(showYPos, 0.4f);
     }
 
     public void PlayPhoneEpisode(EpisodeConfig config)
     {
         gameObject.SetActive(true);
+        phone.anchoredPosition = new Vector2(phone.anchoredPosition.x, -showYPos);
         ShowEpisodeView(config.belongGroup, config.ID);
+        phone.DOAnchorPosY(showYPos, 0.4f);
     }
 
     private void ShowWechat()
@@ -185,7 +195,7 @@ public class PhoneView : MonoBehaviour
         switch (curPage)
         {
             case PhonePageType.Homepage:
-                Close();
+                CloseView();
                 break;
             case PhonePageType.Clue:
                 cluePage.gameObject.SetActive(false);
@@ -202,13 +212,16 @@ public class PhoneView : MonoBehaviour
         }
     }
 
-    private void Close()
+    public void CloseView()
     {
         AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
         if (!GameDataProxy.Instance.canOperate)
         {
             return;
         }
-        gameObject.SetActive(false);
+        phone.DOAnchorPosY(-showYPos, 0.4f).OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+        });
     }
 }
