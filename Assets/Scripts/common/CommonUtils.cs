@@ -3,13 +3,19 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CommonUtils : MonoSingleton<CommonUtils>
 {
+    static Dictionary<string, Sprite> imageMap = new Dictionary<string,Sprite>();
     static public void updateImage(string imageResourcePath, Image uiImage)
     {
         if(imageResourcePath == null)
         {
             return;
         }
-        Sprite image = Resources.Load<Sprite>(imageResourcePath);
+        Sprite image;
+        imageMap.TryGetValue(imageResourcePath, out image);
+        if(image != null) { 
+            image = Resources.Load<Sprite>(imageResourcePath); ;
+            CommonUtils.imageMap.Add(imageResourcePath , image);
+        }
         if(uiImage != null)
         {
             if (image != null)
