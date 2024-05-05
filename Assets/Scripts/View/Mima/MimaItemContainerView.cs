@@ -10,7 +10,7 @@ public class MimaItemContainerView : MonoSingleton<MimaItemContainerView>
     // Start is called before the first frame update
     public GameObject mainObject;
     Action clickFunc;
-    public int curNumber = 2;
+    public int curNumber = 0;
 
     int rollNodeCount = 5;
     int middleNumber = 2;
@@ -38,16 +38,17 @@ public class MimaItemContainerView : MonoSingleton<MimaItemContainerView>
         }
     }
 
-    public void init(int originNumber,Action clickFunc)
+    public void init(int originNumber,Action clickFunc,List<string> showList, List<int> posList)
     {
         this.clickFunc = clickFunc;
         this.curNumber = originNumber;
 
         for(int i=0;i<rollNodeList.Count;i++)
         {
-            MimaItemView mimaItemView = rollNodeList[i];
-            mimaItemView.transform.localPosition = new Vector2(mimaItemView.transform.localPosition.x, getPosFromIndex(i));
-            mimaItemView.init(i);
+            int posIndex = posList[i];
+            MimaItemView mimaItemView = rollNodeList[posIndex];
+            mimaItemView.transform.localPosition = new Vector2(mimaItemView.transform.localPosition.x, getPosFromIndex(posIndex));
+            mimaItemView.init(i, showList[i]);
         }
         isMove = false;
     }
@@ -55,7 +56,7 @@ public class MimaItemContainerView : MonoSingleton<MimaItemContainerView>
     public float getPosFromIndex(int index)
     {
         float result = 0;
-        int diff = index-middleNumber ;
+        int diff = middleNumber-index;
 
 
         float height = 0f;

@@ -26,9 +26,9 @@ public class MimaItemView : MonoSingleton<MimaItemView>
         return MimaItemView.ViewPrefab;
     }
 
-    public void init(int number)
+    public void init(int number,string urlName)
     {
-        string url = "Images/UI/Mima/word_"+(number+1).ToString();
+        string url = "Images/UI/Mima/Ëø×ÖÇÐÍ¼/" + urlName;
         CommonUtils.updateImage(url, sitePic);
         this.curIndex = number;
     }
