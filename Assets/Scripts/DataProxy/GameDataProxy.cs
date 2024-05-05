@@ -24,7 +24,7 @@ public class GameDataProxy : Singleton<GameDataProxy>
     public Dictionary<JewelryType,int> insertjewelryMap = new Dictionary<JewelryType, int>();
     public Dictionary<JewelryType, int> rightInsertMap = new Dictionary<JewelryType, int>();
 
-    public List<int> rightMimaList = new List<int> { 5, 4, 3, 3, 1 };
+    public List<int> rightMimaList = new List<int> { 2,4,1,4,5,5,3};
     public List<int> useMimaList = new List<int> ();
 
     public List<PuzzleCombineConfig> puzzleCombineConfigs = new List<PuzzleCombineConfig>();
