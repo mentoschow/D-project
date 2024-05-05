@@ -73,5 +73,9 @@ public class CommonUtils : MonoSingleton<CommonUtils>
         {
             textCom.text = txt;
         }
+        else
+        {
+            textCom.text = "";
+        }
     }
 }

@@ -14,6 +14,8 @@ public class HomepageView : MonoSingleton<HomepageView>
     [SerializeField]
     private GameObject staffArea;
     [SerializeField]
+    private GameObject gameStartPage;
+    [SerializeField]
     private GameObject gameOverPage;
     [SerializeField]
     private Button gameOverQuitBtn;
@@ -25,6 +27,7 @@ public class HomepageView : MonoSingleton<HomepageView>
         staffBtn?.onClick.AddListener(ShowStaff);
         gameOverQuitBtn?.onClick.AddListener(QuitGame);
         gameOverPage?.SetActive(false);
+        gameStartPage?.SetActive(true);
         staffArea.SetActive(false);
     }
 
@@ -53,6 +56,9 @@ public class HomepageView : MonoSingleton<HomepageView>
 
     public void ShowGameOver()
     {
+        gameStartPage.SetActive(false);
+        gameStartBtn?.gameObject.SetActive(false);
+        staffArea?.SetActive(false);
         gameOverPage.SetActive(true);
     }
 }

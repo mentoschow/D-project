@@ -195,7 +195,7 @@ public class UIController : MonoSingleton<UIController>
 
     public void HidePhoneView()
     {
-        phoneView?.gameObject.SetActive(false);
+        phoneView?.CloseView();
     }
 
     public void PlayEpisode(string ID)
