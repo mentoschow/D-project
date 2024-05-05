@@ -13,7 +13,7 @@ public class MimaView : MonoSingleton<MimaView>
     private Button closeBtn;
     private Button finishBtn;
 
-    int count = 5;
+    int count = 7;
     int originNumber = 2;
     Dictionary<int,MimaItemContainerView> itemViewMap = new Dictionary<int,MimaItemContainerView>();
 
