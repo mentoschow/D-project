@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhoneWechatView : MonoBehaviour
 {
     [SerializeField]
-    private Transform content;
+    private RectTransform content;
     [SerializeField]
     private GameObject partObj;
 
@@ -26,6 +27,7 @@ public class PhoneWechatView : MonoBehaviour
                 {
                     partViews.Add(view);
                     view.transform.SetParent(content);
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(content);
                 }
                 else
                 {

@@ -2,11 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ClueCombineView : MonoSingleton<ClueCombineView>
 {
@@ -60,6 +57,11 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
         questionTxt = CommonUtils.findChildByName(transform, "questionTxt").gameObject.GetComponent<Text>();
         finishBtn = transform.Find("finishBtn")?.GetComponent<Button>();
         finishBtn?.onClick.AddListener(OnFinishClick);
+#if UNITY_EDITOR
+        finishBtn.gameObject.SetActive(true);
+#else
+        finishBtn.gameObject.SetActive(false);
+#endif
         //closeBtn = CommonUtils.findChildByName(transform, "closeBtn").gameObject.GetComponent<UnityEngine.UI.Button>();
         //closeBtn?.onClick.AddListener(onCloseBtnClick);
     }

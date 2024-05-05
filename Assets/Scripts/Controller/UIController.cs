@@ -305,7 +305,7 @@ public class UIController : MonoSingleton<UIController>
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            ShowPhoneOrClue();
+            //ShowPhoneOrClue();
         }
     }
 
@@ -322,7 +322,7 @@ public class UIController : MonoSingleton<UIController>
         }
         else if (roleType == RoleType.MainRoleBoy)
         {
-            mainRoleBoyClueView.gameObject.SetActive(true);
+            mainRoleBoyClueView.Show();
             mainRoleBoyClueView.UpdateView();
         }
     }
