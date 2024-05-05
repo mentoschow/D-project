@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class GetItemTipPartView : MonoBehaviour
 {
@@ -18,7 +19,9 @@ public class GetItemTipPartView : MonoBehaviour
     [SerializeField]
     private float stayTime = 2f;
     [SerializeField]
-    private Image img;
+    private Image background;
+    [SerializeField]
+    private Image icon;
 
     private RectTransform rect;
     private string itemID;
@@ -37,11 +40,15 @@ public class GetItemTipPartView : MonoBehaviour
             var curRoleType = RoleController.Instance.curRoleView.roleType;
             if (curRoleType == RoleType.MainRoleBoy)
             {
-                img.sprite = bg_boy_normal;
+                background.sprite = bg_boy_normal;
             }
             else if (curRoleType == RoleType.MainRoleGirl)
             {
-                img.sprite = bg_girl_normal;
+                background.sprite = bg_girl_normal;
+            }
+            if (ResourcesController.Instance.clueItemRes.ContainsKey(itemID))
+            {
+                icon.sprite = ResourcesController.Instance.clueItemRes[itemID].sprite;
             }
             text.text = config.name;
             rect.DOAnchorPosX(0, aniTime);
