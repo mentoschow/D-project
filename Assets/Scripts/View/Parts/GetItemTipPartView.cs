@@ -54,8 +54,7 @@ public class GetItemTipPartView : MonoBehaviour
 
     private void Disappear()
     {
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(rect.DOAnchorPosX(rect.rect.width, aniTime)).AppendCallback(() =>
+        rect.DOAnchorPosX(rect.rect.width, aniTime).OnComplete(() =>
         {
             MessageManager.Instance.Send(MessageDefine.GetItemDone);
             Destroy(gameObject);

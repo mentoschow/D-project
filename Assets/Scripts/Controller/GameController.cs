@@ -72,8 +72,7 @@ public class GameController : Singleton<GameController>
         Debug.Log("游戏开始了");
         UIController.Instance.HideGamePlayView();
         RoleController.Instance.curRoleView.transform.position = new Vector2(-13f, -0.216f);
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.216f), 3)).AppendCallback(() =>
+        RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-5f, -0.216f), 3).OnComplete(() =>
         {
             SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false, false); // 特殊处理
         });
