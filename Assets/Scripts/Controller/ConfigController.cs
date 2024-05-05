@@ -4,13 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using Unity.Burst.Intrinsics;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public enum JewelryType
@@ -48,20 +41,26 @@ public class PuzzleCombineConfig
     public JewelryType jewelryType;
 }
 
-public class ConfigController : Singleton<ConfigController>
+public class ConfigController : MonoSingleton<ConfigController>
 {
-    private const string configPath = "Assets/Resources/Configs/";
-    private const string fileTailPath = ".csv";
-    private Dictionary<string, string> dataFilePathDic = new Dictionary<string, string>() {
-        {"GameLineConfig", configPath + "配置文档-自动触发流程" + fileTailPath},
-        {"ChapterConfig", configPath + "配置文档-章节" + fileTailPath},
-        {"EpisodeConfig", configPath + "配置文档-情节" + fileTailPath},
-        {"DialogConfig", configPath + "配置文档-对话" + fileTailPath},
-        {"EquipmentConfig", configPath + "配置文档-设备" + fileTailPath},
-        {"ItemConfig", configPath + "配置文档-道具" + fileTailPath},
-        {"MergeClueConfig", configPath + "配置文档-线索合并" + fileTailPath},
-        {"CharacterAutoMoveConfig", configPath + "配置文档-角色移动" + fileTailPath},
-    };
+    [SerializeField]
+    private TextAsset gameLineCsv;
+    [SerializeField]
+    private TextAsset dialogCsv;
+    [SerializeField]
+    private TextAsset episodeCsv;
+    [SerializeField]
+    private TextAsset equipmentCsv;
+    [SerializeField]
+    private TextAsset itemCsv;
+    [SerializeField]
+    private TextAsset mergeClueCsv;
+    [SerializeField]
+    private TextAsset roleMoveCsv;
+    [SerializeField]
+    public TextAsset jsonTextAsset;
+
+    private Dictionary<string, TextAsset> dataFilePathDic = new Dictionary<string, TextAsset>();
 
     private Dictionary<string, DataTable> datatableDic = new Dictionary<string, DataTable>();
     private Dictionary<GameLineNode, GameLineNode> gameLineConfig = new Dictionary<GameLineNode, GameLineNode>();  // 自动触发流程配置
@@ -74,23 +73,27 @@ public class ConfigController : Singleton<ConfigController>
     private Dictionary<string, MergeClueConfig> mergeClueConfigList = new Dictionary<string, MergeClueConfig>();
     private Dictionary<string, CharacterAutoMoveConfig> characterAutoMoveConfigList = new Dictionary<string, CharacterAutoMoveConfig>();
 
-    private string testJsonPath = configPath + "puzzle.json";
-    public TextAsset jsonTextAsset; 
     public PuzzleConfig puzzleConfig;
-    public ConfigController()
+    private void Awake()
     {
+        dataFilePathDic.Add("GameLineConfig", gameLineCsv);
+        dataFilePathDic.Add("EpisodeConfig", episodeCsv);
+        dataFilePathDic.Add("DialogConfig", dialogCsv);
+        dataFilePathDic.Add("EquipmentConfig", equipmentCsv);
+        dataFilePathDic.Add("ItemConfig", itemCsv);
+        dataFilePathDic.Add("MergeClueConfig", mergeClueCsv);
+        dataFilePathDic.Add("CharacterAutoMoveConfig", roleMoveCsv);
+
         GenerateConfig();
 
-        this.initPuzzleConfig();
-        //PuzzleConfig ggboy = JsonUtility.FromJson(PuzzleConfig)("");
+        initPuzzleConfig();
     }
 
     void initPuzzleConfig()
     {
-        string json = File.ReadAllText(testJsonPath);
-        this.puzzleConfig = JsonUtility.FromJson<PuzzleConfig>(json);
+        puzzleConfig = JsonUtility.FromJson<PuzzleConfig>(jsonTextAsset.text);
 
-        List<PuzzleItemConfig> configList = this.puzzleConfig?.itemConfigList ?? new List<PuzzleItemConfig>();
+        List<PuzzleItemConfig> configList = puzzleConfig?.itemConfigList ?? new List<PuzzleItemConfig>();
         int len = configList?.Count ?? 0;
         if (len > 0)
         {
@@ -334,6 +337,14 @@ public class ConfigController : Singleton<ConfigController>
                     config.description = row["description"].ToString();
                     config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
                     config.triggerPuzzleID = row["triggerPuzzleID"].ToString();
+                    if (row["isTriggerEpisodeOnlyOnce"].ToString() == "")
+                    {
+                        config.isTriggerEpisodeOnlyOnce = false;
+                    }
+                    else
+                    {
+                        config.isTriggerEpisodeOnlyOnce = int.Parse(row["isTriggerEpisodeOnlyOnce"].ToString()) == 1 ? true : false;
+                    }
 
                     equipmentConfigList[equipmentID] = config;
                     break;
@@ -474,51 +485,36 @@ public class ConfigController : Singleton<ConfigController>
 
     private void GenerateConfig()
     {
-        foreach (var item in dataFilePathDic)
+        foreach (var data in dataFilePathDic)
         {
-            string filePath = item.Value;
-            //Debug.Log("加载配置:" + filePath);
+            string[] streamData = data.Value.text.Replace("\r", "").Split('\n');
             DataTable dt = new DataTable();
-            try
+            bool isFirst = true;
+            foreach (var item in streamData)
             {
-                //文件流读取
-                System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open);
-                System.IO.StreamReader sr = new System.IO.StreamReader(fs, Encoding.GetEncoding("gb2312"));
-                string tempText = "";
-                bool isFirst = true;
-                while ((tempText = sr.ReadLine()) != null)
+                //一般第一行为标题
+                if (isFirst)
                 {
-                    //一般第一行为标题
-                    if (isFirst)
+                    string[] arr = item.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string str in arr)
                     {
-                        string[] arr = tempText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                        foreach (string str in arr)
-                        {
-                            dt.Columns.Add(str);
-                        }
-                        isFirst = false;
+                        dt.Columns.Add(str);
                     }
-                    else
-                    {
-                        string[] arr = FromCsvLine(tempText);
-                        DataRow dr = dt.NewRow();
-                        for (int i = 0; i < dt.Columns.Count; i++)
-                        {
-                            string valueName = dt.Columns[i].ToString();
-                            dr[valueName] = i < arr.Length ? arr[i] : "";
-                        }
-                        dt.Rows.Add(dr);
-                    }
+                    isFirst = false;
                 }
-                datatableDic[item.Key] = dt;
-                //关闭流
-                sr.Close();
-                fs.Close();
+                else if (item != "")
+                {
+                    string[] arr = FromCsvLine(item);
+                    DataRow dr = dt.NewRow();
+                    for (int i = 0; i < dt.Columns.Count; i++)
+                    {
+                        string valueName = dt.Columns[i].ToString();
+                        dr[valueName] = i < arr.Length ? arr[i] : "";
+                    }
+                    dt.Rows.Add(dr);
+                }
             }
-            catch (Exception error)
-            {
-                Debug.LogError(error);
-            }
+            datatableDic[data.Key] = dt;
         }
         GenerateGameLineConfig();
     }
@@ -736,6 +732,7 @@ public class EquipmentConfig
     public string triggerEpisodeID;
     public string triggerPuzzleID;
     public List<string> mustDoneEpisodeID;
+    public bool isTriggerEpisodeOnlyOnce;
 }
 
 public class ItemConfig

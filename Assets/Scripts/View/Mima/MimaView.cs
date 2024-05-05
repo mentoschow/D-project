@@ -45,6 +45,11 @@ public class MimaView : MonoSingleton<MimaView>
         closeBtn?.onClick.AddListener(onCloseBtnClick);
         finishBtn = transform.Find("finishBtn")?.GetComponent<Button>();
         finishBtn?.onClick.AddListener(OnFinishClick);
+#if UNITY_EDITOR
+        finishBtn.gameObject.SetActive(true);
+#else
+        finishBtn.gameObject.SetActive(false);
+#endif
 
         for (int i = 0;i< count; i++)
         {

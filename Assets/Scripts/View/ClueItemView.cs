@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
+using DG.Tweening;
 
 public class ClueItemView : MonoBehaviour
 {
+    [SerializeField]
+    private RectTransform cluePage;
     [SerializeField]
     private GameObject detailPage;
     [SerializeField]
@@ -29,6 +30,8 @@ public class ClueItemView : MonoBehaviour
     private GameObject clueItemObj;
 
     private List<ClueItemPartView> itemViewList = new List<ClueItemPartView>();
+
+    private const int showYPos = 528;
 
     void Start()
     {
@@ -106,6 +109,17 @@ public class ClueItemView : MonoBehaviour
     private void Close()
     {
         AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
-        gameObject.SetActive(false);
+        cluePage.anchoredPosition = new Vector2(cluePage.anchoredPosition.x, -showYPos);
+        cluePage.DOAnchorPosY(-showYPos, 0.4f).OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+        });
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        cluePage.anchoredPosition = new Vector2(cluePage.anchoredPosition.x, -showYPos);
+        cluePage.DOAnchorPosY(showYPos, 0.4f);
     }
 }
