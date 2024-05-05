@@ -14,8 +14,18 @@ public class MimaView : MonoSingleton<MimaView>
     private Button finishBtn;
 
     int count = 7;
-    int originNumber = 2;
+    int originNumber = 0;
     Dictionary<int,MimaItemContainerView> itemViewMap = new Dictionary<int,MimaItemContainerView>();
+    Dictionary<int, List<string>> urlMap = new Dictionary<int, List<string>> {
+        {0,new List<string> { "杨","拨","东","春","伊" } },
+        {1,new List<string> { "花","娇","人","尽","来" } },
+        {2,new List<string>  { "浮","百","难","无","志" } },
+        {3,new List<string>  { "媚","情","阻","云","岂" } },
+        {4,new List<string>  { "却","肝","青","在","览" } },
+        {5,new List<string> { "阑","肠","封","云","众" } },
+        {6,new List<string>  { "断","志","山","侯","珊" } },
+    };
+
 
     static GameObject ViewPrefab;
     public static GameObject getPrefab()
@@ -50,7 +60,7 @@ public class MimaView : MonoSingleton<MimaView>
 #else
         finishBtn.gameObject.SetActive(false);
 #endif
-
+        List<int> posList = new List<int> {2,3,4,0,1 };
         for (int i = 0;i< count; i++)
         {
             string nodeName = "rollNode_"+ i.ToString();
@@ -58,10 +68,12 @@ public class MimaView : MonoSingleton<MimaView>
             MimaItemContainerView itemView = attachNode.AddComponent<MimaItemContainerView>();
             itemViewMap.Add(i, itemView);
 
+            List<string> showList = new List<string>();
+            this.urlMap.TryGetValue(i, out showList);
             itemView.init(originNumber, () =>
             {
                 this.checkRight();
-            });
+            },showList,posList);
         }
         open_pic = CommonUtils.findChildByName(transform, "open_pic").gameObject;
         close_pic = CommonUtils.findChildByName(transform, "close_pic").gameObject;
