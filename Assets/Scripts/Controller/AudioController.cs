@@ -9,13 +9,13 @@ public class AudioController : MonoSingleton<AudioController>
     [SerializeField]
     private AudioSource audioSource;
 
-    private Dictionary<AudioEffectType, AudioClip> effectRes = new Dictionary<AudioEffectType, AudioClip>();
+    private Dictionary<AudioEffectType, AudioEffectRes> effectRes = new Dictionary<AudioEffectType, AudioEffectRes>();
 
     void Start()
     {
         foreach (var res in audioRes.effectRes)
         {
-            effectRes[res.type] = res.clip;
+            effectRes[res.type] = res;
         }
     }
 
@@ -24,7 +24,7 @@ public class AudioController : MonoSingleton<AudioController>
         if (effectRes.ContainsKey(type))
         {
             audioSource.loop = loop;
-            audioSource.PlayOneShot(effectRes[type]);
+            audioSource.PlayOneShot(effectRes[type].clip, effectRes[type].volumn);
         }
     }
 

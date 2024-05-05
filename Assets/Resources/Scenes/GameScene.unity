@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 787745554}
   - component: {fileID: 787745555}
   - component: {fileID: 787745556}
+  - component: {fileID: 787745557}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -479,6 +480,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &787745557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787745550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb8d0932539c64a4c9dfad74359525c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameLineCsv: {fileID: 4900000, guid: b9f6b305f3f22d34cab5c20b3c4ded81, type: 3}
+  dialogCsv: {fileID: 4900000, guid: 38a46cc14cf87a74eb25e6b98f2f108b, type: 3}
+  episodeCsv: {fileID: 4900000, guid: 82316ad222e75694a880e1147bd8e723, type: 3}
+  equipmentCsv: {fileID: 4900000, guid: 8c374ae0d59f88046952d3b1ce2e6b7d, type: 3}
+  itemCsv: {fileID: 4900000, guid: 6b66cf84d6c4f8e48aa3e268e5b1f89d, type: 3}
+  mergeClueCsv: {fileID: 4900000, guid: f987c9a8daed7f844b23eb5b58ed482a, type: 3}
+  roleMoveCsv: {fileID: 4900000, guid: 01cdaa566133153488ef0212897cc25c, type: 3}
+  jsonTextAsset: {fileID: 4900000, guid: 98e36cb76bf634c47870a5e5a1c2f693, type: 3}
+  puzzleConfig:
+    ID: 
+    type: 0
+    itemConfigList: []
 --- !u!1 &807455519
 GameObject:
   m_ObjectHideFlags: 0

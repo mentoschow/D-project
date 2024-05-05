@@ -28,11 +28,10 @@ finishType,finishID,triggerType,triggerID
 5,MoveToDianbaojiGirl,2,ChangeToBoy
 2,ChangeToBoy,3,MS01_030_040
 3,MS01_030_040,6,Free
-3,SQ01_030_080,4,PLAY_030_036_foundkey
-3,SQ01_030_090,4,PLAY_030_036_foundkey
-3,SQ01_030_100,4,PLAY_030_036_foundkey
-3,SQ01_030_110,4,PLAY_030_036_foundkey
-4,PLAY_030_036_foundkey,3,MS01_030_050
+3,SQ01_030_080,3,MS01_030_050
+3,SQ01_030_090,3,MS01_030_050
+3,SQ01_030_100,3,MS01_030_050
+3,SQ01_030_110,3,MS01_030_050
 3,MS01_030_050,5,MoveToDianbaojiBoy
 5,MoveToDianbaojiBoy,2,ChangeToGirl
 2,ChangeToGirl,3,MS01_030_055

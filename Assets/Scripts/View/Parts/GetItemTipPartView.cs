@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class GetItemTipPartView : MonoBehaviour
 {
@@ -23,14 +22,14 @@ public class GetItemTipPartView : MonoBehaviour
 
     private RectTransform rect;
     private string itemID;
-
+    private int index;
 
     void Awake()
     {
         rect = GetComponent<RectTransform>();
     }
 
-    public void UpdateView(string itemID)
+    public void UpdateView(string itemID, int index)
     {
         var config = ConfigController.Instance.GetClueItemConfig(itemID);
         if (config != null)
@@ -47,6 +46,7 @@ public class GetItemTipPartView : MonoBehaviour
             text.text = config.name;
             rect.DOAnchorPosX(0, aniTime);
             itemID = config.ID;
+            this.index = index;
             CheckSaveBag(config);
         }
         Invoke("Disappear", stayTime);
@@ -56,7 +56,7 @@ public class GetItemTipPartView : MonoBehaviour
     {
         rect.DOAnchorPosX(rect.rect.width, aniTime).OnComplete(() =>
         {
-            MessageManager.Instance.Send(MessageDefine.GetItemDone);
+            MessageManager.Instance.Send(MessageDefine.GetItemDone, new MessageData(index));
             Destroy(gameObject);
         });
     }

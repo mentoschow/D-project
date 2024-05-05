@@ -33,7 +33,12 @@ public class PuzzleView : MonoSingleton<PuzzleView>
     {
         closeBtn.onClick.AddListener(onCloseBtnClick);
         finishBtn?.onClick.AddListener(OnFinishClick);
-        this.initAttachNodeMap();
+        initAttachNodeMap();
+#if UNITY_EDITOR
+        finishBtn.gameObject.SetActive(true);
+#else
+        finishBtn.gameObject.SetActive(false);
+#endif
     }
 
     void initAttachNodeMap()

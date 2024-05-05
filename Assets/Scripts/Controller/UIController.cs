@@ -39,7 +39,7 @@ public class UIController : MonoSingleton<UIController>
     private Transform layer2;
     private Transform layer3;
     private Transform layer4;
-    private int getItemTipIndex = 0;
+    private Dictionary<int, bool> isItemIndexUsing = new Dictionary<int, bool>();
 
     public Button testBtn;
     void Awake()
@@ -73,6 +73,11 @@ public class UIController : MonoSingleton<UIController>
         ShowHomepage();
 
         testBtn.onClick.AddListener(onTestBtnClick);
+
+        for (int i = 0; i < 10; i++)
+        {
+            isItemIndexUsing[i] = false;
+        }
     }
 
      void onTestBtnClick()
@@ -283,29 +288,37 @@ public class UIController : MonoSingleton<UIController>
             {
                 obj.transform.SetParent(layer4);
                 var rect = obj.GetComponent<RectTransform>();
-                float y = -((rect.rect.height + 20) * getItemTipIndex + 100);
+
+                float y = -((rect.rect.height + 20) + 100);
+                int _index = 0;
+                foreach (var index in isItemIndexUsing)
+                {
+                    if (index.Value == false)
+                    {
+                        _index = index.Key;
+                        y = -((rect.rect.height + 20) * index.Key + 100);
+                        isItemIndexUsing[index.Key] = true;
+                        break;
+                    }
+                }
+                
                 rect.anchoredPosition = new Vector3(rect.rect.width, y);
                 var view = obj.GetComponent<GetItemTipPartView>();
-                view?.UpdateView(itemList[i]);
-                getItemTipIndex++;
+                view?.UpdateView(itemList[i], _index);
             }
         }
     }
 
-    private void OnGetItemDone()
+    private void OnGetItemDone(MessageData data)
     {
-        getItemTipIndex--;
-        if (getItemTipIndex < 0)
-        {
-            getItemTipIndex = 0;
-        }
+        isItemIndexUsing[data.valueInt] = false;
     }
 
     private void CheckInput()
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            ShowPhoneOrClue();
+            //ShowPhoneOrClue();
         }
     }
 
@@ -322,7 +335,7 @@ public class UIController : MonoSingleton<UIController>
         }
         else if (roleType == RoleType.MainRoleBoy)
         {
-            mainRoleBoyClueView.gameObject.SetActive(true);
+            mainRoleBoyClueView.Show();
             mainRoleBoyClueView.UpdateView();
         }
     }

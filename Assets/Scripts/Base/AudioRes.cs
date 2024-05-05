@@ -13,6 +13,7 @@ public class AudioEffectRes
 {
     public AudioEffectType type;
     public AudioClip clip;
+    public float volumn;
 }
 
 public enum AudioEffectType
