@@ -97,6 +97,11 @@ public class PuzzleView : MonoSingleton<PuzzleView>
                                 Destroy(this.curDragNode);
                             }
                             this.curDragNode = Instantiate(dragNode, curDragAttachNode.transform);
+                            GameObject explainTxt = CommonUtils.findChildByName(this.curDragNode.transform, "explainTxt")?.gameObject;
+                            if (explainTxt!=null)
+                            {
+                                explainTxt.SetActive(true);
+                            }
                         };
                         dragMoveCallback = (Vector2 pos) =>
                         {

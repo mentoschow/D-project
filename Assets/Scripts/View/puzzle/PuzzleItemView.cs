@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PuzzleItemView : MonoBehaviour
@@ -92,7 +93,27 @@ public class PuzzleItemView : MonoBehaviour
                 if (isExist)
                 {
                     Image pic = imageNode.GetComponent<Image>();
+                    GameObject explainTxt = CommonUtils.findChildByName(pic.gameObject.transform,"explainTxt")?.gameObject;
                     item.Value?.init(dragStartCallback, dragMoveCallback, dragOverCallback, item.Key, pic);
+
+                    if (explainTxt != null)
+                    {
+                        explainTxt.SetActive(false);
+                        item.Value?.initPointer(() =>
+                        {
+                            if (explainTxt)
+                            {
+                                explainTxt.SetActive(true);
+                            }
+                        }, () =>
+                        {
+                            if (explainTxt)
+                            {
+                                explainTxt.SetActive(false);
+                            }
+                        });
+                    }
+
                 }
 
             }

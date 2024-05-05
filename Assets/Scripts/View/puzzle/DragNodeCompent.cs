@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class DragNodeCompent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragNodeCompent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private RectTransform rectTransform;
     // Start is called before the first frame update
@@ -39,6 +39,34 @@ public class DragNodeCompent : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         this.selfCode = code;
         this.pic = pic;
         this.originPos = pic.gameObject.transform.localPosition;
+    }
+
+    Action pointerEnterCallback;
+    Action pointerExitCallback;
+    public void initPointer(Action pointerEnterCallback,Action pointerExitCallback)
+    {
+       this.pointerEnterCallback = pointerEnterCallback;
+        this.pointerExitCallback = pointerExitCallback;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(this.pointerEnterCallback != null)
+        {
+            this.pointerEnterCallback();
+            // 当鼠标悬停在此UI元素上时调用
+            Debug.Log("Mouse entered " + gameObject.name);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (this.pointerExitCallback!= null)
+        {
+            this.pointerExitCallback();
+            // 当鼠标离开此UI元素时调用
+            Debug.Log("Mouse exited " + gameObject.name);
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
