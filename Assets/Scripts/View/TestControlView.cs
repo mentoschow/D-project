@@ -31,6 +31,7 @@ public class TestControlView : MonoSingleton<TestControlView>
         clueConfig.correctClueList = new List<string> { "CUE_0020_review_telegraph", "CUE_0030_review_telegraphoffice", "CUE_0040_review_college" };
         clueConfig.prepareClueList = new List<string> { "CUE_0005_message_library", "CUE_0010_message_miss", "CUE_0020_review_telegraph", "CUE_0030_review_telegraphoffice", "CUE_0040_review_college" };
         clueConfig.completeClue = "CUE_0050_reason_telegraph";
+        clueConfig.title = "ÕÒ³öË­ÊÇ±´¶ûÍÐ";
 
         UIController.Instance.showClueCombineView(clueConfig);
         gameObject.SetActive(false);

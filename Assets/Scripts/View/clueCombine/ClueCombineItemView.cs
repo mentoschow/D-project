@@ -23,6 +23,8 @@ public class ClueCombineItemView : MonoBehaviour
     [SerializeField]
     private Image img;
 
+    public Image itemPic;
+
     private RectTransform rect;
     private string itemID;
 
@@ -81,5 +83,15 @@ public class ClueCombineItemView : MonoBehaviour
             }
             text.text = config.name;
         }
+        ImageRes picRes;
+
+        ResourcesController.Instance.clueItemRes.TryGetValue(itemID, out picRes);
+        if (picRes?.sprite != null)
+        {
+            itemPic.gameObject.SetActive(true);
+            itemPic.sprite = picRes.sprite;
+            itemPic.SetNativeSize();
+        }
+
     }
 }
