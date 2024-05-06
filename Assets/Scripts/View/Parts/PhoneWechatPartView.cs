@@ -42,7 +42,7 @@ public class PhoneWechatPartView : MonoBehaviour
 
     private void OnButtonClick()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
         MessageManager.Instance.Send(MessageDefine.OpenWechatDialogPage, new MessageData(group));
     }
 }

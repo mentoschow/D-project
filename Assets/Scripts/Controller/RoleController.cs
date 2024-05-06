@@ -11,6 +11,9 @@ public class RoleController : MonoSingleton<RoleController>
     private RoleType curRoleType = RoleType.MainRoleGirl;
     public RoleView curRoleView;
 
+    private bool canAutoMove = false;
+    private float targetPos;
+    private GameLineNode autoMoveNode;
     private void Start()
     {
         ChangeRole(RoleType.MainRoleGirl);
@@ -57,6 +60,14 @@ public class RoleController : MonoSingleton<RoleController>
     private void Update()
     {
         CheckInput();
+        float abs = curRoleView.transform.position.x - targetPos;
+        if (Mathf.Abs(abs) < 0.3 && canAutoMove)
+        {
+            canAutoMove = false;
+            targetPos = 0;
+            curRoleView.moveVec = MoveVector.None;
+            MessageManager.Instance.Send(MessageDefine.GameLineNodeDone, new MessageData(autoMoveNode));
+        }
     }
 
     private void CheckInput()
@@ -88,7 +99,7 @@ public class RoleController : MonoSingleton<RoleController>
                 curRoleView.InteractWithEquipment();
             }
         }
-        else
+        else if (!canAutoMove)
         {
             curRoleView.moveVec = MoveVector.None;
         }
@@ -104,17 +115,31 @@ public class RoleController : MonoSingleton<RoleController>
         var config = ConfigController.Instance.GetCharacterAutoMoveConfig(ID);
         if (config != null)
         {
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(curRoleView.transform.DOMoveX(config.posX, config.duration)).AppendCallback(() =>
+            targetPos = config.posX;
+            canAutoMove = true;
+            if (config.posX < curRoleView.transform.position.x)
             {
-                GameLineNode node = new GameLineNode();
-                node.type = GameNodeType.CharacterMove;
-                node.ID = ID;
-                MessageManager.Instance.Send(MessageDefine.StageStart, new MessageData(node));
-            });
+                curRoleView.moveVec = MoveVector.Left;
+            }
+            else
+            {
+                curRoleView.moveVec = MoveVector.Right;
+            }
+            autoMoveNode = new GameLineNode();
+            autoMoveNode.type = GameNodeType.CharacterMove;
+            autoMoveNode.ID = ID;
+            //Sequence sequence = DOTween.Sequence();
+            //sequence.Append(curRoleView.transform.DOMoveX(config.posX, config.duration)).AppendCallback(() =>
+            //{
+            //    GameLineNode node = new GameLineNode();
+            //    node.type = GameNodeType.CharacterMove;
+            //    node.ID = ID;
+            //    MessageManager.Instance.Send(MessageDefine.StageStart, new MessageData(node));
+            //});
         }
     }
 }
+
 public enum MoveVector
 {
     None,  // 原地不动

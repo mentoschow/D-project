@@ -93,7 +93,7 @@ public class EpisodePlayerView : MonoBehaviour
 
     public void OnNextBtnClick()
     {
-        AudioController.Instance.PlayAudioEffect(curType == EpisodeType.Normal ? AudioEffectType.NormalDialogPlayButton : AudioEffectType.PhoneDialogPlayButton);
+        AudioController.Instance.PlayAudioEffect(curType == EpisodeType.Normal ? AudioType.NormalDialogPlayButton : AudioType.PhoneDialogPlayButton);
         switch (curStatus)
         {
             case EpisodePlayerStatus.Stop:
@@ -264,7 +264,7 @@ public class EpisodePlayerView : MonoBehaviour
             typeSpeed = normalTypingSpeed;
             typeTimer = 0;
             ChangeStatus(EpisodePlayerStatus.Typing);
-            AudioController.Instance.PlayAudioEffect(AudioEffectType.TypeEffect, true);
+            AudioController.Instance.PlayAudioEffect(AudioType.TypeEffect, true);
         }
         else
         {

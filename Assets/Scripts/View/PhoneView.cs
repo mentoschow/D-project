@@ -106,7 +106,7 @@ public class PhoneView : MonoBehaviour
 
     private void ShowWechat()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
         if (!GameDataProxy.Instance.canOperate)
         {
             return;
@@ -169,7 +169,7 @@ public class PhoneView : MonoBehaviour
 
     private void ShowItemView()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
         if (!GameDataProxy.Instance.canOperate)
         {
             return;
@@ -187,7 +187,7 @@ public class PhoneView : MonoBehaviour
 
     private void BackPage()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
         if (!GameDataProxy.Instance.canOperate)
         {
             return;
@@ -214,7 +214,7 @@ public class PhoneView : MonoBehaviour
 
     public void CloseView()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
         if (!GameDataProxy.Instance.canOperate)
         {
             return;

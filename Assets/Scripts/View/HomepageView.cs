@@ -33,13 +33,13 @@ public class HomepageView : MonoSingleton<HomepageView>
 
     private void GameStart()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.GameStartButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.GameStartButton);
         GameController.Instance.GameStart();
     }
 
     private void QuitGame()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.NormalButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.NormalButton);
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
     #else
@@ -49,7 +49,7 @@ public class HomepageView : MonoSingleton<HomepageView>
 
     private void ShowStaff()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.NormalButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.NormalButton);
         var active = staffArea.activeInHierarchy;
         staffArea.SetActive(!active);
     }
