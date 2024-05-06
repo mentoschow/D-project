@@ -159,6 +159,16 @@ public class PuzzleItemView : MonoBehaviour
 
                     itemView.gameObject.transform.localPosition = new Vector2(itemConfig.xPos, itemConfig.yPos);
 
+                    if(viewID == JewelryType.Watch)
+                    {
+                        // 获取当前的旋转值
+                        Vector3 currentRotation = itemView.gameObject.transform.rotation.eulerAngles;
+                        // 设置新的Z轴旋转值
+                        currentRotation.z = 25;
+                        // 应用新的旋转值
+                        itemView.gameObject.transform.rotation = Quaternion.Euler(currentRotation);
+                    }
+
                     insertViewMap[viewID] = itemView;
                 }
                 bool complete = GameDataProxy.Instance.checkJewelryComplete(viewID);
