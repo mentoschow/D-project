@@ -39,6 +39,7 @@ public class RoleController : MonoSingleton<RoleController>
                 view.gameObject.SetActive(false);
             }
         }
+        curRoleView.moveVec = MoveVector.None;
     }
 
     private void CreateRole(RoleType type)
@@ -63,9 +64,9 @@ public class RoleController : MonoSingleton<RoleController>
         float abs = curRoleView.transform.position.x - targetPos;
         if (Mathf.Abs(abs) < 0.3 && canAutoMove)
         {
+            curRoleView.moveVec = MoveVector.None;
             canAutoMove = false;
             targetPos = 0;
-            curRoleView.moveVec = MoveVector.None;
             MessageManager.Instance.Send(MessageDefine.GameLineNodeDone, new MessageData(autoMoveNode));
         }
     }
