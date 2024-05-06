@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,12 @@ public class LoadingView : MonoBehaviour
     private Text content;
     [SerializeField]
     private float time = 1.5f;
+    [SerializeField]
+    private Image bg;
 
     private TransitionType curType;
 
-    void Start()
+    void Awake()
     {
         
     }
@@ -29,6 +32,7 @@ public class LoadingView : MonoBehaviour
         switch (type)
         {
             case TransitionType.Blackout:
+                AudioController.Instance.PlayBgm(AudioType.NowBgm);
                 content.text = "";
                 break;
             case TransitionType.None:
@@ -37,28 +41,33 @@ public class LoadingView : MonoBehaviour
             case TransitionType.ChangeToBoy:
             case TransitionType.ChangeToBoy2:
                 content.text = "密室（过去）";
+                AudioController.Instance.PlayBgm(AudioType.PassBgm);
                 RoleController.Instance.ChangeRole(RoleType.MainRoleBoy);
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Pass, StageType.BoxRoom, false);
                 break;
             case TransitionType.ChangeToGirl:
                 content.text = "藏间（现在）";
+                AudioController.Instance.PlayBgm(AudioType.NowBgm);
                 GameDataProxy.Instance.canPlayJiguangui = true;
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
                 SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
             case TransitionType.ChangeToGirl2:
                 content.text = "藏间（现在）";
+                AudioController.Instance.PlayBgm(AudioType.NowBgm);
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
                 //SceneController.Instance.UpdateDoor(DoorType.BoxRoomInRight, true);
                 SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
             case TransitionType.ChangeToBoy3:
                 content.text = "密室（过去）";
+                AudioController.Instance.PlayBgm(AudioType.PassBgm);
                 RoleController.Instance.ChangeRole(RoleType.MainRoleBoy);
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Pass, StageType.SecretRoom_Now, false);
                 break;
             case TransitionType.ChangeToGirl3:
                 content.text = "密室（现在）";
+                AudioController.Instance.PlayBgm(AudioType.NowBgm);
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
                 SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
