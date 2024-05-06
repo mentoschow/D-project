@@ -6,17 +6,19 @@ using UnityEngine;
 public class AudioRes : ScriptableObject
 {
     [Header("”Œœ∑“Ù–ß")]
-    public List<AudioEffectRes> effectRes;
+    public List<AudioClipRes> effectRes;
+    [Header("±≥æ∞“Ù¿÷")]
+    public List<AudioClipRes> bgmRes;
 }
 [System.Serializable]
-public class AudioEffectRes
+public class AudioClipRes
 {
-    public AudioEffectType type;
+    public AudioType type;
     public AudioClip clip;
     public float volumn;
 }
 
-public enum AudioEffectType
+public enum AudioType
 {
     GameStartButton,
     NormalButton,
@@ -28,4 +30,8 @@ public enum AudioEffectType
     Adsorbed,  // Œ¸∏Ω
     PuzzleWrong,
     PuzzleCorrect,
+    NormalBgm,
+    BlackOut,
+    PassBgm,
+    NowBgm
 }
