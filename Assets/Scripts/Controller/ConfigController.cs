@@ -772,6 +772,7 @@ public enum RoleType
     MainRoleGirl,
     MainRoleBoy,
     QingQian,
+    DaYe,
 }
 
 public enum EpisodeType
