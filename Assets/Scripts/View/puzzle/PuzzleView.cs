@@ -174,6 +174,7 @@ public class PuzzleView : MonoSingleton<PuzzleView>
 
                     if (isClose)
                     {
+                        AudioController.Instance.PlayAudioEffect(AudioType.Adsorbed);
                         GameDataProxy.Instance.insertjewelryMap.Add(type, code);
                     }
                 }

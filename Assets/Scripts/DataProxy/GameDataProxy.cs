@@ -76,7 +76,12 @@ public class GameDataProxy : Singleton<GameDataProxy>
             result = insertjewelryMap.SequenceEqual(rightInsertMap);
             if (!result)
             {
+                AudioController.Instance.PlayAudioEffect(AudioType.PuzzleWrong);
                 insertjewelryMap.Clear();
+            }
+            else
+            {
+                AudioController.Instance.PlayAudioEffect(AudioType.PuzzleCorrect);
             }
         }
         return result;
