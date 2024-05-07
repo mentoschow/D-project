@@ -93,7 +93,7 @@
 5,MoveToDianbaojiGirl3,3,MS01_050_040_2
 3,MS01_050_040_2,5,MoveToanmenjiGirl2
 5,MoveToanmenjiGirl2,6,Free
-3,MS01_050_041,3,ChangeToLibraryOut
+3,MS01_050_041,2,ChangeToLibraryOut
 2,ChangeToLibraryOut,3,MS01_060_010
 3,MS01_060_010,2,ChangeToSecretRoom_Now
 2,ChangeToSecretRoom_Now,3,MS01_060_015
