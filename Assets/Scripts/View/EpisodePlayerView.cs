@@ -296,7 +296,15 @@ public class EpisodePlayerView : MonoBehaviour
         if (roleRes != null)
         {
             roleImg.gameObject.SetActive(true);
-            roleImg.sprite = roleRes.imageTypeResMap[dialog.imageType];
+            if (roleRes.imageTypeResMap.ContainsKey(dialog.imageType))
+            {
+                roleImg.gameObject.SetActive(true);
+                roleImg.sprite = roleRes.imageTypeResMap[dialog.imageType];
+            }
+            else
+            {
+                roleImg.gameObject.SetActive(false);
+            }
             nameText.text = roleRes.name;
         }
         else

@@ -83,6 +83,7 @@ public class PhoneView : MonoBehaviour
 
     public void ShowPhone()
     {
+        GameDataProxy.Instance.canOperate = false;
         gameObject.SetActive(true);
         phone.anchoredPosition = new Vector2(phone.anchoredPosition.x, -showYPos);
         phoneHomepage?.SetActive(true);
@@ -107,10 +108,6 @@ public class PhoneView : MonoBehaviour
     private void ShowWechat()
     {
         AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
-        if (!GameDataProxy.Instance.canOperate)
-        {
-            return;
-        }
         cluePage?.gameObject.SetActive(false);
         dialogRoot?.gameObject?.SetActive(false);
         wechatPage?.gameObject.SetActive(true);
@@ -170,10 +167,6 @@ public class PhoneView : MonoBehaviour
     private void ShowItemView()
     {
         AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
-        if (!GameDataProxy.Instance.canOperate)
-        {
-            return;
-        }
         curPage = PhonePageType.Clue;
         wechatPage?.gameObject.SetActive(false);
         dialogRoot?.gameObject.SetActive(false);
@@ -188,10 +181,6 @@ public class PhoneView : MonoBehaviour
     private void BackPage()
     {
         AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
-        if (!GameDataProxy.Instance.canOperate)
-        {
-            return;
-        }
         switch (curPage)
         {
             case PhonePageType.Homepage:
@@ -215,10 +204,7 @@ public class PhoneView : MonoBehaviour
     public void CloseView()
     {
         AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
-        if (!GameDataProxy.Instance.canOperate)
-        {
-            return;
-        }
+        GameDataProxy.Instance.canOperate = true;
         phone.DOAnchorPosY(-showYPos, 0.4f).OnComplete(() =>
         {
             gameObject.SetActive(false);
