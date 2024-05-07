@@ -19,8 +19,8 @@
 5,MoveToBoxRoomDoorGirl1,3,MS01_030_015_2
 3,MS01_030_015_2,5,MoveToBoxRoomDoorGirl2
 5,MoveToBoxRoomDoorGirl2,3,MS01_030_015_3
-3,MS01_030_015_3,5,MoveToDianbaojiGirl2
-5,MoveToDianbaojiGirl2,3,SQ01_030_010
+3,MS01_030_015_3,5,MoveToDianbaojiGirl1
+5,MoveToDianbaojiGirl1,3,SQ01_030_010
 3,SQ01_030_010,3,SQ01_030_015
 3,SQ01_030_015,6,Free
 3,SQ01_030_020,4,PLAY_030_020
