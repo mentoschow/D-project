@@ -209,6 +209,7 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
 
         if (minDisContainCode >= 0)
         {
+            AudioController.Instance.PlayAudioEffect(AudioType.Adsorbed);
             combineMap.Add(minDisContainCode, code);
         }
     }
@@ -229,9 +230,14 @@ public class ClueCombineView : MonoSingleton<ClueCombineView>
             result = rightSet.SetEquals(combineSet);
             if (!result)
             {
+                AudioController.Instance.PlayAudioEffect(AudioType.PuzzleWrong);
                 combineMap.Clear();
                 this.refreshClueItemState();
                 this.refreshContainItemState();
+            }
+            else
+            {
+                AudioController.Instance.PlayAudioEffect(AudioType.PuzzleCorrect);
             }
         }
 
