@@ -237,6 +237,49 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: f4a42ba7bceab9749bf5258666968e7a, type: 3}
   - ID: MS01_050_010_040
     sprite: {fileID: 21300000, guid: f4a42ba7bceab9749bf5258666968e7a, type: 3}
+<<<<<<< Updated upstream
+=======
+  - ID: SQ01_030_080_010
+    sprite: {fileID: 21300000, guid: 31064739130dcde4e9a34835e2737437, type: 3}
+  - ID: SQ01_030_080_020
+    sprite: {fileID: 21300000, guid: 31064739130dcde4e9a34835e2737437, type: 3}
+  - ID: SQ01_030_080_030
+    sprite: {fileID: 21300000, guid: 31064739130dcde4e9a34835e2737437, type: 3}
+  - ID: SQ01_020_040
+    sprite: {fileID: 21300000, guid: 9435e54d1affb5f4abe6bfab2f1cc45c, type: 3}
+  - ID: MS01_030_012_010
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
+  - ID: MS01_030_012_020
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
+  - ID: MS01_030_012_030
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
+  - ID: SQ01_020_040_010
+    sprite: {fileID: 21300000, guid: 9435e54d1affb5f4abe6bfab2f1cc45c, type: 3}
+  - ID: SQ01_050_010_010
+    sprite: {fileID: 21300000, guid: ab613d8d9dc96ca469ed63901daf9b42, type: 3}
+  - ID: SQ01_050_010_020
+    sprite: {fileID: 21300000, guid: 25cc7671a6930344a8008998c1c19fc7, type: 3}
+  - ID: SQ01_050_010_030
+    sprite: {fileID: 21300000, guid: 130d1a1bd4d0cc04d9db72e7ba2bcd2f, type: 3}
+  - ID: SQ01_050_010_040
+    sprite: {fileID: 21300000, guid: 190588086ff0b5943ac17c67882c4202, type: 3}
+  - ID: SQ01_050_010_050
+    sprite: {fileID: 21300000, guid: 8d7d6d46b75c8cc40b779ebb739b5ff0, type: 3}
+  - ID: SQ01_050_010_060
+    sprite: {fileID: 21300000, guid: 8b90498e5c5ece94ca105e75f9daa0e8, type: 3}
+  - ID: SQ01_050_010_070
+    sprite: {fileID: 21300000, guid: 23649eecc763b49479f8753dc921e4c3, type: 3}
+  - ID: MS01_050_040_030
+    sprite: {fileID: 21300000, guid: 0cd082a32a204d546842b1395327a4e1, type: 3}
+  - ID: MS01_050_040_040
+    sprite: {fileID: 21300000, guid: 0cd082a32a204d546842b1395327a4e1, type: 3}
+  - ID: SQ01_040_010_030
+    sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
+  - ID: SQ01_040_010_040
+    sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
+  - ID: MS01_060_015_010
+    sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
+>>>>>>> Stashed changes
   roleRes:
   - type: 1
     name: "\u5973\u4E3B\u89D2"
