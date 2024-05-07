@@ -19,7 +19,7 @@ public class CommonButtonPartView : MonoBehaviour
     private void BackToHomepage()
     {
         //UIController.Instance.BackHomepage();
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.NormalButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.NormalButton);
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -29,7 +29,7 @@ public class CommonButtonPartView : MonoBehaviour
 
     private void ShowClueOrPhone()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.NormalButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.NormalButton);
         UIController.Instance.ShowPhoneOrClue();
     }
 }

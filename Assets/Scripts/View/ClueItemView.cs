@@ -102,13 +102,13 @@ public class ClueItemView : MonoBehaviour
 
     private void CloseDetail()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
         detailPage?.SetActive(false);
     }
 
     private void Close()
     {
-        AudioController.Instance.PlayAudioEffect(AudioEffectType.PhoneButton);
+        AudioController.Instance.PlayAudioEffect(AudioType.PhoneButton);
         cluePage.anchoredPosition = new Vector2(cluePage.anchoredPosition.x, -showYPos);
         cluePage.DOAnchorPosY(-showYPos, 0.4f).OnComplete(() =>
         {

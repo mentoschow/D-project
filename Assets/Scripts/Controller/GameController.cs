@@ -70,9 +70,13 @@ public class GameController : Singleton<GameController>
     {
         Debug.Log("游戏开始了");
         UIController.Instance.HideGamePlayView();
+        UIController.Instance.ShowTransition("图书馆外");
         RoleController.Instance.curRoleView.transform.position = new Vector2(-13f, -0.216f);
+        RoleController.Instance.curRoleView.moveVec = MoveVector.Right;
         RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-10f, -0.216f), 1).OnComplete(() =>
         {
+            AudioController.Instance.PlayBgm(AudioType.NormalBgm);
+            RoleController.Instance.curRoleView.moveVec = MoveVector.None;
             SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false, false); // 特殊处理
         });
     }

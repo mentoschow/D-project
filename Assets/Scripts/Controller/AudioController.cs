@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,12 @@ public class AudioController : MonoSingleton<AudioController>
     [SerializeField]
     private AudioRes audioRes;
     [SerializeField]
-    private AudioSource audioSource;
+    private AudioSource effectPlayer;
+    [SerializeField]
+    private AudioSource bgmPlayer;
 
-    private Dictionary<AudioEffectType, AudioEffectRes> effectRes = new Dictionary<AudioEffectType, AudioEffectRes>();
+    private Dictionary<AudioType, AudioClipRes> effectRes = new Dictionary<AudioType, AudioClipRes>();
+    private Dictionary<AudioType, AudioClipRes> bgmRes = new Dictionary<AudioType, AudioClipRes>();
 
     void Start()
     {
@@ -17,19 +21,34 @@ public class AudioController : MonoSingleton<AudioController>
         {
             effectRes[res.type] = res;
         }
+        foreach (var res in audioRes.bgmRes)
+        {
+            bgmRes[res.type] = res;
+        }
     }
 
-    public void PlayAudioEffect(AudioEffectType type, bool loop = false)
+    public void PlayAudioEffect(AudioType type, bool loop = false)
     {
         if (effectRes.ContainsKey(type))
         {
-            audioSource.loop = loop;
-            audioSource.PlayOneShot(effectRes[type].clip, effectRes[type].volumn);
+            effectPlayer.loop = loop;
+            effectPlayer.PlayOneShot(effectRes[type].clip, effectRes[type].volumn);
+        }
+    }
+
+    public void PlayBgm(AudioType type)
+    {
+        if (bgmRes.ContainsKey(type))
+        {
+            bgmPlayer.loop = true;
+            bgmPlayer.clip = bgmRes[type].clip;
+            bgmPlayer.volume = bgmRes[type].volumn;
+            bgmPlayer.Play();
         }
     }
 
     public void Stop()
     {
-        audioSource.Stop();
+        effectPlayer.Stop();
     }
 }

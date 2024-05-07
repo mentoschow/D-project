@@ -41,7 +41,7 @@ MonoBehaviour:
   - type: 6
     prefab: {fileID: 3163663043471574251, guid: 59f8c37b374f09440b3cc5d1465b59b6, type: 3}
     name: "\u5BC6\u5BA4\uFF08\u8FC7\u53BB\uFF09"
-    leftPosX: -6
+    leftPosX: -9.4
     rightPosX: 12
   clueItemImage:
   - ID: T_CUE_IDEA
@@ -205,11 +205,9 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 7931a606611db6a4299ec159f778f758, type: 3}
   - ID: SQ01_030_050_020
     sprite: {fileID: 21300000, guid: 7931a606611db6a4299ec159f778f758, type: 3}
-  - ID: MS01_030_040_020
+  - ID: MS01_030_040_030
     sprite: {fileID: 21300000, guid: 0eaa20a63849d7145a8017fe1ace5770, type: 3}
-  - ID: MS01_030_040_030
-    sprite: {fileID: 21300000, guid: 0b8782955da79bf48b5857318791a6d9, type: 3}
-  - ID: MS01_030_040_030
+  - ID: MS01_030_040_040
     sprite: {fileID: 21300000, guid: 0b8782955da79bf48b5857318791a6d9, type: 3}
   - ID: SQ01_030_110_020
     sprite: {fileID: 21300000, guid: 9b3ff60807611af4490957905defd3b9, type: 3}
@@ -237,8 +235,6 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: f4a42ba7bceab9749bf5258666968e7a, type: 3}
   - ID: MS01_050_010_040
     sprite: {fileID: 21300000, guid: f4a42ba7bceab9749bf5258666968e7a, type: 3}
-<<<<<<< Updated upstream
-=======
   - ID: SQ01_030_080_010
     sprite: {fileID: 21300000, guid: 31064739130dcde4e9a34835e2737437, type: 3}
   - ID: SQ01_030_080_020
@@ -273,16 +269,9 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 0cd082a32a204d546842b1395327a4e1, type: 3}
   - ID: MS01_050_040_040
     sprite: {fileID: 21300000, guid: 0cd082a32a204d546842b1395327a4e1, type: 3}
-  - ID: SQ01_040_010_030
-    sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
-  - ID: SQ01_040_010_040
-    sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
-  - ID: MS01_060_015_010
-    sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
->>>>>>> Stashed changes
   roleRes:
   - type: 1
-    name: "\u5973\u4E3B\u89D2"
+    name: "\u674E\u8A00\u8E4A"
     icon: {fileID: 21300000, guid: 6c66b7625080aca49a76322c665930cf, type: 3}
     imageTypeRes:
     - type: 0
@@ -298,7 +287,7 @@ MonoBehaviour:
     - type: 5
       sprite: {fileID: 21300000, guid: 4f6dfa27f22723f499f6baf577857281, type: 3}
   - type: 2
-    name: "\u7537\u4E3B\u89D2"
+    name: "\u7EAA\u4E91\u4E66"
     icon: {fileID: 21300000, guid: dc96426423306e34a95ecea381d67f0c, type: 3}
     imageTypeRes:
     - type: 0

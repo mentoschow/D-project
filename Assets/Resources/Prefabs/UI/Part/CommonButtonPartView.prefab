@@ -95,8 +95,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quitBtn: {fileID: 8384826994272330056}
   clueBtn: {fileID: 5037342924458313913}
-<<<<<<< Updated upstream
-=======
 --- !u!1 &3246082614870450790
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +130,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -137.81, y: -14}
+  m_AnchoredPosition: {x: -68.906, y: -68}
   m_SizeDelta: {x: 137.8115, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1736327585963496010
@@ -177,7 +175,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u67E5\u770B\u8BB0\u5F55"
->>>>>>> Stashed changes
 --- !u!1 &7371478097452364501
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +326,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 204855254828542822}
   m_Father: {fileID: 591836709661695407}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

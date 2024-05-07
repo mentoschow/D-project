@@ -15,24 +15,19 @@ MonoBehaviour:
   effectRes:
   - type: 0
     clip: {fileID: 8300000, guid: fc00e9c97ff4b7d4dbb038024e2b5654, type: 3}
-    volumn: 0.5
+    volumn: 0.3
   - type: 1
     clip: {fileID: 8300000, guid: 01402300ed615b4489c7ecfce944a46d, type: 3}
     volumn: 0.2
   - type: 2
     clip: {fileID: 8300000, guid: 0e7b2a9b04b833649abbf21cab27c6e1, type: 3}
-    volumn: 0.5
+    volumn: 0.1
   - type: 3
     clip: {fileID: 8300000, guid: abf160cb3ee9f1f4fa223b441d7e9e51, type: 3}
     volumn: 0.2
   - type: 4
-<<<<<<< Updated upstream
-    clip: {fileID: 8300000, guid: c1c31b1f8c3c181418b95df8dd516ecd, type: 3}
+    clip: {fileID: 8300000, guid: 4dfc70639ad41dc42b20087e67840608, type: 3}
     volumn: 0.5
-=======
-    clip: {fileID: 8300000, guid: 77720add6c75f5149a49baaa0156f0f1, type: 3}
-    volumn: 0.3
->>>>>>> Stashed changes
   - type: 5
     clip: {fileID: 8300000, guid: 77720add6c75f5149a49baaa0156f0f1, type: 3}
     volumn: 0.5
@@ -45,22 +40,19 @@ MonoBehaviour:
   - type: 8
     clip: {fileID: 8300000, guid: 6ac5b200f9470174c95145661bcd6f63, type: 3}
     volumn: 1
-  - type: 6
+  - type: 9
     clip: {fileID: 8300000, guid: c2084279156d7694a8dd50f08e7df034, type: 3}
     volumn: 0.5
-<<<<<<< Updated upstream
-=======
   bgmRes:
   - type: 10
     clip: {fileID: 8300000, guid: a86d98c74dac79c47840cc0346c45132, type: 3}
-    volumn: 1
+    volumn: 0.5
   - type: 12
     clip: {fileID: 8300000, guid: fc5849c0d8125ae408124abf828fa207, type: 3}
-    volumn: 1
+    volumn: 0.5
   - type: 13
     clip: {fileID: 8300000, guid: d39d9651527dd504a9e3b83b2a7d4a76, type: 3}
     volumn: 1
   - type: 12
     clip: {fileID: 8300000, guid: fc5849c0d8125ae408124abf828fa207, type: 3}
     volumn: 1
->>>>>>> Stashed changes

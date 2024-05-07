@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,8 @@ public class RoleView : MonoBehaviour
     private PhysicsMaterial2D fullFriction;
     [SerializeField]
     private TextMesh tips;
+    [SerializeField]
+    private Animator anime;
 
     private Rigidbody2D rigidBody;
     private CapsuleCollider2D capsuleCollider;
@@ -56,15 +59,18 @@ public class RoleView : MonoBehaviour
         {
             case MoveVector.None:
                 realMoveSpeed *= 0;
+                anime.SetBool("canMove", false);
                 rigidBody.sharedMaterial = fullFriction;
                 break;
             case MoveVector.Left:
                 realMoveSpeed *= -1;
+                anime.SetBool("canMove", true);
                 rigidBody.sharedMaterial = noFriction;
                 roleSp.transform.localScale = new Vector3(originScaleX, roleSp.transform.localScale.y, 1);
                 break;
             case MoveVector.Right:
                 realMoveSpeed *= 1;
+                anime.SetBool("canMove", true);
                 rigidBody.sharedMaterial = noFriction;
                 roleSp.transform.localScale = new Vector3(-originScaleX, roleSp.transform.localScale.y, 1);
                 break;
