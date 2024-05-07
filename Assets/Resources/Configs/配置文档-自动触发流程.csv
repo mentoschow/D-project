@@ -92,9 +92,9 @@
 3,MS01_050_022,6,Free
 4,PasswordPuzzle,3,SQ01_050_025
 3,SQ01_050_025,6,Free
-3,MS01_050_030,3,MS01_050_040_1
-3,MS01_050_040_1,2,ChangeToGirl3
-2,ChangeToGirl3,5,MoveToDianbaojiGirl3
+3,MS01_050_030,2,ChangeToGirl3
+2,ChangeToGirl3,3,MS01_050_040_1
+3,MS01_050_040_1,5,MoveToDianbaojiGirl3
 5,MoveToDianbaojiGirl3,3,MS01_050_040_2
 3,MS01_050_040_2,5,MoveToanmenjiGirl2
 5,MoveToanmenjiGirl2,6,Free
