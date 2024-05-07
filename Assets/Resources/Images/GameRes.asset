@@ -273,6 +273,8 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
   - ID: SQ01_040_010_040
     sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
+  - ID: SQ01_030_052_010
+    sprite: {fileID: 21300000, guid: 09d3223245da707479c47cc1fc8be9ea, type: 3}
   roleRes:
   - type: 1
     name: "\u674E\u8A00\u8E4A"
