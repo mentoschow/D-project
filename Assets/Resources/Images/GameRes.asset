@@ -41,7 +41,7 @@ MonoBehaviour:
   - type: 6
     prefab: {fileID: 3163663043471574251, guid: 59f8c37b374f09440b3cc5d1465b59b6, type: 3}
     name: "\u5BC6\u5BA4\uFF08\u8FC7\u53BB\uFF09"
-    leftPosX: -6
+    leftPosX: -9.4
     rightPosX: 12
   clueItemImage:
   - ID: T_CUE_IDEA
