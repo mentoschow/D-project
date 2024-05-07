@@ -6843,9 +6843,8 @@ MonoBehaviour:
   closeBtn: {fileID: 3800308368503891029}
   keyBtn: {fileID: 8606605496013946785}
   topBtn: {fileID: 5556328674259212741}
-  bookBtns:
-  - {fileID: 5634105213745096669}
-  - {fileID: 3409219007358263257}
+  book1Btn: {fileID: 5634105213745096669}
+  book2Btn: {fileID: 3409219007358263257}
   childViewNode: {fileID: 3494367293735247926}
   puzzleBeforeObj: {fileID: 8829262375891948465, guid: 6dd0493d58dd5444f84f93d30fa84556, type: 3}
   puzzleObj: {fileID: 8829262375891948465, guid: ee12d049126d9314f98f67bcbaf90fe0, type: 3}

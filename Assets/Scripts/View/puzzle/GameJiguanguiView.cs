@@ -12,7 +12,9 @@ public class GameJiguanguiView : MonoBehaviour
     [SerializeField]
     private Button topBtn;
     [SerializeField]
-    private List<Button> bookBtns;
+    private Button book1Btn;
+    [SerializeField]
+    private Button book2Btn;
     [SerializeField]
     private RectTransform childViewNode;
     [SerializeField]
@@ -28,10 +30,8 @@ public class GameJiguanguiView : MonoBehaviour
         closeBtn?.onClick.AddListener(Close);
         keyBtn?.onClick.AddListener(OnKeyClick);
         topBtn?.onClick.AddListener(OnTopClick);
-        foreach (var button in bookBtns)
-        {
-            button?.onClick.AddListener(OnBookClick);
-        }
+        book1Btn?.onClick.AddListener(OnBook1Click);
+        book2Btn?.onClick.AddListener(OnBook2Click);
     }
 
     private void OnEnable()
@@ -45,9 +45,14 @@ public class GameJiguanguiView : MonoBehaviour
         UIController.Instance.PlayEpisode("SQ01_030_020");
     }
 
-    private void OnBookClick()
+    private void OnBook1Click()
     {
         UIController.Instance.PlayEpisode("SQ01_030_050");
+    }
+
+    private void OnBook2Click()
+    {
+        UIController.Instance.PlayEpisode("SQ01_030_055");
     }
 
     private void Close()
