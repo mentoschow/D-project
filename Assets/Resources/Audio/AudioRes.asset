@@ -40,7 +40,7 @@ MonoBehaviour:
   - type: 8
     clip: {fileID: 8300000, guid: 6ac5b200f9470174c95145661bcd6f63, type: 3}
     volumn: 1
-  - type: 6
+  - type: 9
     clip: {fileID: 8300000, guid: c2084279156d7694a8dd50f08e7df034, type: 3}
     volumn: 0.5
   bgmRes:
