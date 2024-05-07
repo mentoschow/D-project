@@ -15,13 +15,13 @@ MonoBehaviour:
   effectRes:
   - type: 0
     clip: {fileID: 8300000, guid: fc00e9c97ff4b7d4dbb038024e2b5654, type: 3}
-    volumn: 0.5
+    volumn: 0.3
   - type: 1
     clip: {fileID: 8300000, guid: 01402300ed615b4489c7ecfce944a46d, type: 3}
     volumn: 0.2
   - type: 2
     clip: {fileID: 8300000, guid: 0e7b2a9b04b833649abbf21cab27c6e1, type: 3}
-    volumn: 0.5
+    volumn: 0.1
   - type: 3
     clip: {fileID: 8300000, guid: abf160cb3ee9f1f4fa223b441d7e9e51, type: 3}
     volumn: 0.2
@@ -45,11 +45,14 @@ MonoBehaviour:
     volumn: 0.5
   bgmRes:
   - type: 10
-    clip: {fileID: 8300000, guid: 46b6dee67d2507d4bbf9b6a164d76965, type: 3}
+    clip: {fileID: 8300000, guid: a86d98c74dac79c47840cc0346c45132, type: 3}
     volumn: 0.5
   - type: 12
-    clip: {fileID: 8300000, guid: 32208df5f598cd14cadd23d6337a5fc1, type: 3}
+    clip: {fileID: 8300000, guid: fc5849c0d8125ae408124abf828fa207, type: 3}
     volumn: 0.5
   - type: 13
-    clip: {fileID: 8300000, guid: d0c446dd1b8908c4fb061ecacbca0bcb, type: 3}
+    clip: {fileID: 8300000, guid: d39d9651527dd504a9e3b83b2a7d4a76, type: 3}
+    volumn: 1
+  - type: 12
+    clip: {fileID: 8300000, guid: fc5849c0d8125ae408124abf828fa207, type: 3}
     volumn: 1
