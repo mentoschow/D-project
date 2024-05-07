@@ -22,44 +22,44 @@
             "jewelryType": 4,
             "combineList": []
         },
-         {
+        {
             "itemID": "item_5",
             "jewelryType": 5,
             "combineList": []
         },
-         {
+        {
             "itemID": "item_6",
             "jewelryType": 6,
             "combineList": [
+                {
+                    "xPos": 14,
+                    "yPos": 215,
+                    "code": 3,
+                    "jewelryType": 5
+                },
+                {
+                    "xPos": 0,
+                    "yPos": -23,
+                    "code": 1,
+                    "jewelryType": 2
+                },
                 {
                     "xPos": -59,
                     "yPos": 152,
                     "code": 1,
                     "jewelryType": 1
                 },
-                          {
-                    "xPos": 0,
-                    "yPos": -23,
-                    "code": 1,
-                    "jewelryType": 2
-                },
-                          {
-                    "xPos": -7,
-                    "yPos": -148,
-                    "code": 4,
-                    "jewelryType": 3
-                },
-                          {
+                {
                     "xPos": 102,
                     "yPos": -164,
                     "code": 4,
                     "jewelryType": 4
                 },
-                          {
-                    "xPos": 14,
-                    "yPos": 215,
-                    "code": 3,
-                    "jewelryType": 5
+                {
+                    "xPos": -7,
+                    "yPos": -148,
+                    "code": 4,
+                    "jewelryType": 3
                 }
             ]
         }
