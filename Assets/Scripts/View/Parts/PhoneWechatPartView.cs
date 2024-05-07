@@ -26,9 +26,9 @@ public class PhoneWechatPartView : MonoBehaviour
     public void UpdateView(BelongPhoneGroup _group, DialogConfig dialog)
     {
         group = _group;
-        if (ResourcesController.Instance.roleRes.ContainsKey(dialog.roleType))
+        if (ResourcesController.Instance.wechatGroupRes.ContainsKey(_group))
         {
-            var res = ResourcesController.Instance.roleRes[dialog.roleType];
+            var res = ResourcesController.Instance.wechatGroupRes[_group];
             icon.sprite = res.icon;
             nameText.text = res.name;
         }
