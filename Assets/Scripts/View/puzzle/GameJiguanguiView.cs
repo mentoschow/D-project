@@ -52,7 +52,7 @@ public class GameJiguanguiView : MonoBehaviour
 
     private void OnBook2Click()
     {
-        UIController.Instance.PlayEpisode("SQ01_030_055");
+        UIController.Instance.PlayEpisode("SQ01_030_052");
     }
 
     private void Close()

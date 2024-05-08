@@ -334,7 +334,7 @@ public class ConfigController : MonoSingleton<ConfigController>
                 {
                     config.ID = equipmentID;
                     config.name = row["name"].ToString();
-                    config.description = row["description"].ToString();
+                    //config.description = row["description"].ToString();
                     config.triggerEpisodeID = row["triggerEpisodeID"].ToString();
                     config.triggerPuzzleID = row["triggerPuzzleID"].ToString();
                     if (row["isTriggerEpisodeOnlyOnce"].ToString() == "")
