@@ -73,7 +73,12 @@ public class EpisodePlayerView : MonoBehaviour
         if (curStatus == EpisodePlayerStatus.Typing)
         {
             typeTimer += Time.deltaTime * typeSpeed;
-            content.text = targetText.Substring(0, (int)typeTimer);
+            int length = (int)typeTimer;
+            if (length > targetText.Length)
+            {
+                length = targetText.Length;
+            }
+            content.text = targetText.Substring(0, length);
             if (content.text == targetText)
             {
                 ChangeStatus(EpisodePlayerStatus.Pause);
