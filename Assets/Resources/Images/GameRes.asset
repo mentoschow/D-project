@@ -236,11 +236,11 @@ MonoBehaviour:
   - ID: MS01_050_010_040
     sprite: {fileID: 21300000, guid: f4a42ba7bceab9749bf5258666968e7a, type: 3}
   - ID: SQ01_030_080_010
-    sprite: {fileID: 21300000, guid: 63da59d9191064f49a811f7f01489730, type: 3}
+    sprite: {fileID: 21300000, guid: 9357a9d3de11e064d9d90fce69e94fcd, type: 3}
   - ID: SQ01_030_080_020
-    sprite: {fileID: 21300000, guid: 63da59d9191064f49a811f7f01489730, type: 3}
+    sprite: {fileID: 21300000, guid: 9357a9d3de11e064d9d90fce69e94fcd, type: 3}
   - ID: SQ01_030_080_030
-    sprite: {fileID: 21300000, guid: 63da59d9191064f49a811f7f01489730, type: 3}
+    sprite: {fileID: 21300000, guid: 9357a9d3de11e064d9d90fce69e94fcd, type: 3}
   - ID: SQ01_020_040
     sprite: {fileID: 21300000, guid: 9435e54d1affb5f4abe6bfab2f1cc45c, type: 3}
   - ID: MS01_030_012_010
@@ -275,6 +275,16 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
   - ID: SQ01_030_052_010
     sprite: {fileID: 21300000, guid: 09d3223245da707479c47cc1fc8be9ea, type: 3}
+  - ID: MS01_060_015_010
+    sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
+  - ID: MS01_060_015_020
+    sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
+  - ID: MS01_060_015_030
+    sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
+  - ID: MS01_060_015_040
+    sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
+  - ID: MS01_060_015_050
+    sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
   roleRes:
   - type: 1
     name: "\u674E\u8A00\u8E4A"
