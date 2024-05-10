@@ -660,7 +660,8 @@ public enum TransitionType
     ChangeToBoy3,
     ChangeToGirl3,
     ChangeToLibraryOut,
-    ChangeToSecretRoom_Now
+    ChangeToSecretRoom_Now,
+    ChangeToSecretRoom_Now1
 }
 
 public class GameLineConfig

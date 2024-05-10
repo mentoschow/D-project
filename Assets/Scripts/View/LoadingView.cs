@@ -32,6 +32,7 @@ public class LoadingView : MonoBehaviour
         switch (type)
         {
             case TransitionType.Blackout:
+                AudioController.Instance.PlayAudioEffect(AudioType.BlackOut);
                 AudioController.Instance.PlayBgm(AudioType.NowBgm);
                 content.text = "";
                 break;
@@ -78,6 +79,10 @@ public class LoadingView : MonoBehaviour
             case TransitionType.ChangeToSecretRoom_Now:
                 content.text = "密室（现在）";
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Now, StageType.LibraryOut, false);
+                break;
+            case TransitionType.ChangeToSecretRoom_Now1:
+                content.text = "密室（现在）";
+                SceneController.Instance.ChangeScene(StageType.SecretRoom_Now, StageType.BoxRoom, false);
                 break;
         }
         Invoke("TriggerNextNode", time);

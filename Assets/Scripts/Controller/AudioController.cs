@@ -31,6 +31,7 @@ public class AudioController : MonoSingleton<AudioController>
     {
         if (effectRes.ContainsKey(type))
         {
+            Debug.Log("≤•∑≈“Ù–ß£∫" + type.ToString());
             effectPlayer.loop = loop;
             effectPlayer.PlayOneShot(effectRes[type].clip, effectRes[type].volumn);
         }
@@ -40,6 +41,7 @@ public class AudioController : MonoSingleton<AudioController>
     {
         if (bgmRes.ContainsKey(type))
         {
+            Debug.Log("≤•∑≈bgm£∫" + type.ToString());
             bgmPlayer.loop = true;
             bgmPlayer.clip = bgmRes[type].clip;
             bgmPlayer.volume = bgmRes[type].volumn;

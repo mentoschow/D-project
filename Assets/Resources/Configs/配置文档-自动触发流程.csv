@@ -1,4 +1,4 @@
-﻿finishType,finishID,triggerType,triggerID
+finishType,finishID,triggerType,triggerID
 1,LibraryOut,3,MS01_010_010
 3,MS01_010_010,3,MS01_010_020
 3,MS01_010_020,6,Free
@@ -21,7 +21,8 @@
 5,MoveToBoxRoomDoorGirl2,3,MS01_030_015_3
 3,MS01_030_015_3,5,MoveToDianbaojiGirl1
 5,MoveToDianbaojiGirl1,3,SQ01_030_010
-3,SQ01_030_010,3,SQ01_030_015
+3,SQ01_030_010,5,MoveToguiziGirl1
+5,MoveToguiziGirl1,3,SQ01_030_015
 3,SQ01_030_015,6,Free
 3,SQ01_030_020,4,PLAY_030_020
 3,SQ01_030_030,4,PLAY_030_020
@@ -60,8 +61,8 @@
 5,MoveToDianbaojiBoy3,2,ChangeToGirl2
 2,ChangeToGirl2,3,MS01_030_080
 3,MS01_030_080,6,Free
-1,SecretRoom_Now,3,MS01_040_010_1
-3,MS01_040_010_1,3,MS01_040_010_2
+3,MS01_040_010_1,2,ChangeToSecretRoom_Now1
+1,SecretRoom_Now,3,MS01_040_010_2
 3,MS01_040_010_2,6,Free
 3,SQ01_040_010_bone,4,PLAY_040_031_bone
 3,SQ01_040_020_picture,4,PLAY_040_031_bone
@@ -92,7 +93,8 @@
 3,MS01_050_022,6,Free
 4,PasswordPuzzle,3,SQ01_050_025
 3,SQ01_050_025,6,Free
-3,MS01_050_030,2,ChangeToGirl3
+3,MS01_050_030,5,MoveToDianbaojiBoy4
+5,MoveToDianbaojiBoy4,2,ChangeToGirl3
 2,ChangeToGirl3,3,MS01_050_040_1
 3,MS01_050_040_1,5,MoveToDianbaojiGirl3
 5,MoveToDianbaojiGirl3,3,MS01_050_040_2

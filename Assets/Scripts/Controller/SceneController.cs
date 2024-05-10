@@ -221,6 +221,7 @@ public class SceneController : MonoSingleton<SceneController>
         {
             UpdateEquipment("BoxRoomRightDoorClose", true);
             UIController.Instance.HideGamePlayView();
+            AudioController.Instance.PlayAudioEffect(AudioType.ClosetMove);
             var obj = equipmentList["OrganClosetInBoxRoom"].transform;
             Sequence sequence = DOTween.Sequence();
             sequence.Append(obj.DOMoveX(7, 2)).AppendCallback(() =>

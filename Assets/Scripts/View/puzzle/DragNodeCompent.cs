@@ -74,7 +74,7 @@ public class DragNodeCompent : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         //this.originPos = pic.gameObject.transform.localPosition;
         if (this.dragStartFun != null)
         {
-            AudioController.Instance.PlayAudioEffect(AudioType.MergeClueButton);
+            AudioController.Instance.PlayAudioEffect(AudioType.DragStart);
             this.dragStartFun(transform.gameObject,this.selfCode);
             this.pic.color = new Color(this.pic.color.r, this.pic.color.g, this.pic.color.b, 0f);
         }

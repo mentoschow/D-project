@@ -75,6 +75,7 @@ public class GameController : Singleton<GameController>
         RoleController.Instance.curRoleView.moveVec = MoveVector.Right;
         RoleController.Instance.curRoleView.transform.DOMove(new Vector2(-10f, -0.216f), 1).OnComplete(() =>
         {
+            AudioController.Instance.PlayAudioEffect(AudioType.Clock);
             AudioController.Instance.PlayBgm(AudioType.NormalBgm);
             RoleController.Instance.curRoleView.moveVec = MoveVector.None;
             SceneController.Instance.ChangeScene(StageType.LibraryOut, StageType.None, false, false); // Ãÿ ‚¥¶¿Ì

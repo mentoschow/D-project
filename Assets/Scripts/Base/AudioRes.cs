@@ -20,18 +20,25 @@ public class AudioClipRes
 
 public enum AudioType
 {
+    // effect
     GameStartButton,
     NormalButton,
     NormalDialogPlayButton,
     TypeEffect,
     PhoneDialogPlayButton,
     PhoneButton,
-    MergeClueButton,
+    DragStart,
     Adsorbed,  // Îü¸½
     PuzzleWrong,
     PuzzleCorrect,
-    NormalBgm,
+    StartPhoneEpisode,
+    Clock,
     BlackOut,
+    ClosetMove,
+
+    //bgm
+    NormalBgm,
+    BlackOutBgm,
     PassBgm,
     NowBgm
 }

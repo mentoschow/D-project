@@ -182,6 +182,7 @@ public class UIController : MonoSingleton<UIController>
 
     public void GameEnd()
     {
+        AudioController.Instance.PlayAudioEffect(AudioType.Clock);
         BackHomepage(true);
     }
 
@@ -248,6 +249,7 @@ public class UIController : MonoSingleton<UIController>
                 else if (config.episodeType == EpisodeType.Phone)
                 {
                     phoneView.PlayPhoneEpisode(config);
+                    AudioController.Instance.PlayAudioEffect(AudioType.StartPhoneEpisode);
                 }
             }
             else
