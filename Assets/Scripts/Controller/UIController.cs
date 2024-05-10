@@ -182,7 +182,7 @@ public class UIController : MonoSingleton<UIController>
 
     public void GameEnd()
     {
-        AudioController.Instance.PlayAudioEffect(AudioType.Clock);
+        AudioController.Instance.PlaySyncAudioEffect(AudioType.Clock);
         BackHomepage(true);
     }
 

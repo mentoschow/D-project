@@ -11,6 +11,8 @@ public class AudioController : MonoSingleton<AudioController>
     private AudioSource effectPlayer;
     [SerializeField]
     private AudioSource bgmPlayer;
+    [SerializeField]
+    private AudioSource effectPlayer2;
 
     private Dictionary<AudioType, AudioClipRes> effectRes = new Dictionary<AudioType, AudioClipRes>();
     private Dictionary<AudioType, AudioClipRes> bgmRes = new Dictionary<AudioType, AudioClipRes>();
@@ -34,6 +36,16 @@ public class AudioController : MonoSingleton<AudioController>
             Debug.Log("播放音效：" + type.ToString());
             effectPlayer.loop = loop;
             effectPlayer.PlayOneShot(effectRes[type].clip, effectRes[type].volumn);
+        }
+    }
+
+    public void PlaySyncAudioEffect(AudioType type, bool loop = false)
+    {
+        if (effectRes.ContainsKey(type))
+        {
+            Debug.Log("播放音效：" + type.ToString());
+            effectPlayer2.loop = loop;
+            effectPlayer2.PlayOneShot(effectRes[type].clip, effectRes[type].volumn);
         }
     }
 
