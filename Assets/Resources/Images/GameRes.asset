@@ -297,6 +297,20 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: ad206b94efe7ced4a8537b133098b5f8, type: 3}
   - ID: SQ01_030_100_030
     sprite: {fileID: 21300000, guid: ad206b94efe7ced4a8537b133098b5f8, type: 3}
+  - ID: SQ01_040_080_010
+    sprite: {fileID: 21300000, guid: 96cd2c252693f6147b63d0b402ffd1a3, type: 3}
+  - ID: SQ01_040_080_020
+    sprite: {fileID: 21300000, guid: 593b382286cd8af449c866c7ea19c263, type: 3}
+  - ID: SQ01_040_080_030
+    sprite: {fileID: 21300000, guid: 18006ac7f66ae0143a27821635b57513, type: 3}
+  - ID: SQ01_040_080_040
+    sprite: {fileID: 21300000, guid: bf1b5bffeef052945a90ae6c481d7dc2, type: 3}
+  - ID: SQ01_040_080_050
+    sprite: {fileID: 21300000, guid: 24aff9b610e05934f8df8df0c0a49687, type: 3}
+  - ID: SQ01_040_080_060
+    sprite: {fileID: 21300000, guid: e1384571ede97d948a23e84d9b4a04e2, type: 3}
+  - ID: SQ01_040_080_070
+    sprite: {fileID: 21300000, guid: 9291f7fef47fdb845b16c0d9a540c1d5, type: 3}
   roleRes:
   - type: 1
     name: "\u674E\u8A00\u8E4A"
