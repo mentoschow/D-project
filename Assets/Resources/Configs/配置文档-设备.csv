@@ -25,7 +25,7 @@ BoxRoomRightDoorOpen,暗门,,0,
 SecretRoomPassRightDoorClose,铁门,SQ01_030_090,0,
 SecretRoomPassRightDoorOpen,被打开的铁门,MS01_050_030,0,
 WallClosetInSecretPass1,砖墙,SQ01_050_005,1,
-WallClosetInSecretPass2,砖墙,SQ01_050_020,1,
+WallClosetInSecretPass2,砖墙,,1,
 PhotoClosetInSecretPass,摆着相框的柜子,SQ01_030_080,1,
 PasswordClosetInSecretPass1,上锁的柜子,SQ01_030_100,1,
 PasswordClosetInSecretPass2,上锁的柜子,,0,PasswordPuzzle
