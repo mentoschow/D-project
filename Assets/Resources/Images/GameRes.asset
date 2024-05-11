@@ -285,6 +285,12 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
   - ID: MS01_060_015_050
     sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
+  - ID: MS01_060_020_010
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
+  - ID: MS01_060_020_020
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
+  - ID: MS01_060_020_030
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
   roleRes:
   - type: 1
     name: "\u674E\u8A00\u8E4A"
