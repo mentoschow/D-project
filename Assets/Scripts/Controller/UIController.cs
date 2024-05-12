@@ -45,6 +45,7 @@ public class UIController : MonoSingleton<UIController>
 
     void Awake()
     {
+        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
         MessageManager.Instance.Register(MessageDefine.StageStart, GameStart);
         MessageManager.Instance.Register(MessageDefine.GetItemDone, OnGetItemDone);
         Init();
