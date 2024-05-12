@@ -108,8 +108,8 @@ public class MimaView : MonoSingleton<MimaView>
         }
         if (isOver)
         {
-            AudioController.Instance.PlayAudioEffect(AudioType.PuzzleCorrect);
-
+            //AudioController.Instance.PlayAudioEffect(AudioType.PuzzleCorrect);
+            AudioController.Instance.PlayAudioEffect(AudioType.Unlock);
             this.updateView();
             Debug.Log("√‹¬ÎÀ¯“—ÕÍ≥…");
             //UIController.Instance.GetItemTip(new List<string>() { "CUE_0350" });

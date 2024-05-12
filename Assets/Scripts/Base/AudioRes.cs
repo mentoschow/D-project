@@ -35,6 +35,11 @@ public enum AudioType
     Clock,
     BlackOut,
     ClosetMove,
+    Telegraph,
+    GunShot,
+    Unlock,
+    Locked,
+    Break,
 
     //bgm
     NormalBgm,

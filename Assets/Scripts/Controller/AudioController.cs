@@ -33,7 +33,7 @@ public class AudioController : MonoSingleton<AudioController>
     {
         if (effectRes.ContainsKey(type))
         {
-            Debug.Log("播放音效：" + type.ToString());
+            //Debug.Log("播放音效：" + type.ToString());
             effectPlayer.loop = loop;
             effectPlayer.PlayOneShot(effectRes[type].clip, effectRes[type].volumn);
         }
@@ -43,7 +43,7 @@ public class AudioController : MonoSingleton<AudioController>
     {
         if (effectRes.ContainsKey(type))
         {
-            Debug.Log("播放音效：" + type.ToString());
+            //Debug.Log("播放音效：" + type.ToString());
             effectPlayer2.loop = loop;
             effectPlayer2.PlayOneShot(effectRes[type].clip, effectRes[type].volumn);
         }
@@ -53,7 +53,7 @@ public class AudioController : MonoSingleton<AudioController>
     {
         if (bgmRes.ContainsKey(type))
         {
-            Debug.Log("播放bgm：" + type.ToString());
+            //Debug.Log("播放bgm：" + type.ToString());
             bgmPlayer.loop = true;
             bgmPlayer.clip = bgmRes[type].clip;
             bgmPlayer.volume = bgmRes[type].volumn;

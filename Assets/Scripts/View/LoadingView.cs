@@ -41,12 +41,14 @@ public class LoadingView : MonoBehaviour
                 break;
             case TransitionType.ChangeToBoy:
             case TransitionType.ChangeToBoy2:
+                AudioController.Instance.PlayAudioEffect(AudioType.Telegraph);
                 content.text = "密室（过去）";
                 AudioController.Instance.PlayBgm(AudioType.PassBgm);
                 RoleController.Instance.ChangeRole(RoleType.MainRoleBoy);
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Pass, StageType.BoxRoom, false);
                 break;
             case TransitionType.ChangeToGirl:
+                AudioController.Instance.PlayAudioEffect(AudioType.Telegraph);
                 content.text = "藏间（现在）";
                 AudioController.Instance.PlayBgm(AudioType.NowBgm);
                 GameDataProxy.Instance.canPlayJiguangui = true;
@@ -54,6 +56,7 @@ public class LoadingView : MonoBehaviour
                 SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
             case TransitionType.ChangeToGirl2:
+                AudioController.Instance.PlayAudioEffect(AudioType.Telegraph);
                 content.text = "藏间（现在）";
                 AudioController.Instance.PlayBgm(AudioType.NowBgm);
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
@@ -61,12 +64,14 @@ public class LoadingView : MonoBehaviour
                 SceneController.Instance.ChangeScene(StageType.BoxRoom, StageType.SecretRoom_Pass, false);
                 break;
             case TransitionType.ChangeToBoy3:
+                AudioController.Instance.PlayAudioEffect(AudioType.Telegraph);
                 content.text = "密室（过去）";
                 AudioController.Instance.PlayBgm(AudioType.PassBgm);
                 RoleController.Instance.ChangeRole(RoleType.MainRoleBoy);
                 SceneController.Instance.ChangeScene(StageType.SecretRoom_Pass, StageType.SecretRoom_Now, false);
                 break;
             case TransitionType.ChangeToGirl3:
+                AudioController.Instance.PlayAudioEffect(AudioType.Telegraph);
                 content.text = "密室（现在）";
                 AudioController.Instance.PlayBgm(AudioType.NowBgm);
                 RoleController.Instance.ChangeRole(RoleType.MainRoleGirl);
