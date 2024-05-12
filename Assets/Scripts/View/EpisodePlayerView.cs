@@ -184,6 +184,10 @@ public class EpisodePlayerView : MonoBehaviour
             {
                 UIController.Instance.HidePhoneView();
             }
+            if (curEpisodeID == "MS01_060_020")
+            {
+                AudioController.Instance.PlaySyncAudioEffect(AudioType.TelegraphLong);
+            }
             
             curEpisodeID = "";
             MessageManager.Instance.Send(MessageDefine.PlayEpisodeDone, new MessageData(node));

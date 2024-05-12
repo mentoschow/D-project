@@ -40,6 +40,7 @@ public enum AudioType
     Unlock,
     Locked,
     Break,
+    TelegraphLong,
 
     //bgm
     NormalBgm,
