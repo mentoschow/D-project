@@ -74,13 +74,13 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 705f99f35120b744e9bc5dfeea1a41a0, type: 3}
     volumn: 1
   bgmRes:
-  - type: 14
+  - type: 20
     clip: {fileID: 8300000, guid: a86d98c74dac79c47840cc0346c45132, type: 3}
     volumn: 0.5
-  - type: 16
+  - type: 22
     clip: {fileID: 8300000, guid: fc5849c0d8125ae408124abf828fa207, type: 3}
     volumn: 0.5
-  - type: 17
+  - type: 23
     clip: {fileID: 8300000, guid: d39d9651527dd504a9e3b83b2a7d4a76, type: 3}
     volumn: 1
   - type: 12

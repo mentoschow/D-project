@@ -182,7 +182,6 @@ public class UIController : MonoSingleton<UIController>
 
     public void GameEnd()
     {
-        AudioController.Instance.PlaySyncAudioEffect(AudioType.Clock);
         BackHomepage(true);
     }
 
@@ -251,21 +250,25 @@ public class UIController : MonoSingleton<UIController>
                     phoneView.PlayPhoneEpisode(config);
                     AudioController.Instance.PlayAudioEffect(AudioType.StartPhoneEpisode);
                 }
-                if (config.ID == "MS01_030_015_3")
+                if (config.ID == "MS01_030_015_4")
                 {
-                    AudioController.Instance.PlayAudioEffect(AudioType.Telegraph);
+                    AudioController.Instance.PlaySyncAudioEffect(AudioType.Telegraph);
                 }
                 if (config.ID == "MS01_050_030")
                 {
-                    AudioController.Instance.PlayAudioEffect(AudioType.GunShot);
+                    AudioController.Instance.PlaySyncAudioEffect(AudioType.GunShot);
                 }
                 if (config.ID == "SQ01_030_100_lock")
                 {
-                    AudioController.Instance.PlayAudioEffect(AudioType.Locked);
+                    AudioController.Instance.PlaySyncAudioEffect(AudioType.Locked);
                 }
                 if (config.ID == "MS01_060_015")
                 {
-                    AudioController.Instance.PlayAudioEffect(AudioType.Break);
+                    AudioController.Instance.PlaySyncAudioEffect(AudioType.Break);
+                }
+                if (config.ID == "MS01_060_010")
+                {
+                    AudioController.Instance.PlaySyncAudioEffect(AudioType.Clock);
                 }
             }
             else
