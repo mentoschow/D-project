@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -181,6 +180,11 @@ public class UIController : MonoSingleton<UIController>
     }
 
     public void GameEnd()
+    {
+        Invoke("DelayGameEnd", 3);
+    }
+
+    private void DelayGameEnd()
     {
         BackHomepage(true);
     }

@@ -44,7 +44,7 @@ public class GameController : Singleton<GameController>
                 break;
             case GameNodeType.GameEnd:
                 Debug.Log("自动触发游戏结束：" + nextNode.ID);
-                UIController.Instance.GameEnd();
+                GameEnd();
                 break;
             case GameNodeType.Episode:
                 Debug.Log("自动触发情节：" + nextNode.ID);
@@ -64,6 +64,11 @@ public class GameController : Singleton<GameController>
                 RoleController.Instance.PlayAutoMove(nextNode.ID);
                 break;
         }
+    }
+
+    private void GameEnd()
+    {
+        UIController.Instance.GameEnd();
     }
 
     public void GameStart()
