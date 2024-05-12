@@ -18,8 +18,8 @@
 3,MS01_030_012,3,MS01_030_015_1
 3,MS01_030_015_1,5,LookDoorGirl
 5,LookDoorGirl,3,MS01_030_015_2
-3,MS01_030_015_2,5,MoveToBoxRoomDoorGirl1
-5,MoveToBoxRoomDoorGirl1,3,MS01_030_015_3
+3,MS01_030_015_2,5,MoveToDoorGirl
+5,MoveToDoorGirl,3,MS01_030_015_3
 3,MS01_030_015_3,5,LookDianbaojiGirl1
 5,LookDianbaojiGirl1,3,MS01_030_015_4
 3,MS01_030_015_4,5,MoveToDianbaojiGirl1
