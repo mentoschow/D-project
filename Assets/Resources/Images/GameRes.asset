@@ -31,17 +31,17 @@ MonoBehaviour:
   - type: 4
     prefab: {fileID: 3163663043471574251, guid: d67b8bb34c2f51d40b3d8dfaedb338bf, type: 3}
     name: "\u85CF\u95F4"
-    leftPosX: -8
-    rightPosX: -0.55
+    leftPosX: -4
+    rightPosX: 3.75
   - type: 5
     prefab: {fileID: 3163663043471574251, guid: 2750b96812657a84fb5cb46d2a5bfad7, type: 3}
     name: "\u5BC6\u5BA4\uFF08\u73B0\u5728\uFF09"
-    leftPosX: -6
+    leftPosX: -11
     rightPosX: 12
   - type: 6
     prefab: {fileID: 3163663043471574251, guid: 59f8c37b374f09440b3cc5d1465b59b6, type: 3}
     name: "\u5BC6\u5BA4\uFF08\u8FC7\u53BB\uFF09"
-    leftPosX: -9.4
+    leftPosX: -11
     rightPosX: 12
   clueItemImage:
   - ID: T_CUE_IDEA
@@ -269,10 +269,6 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 0cd082a32a204d546842b1395327a4e1, type: 3}
   - ID: MS01_050_040_040
     sprite: {fileID: 21300000, guid: 0cd082a32a204d546842b1395327a4e1, type: 3}
-  - ID: SQ01_040_010_030
-    sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
-  - ID: SQ01_040_010_040
-    sprite: {fileID: 21300000, guid: c88b236500fbf68458155d1b318783f9, type: 3}
   - ID: SQ01_030_052_010
     sprite: {fileID: 21300000, guid: 09d3223245da707479c47cc1fc8be9ea, type: 3}
   - ID: MS01_060_015_010
@@ -285,6 +281,42 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
   - ID: MS01_060_015_050
     sprite: {fileID: 21300000, guid: 70009999cb8b06b458fab33d8423d3e8, type: 3}
+  - ID: MS01_060_020_010
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
+  - ID: MS01_060_020_020
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
+  - ID: MS01_060_020_030
+    sprite: {fileID: 21300000, guid: 798f906cf1b6bf44c990595e17ef7bb0, type: 3}
+  - ID: SQ01_030_100_010
+    sprite: {fileID: 21300000, guid: ad206b94efe7ced4a8537b133098b5f8, type: 3}
+  - ID: SQ01_030_100_020
+    sprite: {fileID: 21300000, guid: ad206b94efe7ced4a8537b133098b5f8, type: 3}
+  - ID: SQ01_030_100_030
+    sprite: {fileID: 21300000, guid: ad206b94efe7ced4a8537b133098b5f8, type: 3}
+  - ID: SQ01_040_080_010
+    sprite: {fileID: 21300000, guid: 96cd2c252693f6147b63d0b402ffd1a3, type: 3}
+  - ID: SQ01_040_080_020
+    sprite: {fileID: 21300000, guid: 593b382286cd8af449c866c7ea19c263, type: 3}
+  - ID: SQ01_040_080_030
+    sprite: {fileID: 21300000, guid: 18006ac7f66ae0143a27821635b57513, type: 3}
+  - ID: SQ01_040_080_040
+    sprite: {fileID: 21300000, guid: bf1b5bffeef052945a90ae6c481d7dc2, type: 3}
+  - ID: SQ01_040_080_050
+    sprite: {fileID: 21300000, guid: 24aff9b610e05934f8df8df0c0a49687, type: 3}
+  - ID: SQ01_040_080_060
+    sprite: {fileID: 21300000, guid: e1384571ede97d948a23e84d9b4a04e2, type: 3}
+  - ID: SQ01_040_080_070
+    sprite: {fileID: 21300000, guid: 9291f7fef47fdb845b16c0d9a540c1d5, type: 3}
+  - ID: SH01_020_030_040
+    sprite: {fileID: 21300000, guid: 9da27133796b9394dbf77e5edeb58056, type: 3}
+  - ID: SH01_020_040_040
+    sprite: {fileID: 21300000, guid: e1108da9715f71242a339e56acf30644, type: 3}
+  - ID: SQ01_040_010_030
+    sprite: {fileID: 21300000, guid: 243ea411accfdb149a786047b1171899, type: 3}
+  - ID: SQ01_040_010_040
+    sprite: {fileID: 21300000, guid: 243ea411accfdb149a786047b1171899, type: 3}
+  - ID: MS01_030_073_020
+    sprite: {fileID: 21300000, guid: 5259f76cb3308af4a8458395b2cd4669, type: 3}
   roleRes:
   - type: 1
     name: "\u674E\u8A00\u8E4A"
