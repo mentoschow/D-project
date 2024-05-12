@@ -126,6 +126,7 @@ public class GameController : Singleton<GameController>
 
     private void TryOpenPuzzle(string ID)
     {
+        GameDataProxy.Instance.canOperate = false;
         var config = ConfigController.Instance.GetMergeClueConfig(ID);
         if (config.ID != null)
         {
