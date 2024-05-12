@@ -33,7 +33,7 @@ LookDianbaojiGirl4,3.5,1
 MoveToCangshisuoGirl,0,1
 MoveToTushuguanGirl,3.5,1
 LookCangshisuoGirl,0.3,1
-LookMishiDoorGirl,0,1
+LookMishiDoorGirl,-0.3,1
 CangshiGirl,3.7,1
 MishiGirl1,-11,1
 MishiGirl2,12,1
