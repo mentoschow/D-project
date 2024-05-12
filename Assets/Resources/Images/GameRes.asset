@@ -312,11 +312,13 @@ MonoBehaviour:
   - ID: SH01_020_040_040
     sprite: {fileID: 21300000, guid: e1108da9715f71242a339e56acf30644, type: 3}
   - ID: SQ01_040_010_030
-    sprite: {fileID: 21300000, guid: 243ea411accfdb149a786047b1171899, type: 3}
+    sprite: {fileID: 21300000, guid: 782c9e77acf3dd449a45c834bd7076eb, type: 3}
   - ID: SQ01_040_010_040
-    sprite: {fileID: 21300000, guid: 243ea411accfdb149a786047b1171899, type: 3}
+    sprite: {fileID: 21300000, guid: 782c9e77acf3dd449a45c834bd7076eb, type: 3}
   - ID: MS01_030_073_020
     sprite: {fileID: 21300000, guid: 5259f76cb3308af4a8458395b2cd4669, type: 3}
+  - ID: SQ01_030_010_031
+    sprite: {fileID: 21300000, guid: 411fb43de1b15654b938b9924362fa4f, type: 3}
   roleRes:
   - type: 1
     name: "\u674E\u8A00\u8E4A"
