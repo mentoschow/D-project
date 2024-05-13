@@ -15,7 +15,7 @@ MonoBehaviour:
   scenePrefabs:
   - type: 1
     prefab: {fileID: 3163663043471574251, guid: 44230197463e19a47874341e4b307721, type: 3}
-    name: "\u56FE\u4E66\u9986\u5916"
+    name: "\u56FE\u4E66\u9986\u591611111"
     leftPosX: 0
     rightPosX: 5
   - type: 2
@@ -35,12 +35,12 @@ MonoBehaviour:
     rightPosX: 3.75
   - type: 5
     prefab: {fileID: 3163663043471574251, guid: 2750b96812657a84fb5cb46d2a5bfad7, type: 3}
-    name: "\u5BC6\u5BA4\uFF08\u73B0\u5728\uFF09"
+    name: "\u5BC6\u5BA4"
     leftPosX: -11
     rightPosX: 12
   - type: 6
     prefab: {fileID: 3163663043471574251, guid: 59f8c37b374f09440b3cc5d1465b59b6, type: 3}
-    name: "\u5BC6\u5BA4\uFF08\u8FC7\u53BB\uFF09"
+    name: "\u5BC6\u5BA4"
     leftPosX: -11
     rightPosX: 12
   clueItemImage:
