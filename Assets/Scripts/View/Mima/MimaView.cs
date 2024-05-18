@@ -42,6 +42,7 @@ public class MimaView : MonoSingleton<MimaView>
     public void onCloseBtnClick()
     {
         gameObject.SetActive(false);
+        GameDataProxy.Instance.canOperate = true;
     }
 
     void Start()

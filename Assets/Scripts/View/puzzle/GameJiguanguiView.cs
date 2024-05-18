@@ -58,6 +58,7 @@ public class GameJiguanguiView : MonoBehaviour
     private void Close()
     {
         gameObject.SetActive(false);
+        GameDataProxy.Instance.canOperate = true;
     }
 
     private void OnTopClick()
